@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8175905828a35a54fa6930750362bf14, type: 3}
+  m_Name: StatesConfig
+  m_EditorClassIdentifier: Assembly-CSharp::StatesConfig
+  m_StartState: 0
+  m_Mapping:
+  - m_State: 0
+    m_MachineState:
+      rid: 5901800330069540959
+  - m_State: 1
+    m_MachineState:
+      rid: 5901800330069540968
+  m_Transitions:
+  - State: 0
+    ExitStates: 010000000200000006000000
+  - State: 1
+    ExitStates: 00000000010000000200000006000000
+  - State: 2
+    ExitStates: 00000000010000000300000006000000
+  - State: 3
+    ExitStates: 03000000040000000500000006000000
+  - State: 4
+    ExitStates: 030000000500000006000000
+  - State: 5
+    ExitStates: 010000000300000006000000
+  - State: 6
+    ExitStates: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 5901800330069540959
+      type: {class: IdleState, ns: , asm: Assembly-CSharp}
+      data:
+        StateEnded:
+          m_PersistentCalls:
+            m_Calls: []
+        p_IsExitTime: 1
+        p_Time: 10
+    - rid: 5901800330069540968
+      type: {class: PatrolState, ns: , asm: Assembly-CSharp}
+      data:
+        StateEnded:
+          m_PersistentCalls:
+            m_Calls: []
+        p_IsExitTime: 0
+        p_Time: 120

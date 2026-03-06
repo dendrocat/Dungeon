@@ -34,18 +34,36 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "WeaponNum",
+                    "name": "Attack",
                     "type": "Button",
-                    "id": "4de640bb-3b39-42d0-a33d-69047a0cb3af",
+                    "id": "c9f27089-e492-467c-9f41-829b28dd86b0",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
+                    "name": "Reload",
                     "type": "Button",
-                    "id": "c9f27089-e492-467c-9f41-829b28dd86b0",
+                    "id": "008d28b1-17d3-405e-9c09-52741f78fe83",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Throw",
+                    "type": "Button",
+                    "id": "3873fc62-607a-4726-aeff-6f4295c33dad",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeaponNum",
+                    "type": "Button",
+                    "id": "4de640bb-3b39-42d0-a33d-69047a0cb3af",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -160,6 +178,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e59deb9e-6aa3-4b67-895d-ad4396cd835f",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94fd62d3-ffef-44da-89fa-912544274f43",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

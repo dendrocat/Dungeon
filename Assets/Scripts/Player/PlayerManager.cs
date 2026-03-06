@@ -3,11 +3,11 @@ using UnityEngine.Events;
 
 public class PlayerManager : MonoBehaviour, IDamagable
 {
-    [HideInInspector] UnityEvent Died = new();
+    [SerializeField] public UnityEvent Died = new();
 
-    [SerializeField, Min(10)] int m_Health = 100;
+    [SerializeField, Min(10)] float m_Health = 100;
 
-    public int Health
+    public float Health
     {
         get => m_Health;
         private set
@@ -18,8 +18,9 @@ public class PlayerManager : MonoBehaviour, IDamagable
     }
 
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         m_Health -= damage;
     }
 }
+

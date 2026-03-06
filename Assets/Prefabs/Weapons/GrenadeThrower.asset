@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
-  m_Name: Pistol
+  m_Name: GrenadeThrower
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
-  m_WeaponPrefab: {fileID: 7895784510436758991, guid: 70705d0eecbe02d44be14857e867ea8e, type: 3}
-  m_Damage: 2
+  m_WeaponPrefab: {fileID: 5796934852874072609, guid: cf2b7ce24617d0f41ac6fb6d2642bccf, type: 3}
+  m_Damage: 1
   m_ReloadTime: 5
-  m_FireRate: 12
+  m_FireRate: 1
   m_BulletRate: 1
-  m_AutoReload: 0
-  x: 1
-  y: 1
-  m_AmmoPrefab: {fileID: 4418923189705824227, guid: a7d9d7b0fecb2ba49b955d627104fa2d, type: 3}
-  m_AmmoSpeed: 100
-  m_MaxAmmoInTube: 12
-  m_MaxAmmo: 120
-  m_Distance: 300
+  m_AutoReload: 1
+  x: 0.2
+  y: 0.2
+  m_AmmoPrefab: {fileID: 1237673096499679094, guid: 5af9280b6058dcf4f8db18ebfca8c81f, type: 3}
+  m_AmmoSpeed: 20
+  m_MaxAmmoInTube: 1
+  m_MaxAmmo: 3
+  m_Distance: 100

@@ -37,7 +37,7 @@ public class PlayerMover : MonoBehaviour
     {
         m_JumpForce = new Vector3(0, Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * m_JumpHeight), 0);
         m_JumpForce *= m_Rig.mass;
-        Debug.Log($"JumpForce: {m_JumpForce}");
+        // Debug.Log($"JumpForce: {m_JumpForce}");
     }
 
     void Jump()

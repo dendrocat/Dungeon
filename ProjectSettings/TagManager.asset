@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - FirePoint
   layers:
   - Default
   - TransparentFX
@@ -11,6 +12,7 @@ TagManager:
   - Ground
   - Water
   - UI
+  - Player
   - Enemy
   - 
   - 
@@ -35,8 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Obstacle
   m_SortingLayers:
   - name: Default
     uniqueID: 0

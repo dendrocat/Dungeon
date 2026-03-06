@@ -10,8 +10,6 @@ public class GroundChecker : MonoBehaviour
     [SerializeField] LayerMask m_Layer;
 
 
-
-
     void OnDrawGizmos()
     {
         Gizmos.color = IsGrounded ? Color.green : Color.red;

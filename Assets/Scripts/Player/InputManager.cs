@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
     [HideInInspector] public UnityEvent Jumped = new();
     [HideInInspector] public UnityEvent<int> WeaponNumed = new();
     [HideInInspector] public UnityEvent Reloaded = new();
+    [HideInInspector] public UnityEvent Throwed = new();
 
     void Awake()
     {
@@ -57,5 +58,10 @@ public class InputManager : MonoBehaviour
     {
         if (!ctx.performed) return;
         WeaponNumed.Invoke(ctx.control.displayName[0] - '0');
+    }
+
+    public void OnThrow(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed) Throwed.Invoke();
     }
 }
