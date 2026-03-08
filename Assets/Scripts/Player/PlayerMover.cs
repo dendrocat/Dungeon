@@ -4,8 +4,10 @@ using UnityEngine;
 [DeclareFoldoutGroup("set", Title = "Settings", Expanded = true)]
 [DeclareFoldoutGroup("cmp", Title = "Components")]
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMover : MonoBehaviour
+public class PlayerMover : MonoBehaviour, IActivatable
 {
+	public bool IsActive => enabled;
+
     [Group("set")]
     [SerializeField, Slider(1, 10)] int m_Speed = 5;
 
@@ -30,7 +32,7 @@ public class PlayerMover : MonoBehaviour
     void Start()
     {
         m_Input = InputManager.Instance;
-        m_Input.Jumped.AddListener(Jump);
+        m_Input.Jumped += Jump;
     }
 
     void CalcJumpForce()
@@ -57,4 +59,7 @@ public class PlayerMover : MonoBehaviour
     {
         Move();
     }
+
+	public void Activate() => enabled = true;
+	public void Deactivate() => enabled = false;
 }

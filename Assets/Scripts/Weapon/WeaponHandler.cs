@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponHandler : MonoBehaviour
+public class WeaponHandler : MonoBehaviour, IActivatable
 {
     [SerializeField] RangedWeaponStats[] m_Weapons;
     [SerializeField] WeaponStats m_MeleeStats;
@@ -10,6 +10,7 @@ public class WeaponHandler : MonoBehaviour
 
     int m_Index = 0;
 
+	public bool IsActive => enabled;
     public RangedWeapon Weapon { get; private set; } = null;
     public RangedWeapon Grenade { get; private set; } = null;
 
@@ -29,9 +30,9 @@ public class WeaponHandler : MonoBehaviour
 
     void Start()
     {
-        InputManager.Instance.WeaponNumed.AddListener(ChangeWeapon);
-        InputManager.Instance.Reloaded.AddListener(Reload);
-        InputManager.Instance.Throwed.AddListener(ThrowGrenade);
+        InputManager.Instance.WeaponNumed += ChangeWeapon;
+        InputManager.Instance.Reloaded += Reload;
+        InputManager.Instance.Throwed += ThrowGrenade;
 
         ChangeWeapon(1);
     }
@@ -96,4 +97,8 @@ public class WeaponHandler : MonoBehaviour
             Weapon.Equip();
         }
     }
+
+
+	public void Activate() => enabled = true;
+	public void Deactivate() => enabled = false;
 }

@@ -26,7 +26,9 @@ public class AudioSensor : ISensor
     public AudioSensor(AudioInput input, string name)
     {
         m_Name = name;
+		m_Output = new();
     }
+
     public int Write(ObservationWriter writer)
     {
         throw new NotImplementedException("Write in AudioSensor not implemented");

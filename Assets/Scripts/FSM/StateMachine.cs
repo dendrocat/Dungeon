@@ -5,7 +5,9 @@ using System.Collections.Generic;
 
 public class StateMachine : MonoBehaviour
 {
-    [HideInInspector] public UnityEvent ChangeStateRequested = new();
+    public event UnityAction ChangeStateRequested;
+
+	[SerializeField] Enemy m_Enemy;
     [SerializeField] StatesConfig m_Config;
 
     StatesConfig.StateEntry m_ActiveState;
@@ -39,8 +41,8 @@ public class StateMachine : MonoBehaviour
 
         m_ActiveState = m_Config.GetState((States)state);
 
-        m_ActiveState.MachineState.Enter();
-        m_ActiveState.MachineState.StateEnded.AddListener(OnStateEnded);
+        m_ActiveState.MachineState.Enter(m_Enemy);
+        m_ActiveState.MachineState.StateEnded += OnStateEnded;
         return true;
     }
 

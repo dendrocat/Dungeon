@@ -6,7 +6,7 @@ using TriInspector;
 [Serializable]
 public abstract class BaseState
 {
-    [HideInInspector] public UnityEvent<bool> StateEnded = new();
+    public event UnityAction<bool> StateEnded;
 
     [LabelText("IsExitTime"), LabelWidth(100)]
     [SerializeField] protected bool p_IsExitTime = true;
@@ -16,28 +16,32 @@ public abstract class BaseState
 
 
     Timer m_Timer;
+    protected Enemy p_Enemy;
 
     public BaseState()
     {
-		m_Timer = new Timer(p_Time);
-		m_Timer.TimerEnded += () => StateEnded.Invoke(!p_IsExitTime);
+        m_Timer = new Timer(p_Time);
+        m_Timer.TimerEnded += () => StateEnded.Invoke(!p_IsExitTime);
     }
 
-    public void Enter()
+    public void Enter(Enemy enemy)
     {
+        p_Enemy = enemy;
         m_Timer?.Reset();
     }
-    public virtual void OnEnter() { }
+    protected virtual void OnEnter() { }
 
     public void Update(float dt)
     {
         m_Timer?.Update(dt);
+		OnUpdate(dt);
     }
-    public virtual void OnUpdate() { }
+    protected virtual void OnUpdate(float dt) { }
 
     public void Exit()
     {
-		StateEnded.RemoveAllListeners();
+        p_Enemy = null;
+        StateEnded = null;
     }
-    public virtual void OnExit() { }
+    protected virtual void OnExit() { }
 }

@@ -11,10 +11,10 @@ public class InputManager : MonoBehaviour
     public Vector2 MouseDelta { get; private set; }
     public bool Attack { get; private set; }
 
-    [HideInInspector] public UnityEvent Jumped = new();
-    [HideInInspector] public UnityEvent<int> WeaponNumed = new();
-    [HideInInspector] public UnityEvent Reloaded = new();
-    [HideInInspector] public UnityEvent Throwed = new();
+    [HideInInspector] public event UnityAction Jumped;
+    [HideInInspector] public event UnityAction<int> WeaponNumed;
+    [HideInInspector] public event UnityAction Reloaded;
+    [HideInInspector] public event UnityAction Throwed;
 
     void Awake()
     {
