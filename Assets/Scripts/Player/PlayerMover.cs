@@ -6,10 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMover : MonoBehaviour, IActivatable
 {
-	public bool IsActive => enabled;
+    public bool IsActive => enabled;
 
     [Group("set")]
-    [SerializeField, Slider(1, 10)] int m_Speed = 5;
+    [SerializeField, Slider(1, 10)] float m_BaseSpeed = 5;
+    public float BaseSpeed => m_BaseSpeed;
 
     [Group("set")]
     [SerializeField, Slider(1, 10)] int m_JumpHeight = 1;
@@ -22,6 +23,7 @@ public class PlayerMover : MonoBehaviour, IActivatable
 
 
     private Rigidbody m_Rig;
+    public float Speed => m_Rig.linearVelocity.magnitude;
 
     void Awake()
     {
@@ -51,8 +53,8 @@ public class PlayerMover : MonoBehaviour, IActivatable
     void Move()
     {
         var dir = new Vector3(m_Input.Move.x, 0, m_Input.Move.y).normalized;
-        dir = transform.TransformDirection(dir);
-        m_Rig.linearVelocity = new Vector3(dir.x * m_Speed, m_Rig.linearVelocity.y, dir.z * m_Speed);
+        dir = transform.TransformDirection(dir).normalized;
+        m_Rig.linearVelocity = new Vector3(dir.x * m_BaseSpeed, m_Rig.linearVelocity.y, dir.z * m_BaseSpeed);
     }
 
     void FixedUpdate()
@@ -60,6 +62,6 @@ public class PlayerMover : MonoBehaviour, IActivatable
         Move();
     }
 
-	public void Activate() => enabled = true;
-	public void Deactivate() => enabled = false;
+    public void Activate() => enabled = true;
+    public void Deactivate() => enabled = false;
 }

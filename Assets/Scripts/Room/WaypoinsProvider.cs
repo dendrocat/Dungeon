@@ -4,8 +4,7 @@ using UnityEngine;
 public class WaypointsProvider : MonoBehaviour
 {
     public static WaypointsProvider Instance { get; private set; } = null;
-    IReadOnlyList<Transform> m_Waypoints;
-    List<bool> m_BusyPoints;
+    IReadOnlyList<IWaypoint> m_Waypoints;
 
 
     void Awake()
@@ -26,20 +25,20 @@ public class WaypointsProvider : MonoBehaviour
     void GetWaypoints(IWaypoinsStore store)
     {
         m_Waypoints = store.Waypoints;
-        m_BusyPoints = new List<bool>(m_Waypoints.Count);
+        Debug.Log($"Getted {m_Waypoints.Count} waypoints");
     }
 
-    public Vector3 GetFreeWaypoint()
+    public IWaypoint GetFreeWaypoint()
     {
-        if (m_Waypoints == null || m_Waypoints.Count == 0) return Vector3.zero;
+        if (m_Waypoints == null || m_Waypoints.Count == 0) throw new System.OperationCanceledException("Waypoints not found");
+        int index = 0;
         for (int attemp = 0; attemp < 10; ++attemp)
         {
-            int index = Random.Range(0, m_Waypoints.Count);
-            if (m_BusyPoints[index]) continue;
-            m_BusyPoints[index] = true;
-            return m_Waypoints[index].position;
+            index = Random.Range(0, m_Waypoints.Count);
+            if (m_Waypoints[index].IsBusy) continue;
+            return m_Waypoints[index];
         }
-        return m_Waypoints[0].position;
+        return m_Waypoints[0];
     }
 
     void OnDestroy()

@@ -33,6 +33,7 @@ public class Timer
     /// <param name="dt">Delta time since last frame (Time.deltaTime or Time.fixedDeltaTime).</param>
     public void Update(float dt)
     {
+        if (m_Timer >= m_MaxTimer) return;
         m_Timer += dt;
         if (m_Timer >= m_MaxTimer) TimerEnded?.Invoke();
     }

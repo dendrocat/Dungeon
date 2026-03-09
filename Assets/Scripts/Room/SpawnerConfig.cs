@@ -18,5 +18,5 @@ public class SpawnerConfig : ScriptableObject
 
     [SerializeField] List<ConfigEntry> m_SpawnChances;
 
-	public IReadOnlyList<ConfigEntry> SpawnChances => m_SpawnChances;
+    public IReadOnlyList<ConfigEntry> SpawnChances => m_SpawnChances;
 }

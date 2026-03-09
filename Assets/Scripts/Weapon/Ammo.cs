@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Ammo : MonoBehaviour
 {
+    public event UnityAction Hitted;
     Rigidbody m_Rig;
 
     int m_Damage;
@@ -22,7 +24,7 @@ public class Ammo : MonoBehaviour
 
     public void Launch(Vector3 dir)
     {
-		// Debug.Log($"{m_Rig.name} lauched");
+        // Debug.Log($"{m_Rig.name} lauched");
         dir = dir.normalized;
         transform.forward = dir.normalized;
         m_Rig.linearVelocity = dir * m_Speed;
@@ -43,6 +45,7 @@ public class Ammo : MonoBehaviour
     {
         // Debug.Log(other.gameObject.name);
         if (((1 << other.gameObject.layer) & HitMask.value) != 0) Attack(other.gameObject, m_Damage);
+        Hitted?.Invoke();
         OnHit();
     }
 }

@@ -41,16 +41,11 @@ MonoBehaviour:
     - rid: 5901800330069540959
       type: {class: IdleState, ns: , asm: Assembly-CSharp}
       data:
-        StateEnded:
-          m_PersistentCalls:
-            m_Calls: []
         p_IsExitTime: 1
         p_Time: 10
     - rid: 5901800330069540968
       type: {class: PatrolState, ns: , asm: Assembly-CSharp}
       data:
-        StateEnded:
-          m_PersistentCalls:
-            m_Calls: []
         p_IsExitTime: 0
         p_Time: 120
+        m_StopTime: 10

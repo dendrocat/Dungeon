@@ -3,12 +3,12 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour, IDamagable
 {
-	public event UnityAction<float> HealthChanged;
-	public event UnityAction Died;
+    public event UnityAction<float> HealthChanged;
+    public event UnityAction Died;
 
     [SerializeField, Min(10)] float m_MaxHealth = 100;
 
-    float m_Health; 
+    float m_Health;
 
     void Awake()
     {
@@ -17,9 +17,9 @@ public class Health : MonoBehaviour, IDamagable
 
     public virtual void TakeDamage(float damage)
     {
-		if (m_Health <= 0) return;
+        if (m_Health <= 0) return;
         m_Health -= damage;
-		HealthChanged?.Invoke(m_Health);
-		if (m_Health <= 0) Died?.Invoke();
+        HealthChanged?.Invoke(m_Health);
+        if (m_Health <= 0) Died?.Invoke();
     }
 }

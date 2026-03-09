@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TriInspector;
 
 public class Person : MonoBehaviour, IDamagable
 {
+    [LabelText("Health")]
     [SerializeField] protected Health p_Health;
 
     IEnumerable<IActivatable> comps;

@@ -11,7 +11,7 @@ public class MeleeWeapon : Weapon<WeaponStats>
         throw new System.NotImplementedException();
     }
 
-    protected override void	AfterReload()
+    protected override void AfterReload()
     {
         throw new System.NotImplementedException();
     }

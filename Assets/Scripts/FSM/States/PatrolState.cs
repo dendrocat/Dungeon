@@ -1,43 +1,64 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 using TriInspector;
 
-[Serializable]
+[System.Serializable]
 public class PatrolState : BaseState
 {
-    [SerializeField, Slider(1, 10)] int m_StopTime;
+    [LabelWidth(100)]
+    [SerializeField, Min(0.1f), Unit(UnitAttribute.Second)] float m_StopTime = 10;
     NavMeshAgent m_Agent;
 
     Timer m_StopTimer;
+    IWaypoint m_Waypoint;
 
     void SetDestination()
     {
-        Vector3 waypoint = WaypointsProvider.Instance.GetFreeWaypoint();
-        if (NavMesh.SamplePosition(waypoint, out NavMeshHit hit, 1f, 1))
+        m_StopTimer.Reset(m_StopTime + Random.Range(-m_StopTime / 2, m_StopTime / 2));
+
+        m_Waypoint = WaypointsProvider.Instance.GetFreeWaypoint();
+        var waypoint = m_Waypoint.Position;
+        var nWaypoint = waypoint + Random.onUnitSphere * Waypoint.Radius;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(nWaypoint, out hit, 10f, NavMesh.AllAreas))
             waypoint = hit.position;
+        else if (NavMesh.SamplePosition(waypoint, out hit, 10f, NavMesh.AllAreas))
+            waypoint = hit.position;
+
         m_Agent.SetDestination(waypoint);
-        m_StopTimer.Reset(m_StopTime + UnityEngine.Random.Range(-m_StopTime / 2, m_StopTime / 2));
+        m_Waypoint.Occupy();
+
+        Debug.Log($"{p_Enemy.name}: Moving to {m_Waypoint.Name}");
     }
 
     protected override void OnEnter()
     {
-        m_StopTimer = new Timer(m_StopTime + UnityEngine.Random.Range(-m_StopTime / 2, m_StopTime / 2));
+        m_Agent = p_Enemy.NavAgent;
+        m_Agent.isStopped = false;
+
+        m_StopTimer = new Timer(m_StopTime);
         m_StopTimer.TimerEnded += SetDestination;
 
-        m_Agent = p_Enemy.NavAgent;
         SetDestination();
     }
 
 
     protected override void OnUpdate(float dt)
     {
-        if (m_Agent.pathStatus == NavMeshPathStatus.PathComplete) m_StopTimer.Update(dt);
+        if (m_Agent.remainingDistance < m_Agent.stoppingDistance + 0.5f) m_StopTimer.Update(dt);
     }
 
     protected override void OnExit()
     {
-        m_Agent.isStopped = true;
+        m_Agent.ResetPath();
         m_Agent = null;
+
+        m_StopTimer = null;
+    }
+
+    protected override void OnContinue()
+    {
+        SetDestination();
     }
 }

@@ -8,7 +8,7 @@ public class AudioSensorComponent : SensorComponent
     [SerializeField] string m_SensorName = "AudioSensor";
 
     [SerializeField, Slider(5, 100)] float m_AudioRadius = 20;
-	[SerializeField] LayerMask m_AudioMask;
+    [SerializeField] LayerMask m_AudioMask;
 
     [Header("Debug Colors")]
     [FormerlySerializedAs("ListenColor")]
@@ -19,15 +19,16 @@ public class AudioSensorComponent : SensorComponent
 
     AudioSensor m_Sensor;
 
-	AudioInput GetAudioInput() {
-		var input =  new AudioInput();
+    AudioInput GetAudioInput()
+    {
+        var input = new AudioInput();
 
-		input.Transform = transform;
-		input.Radius = m_AudioRadius;
-		input.Mask = m_AudioMask.value;
+        input.Transform = transform;
+        input.Radius = m_AudioRadius;
+        input.Mask = m_AudioMask.value;
 
-		return input;
-	}
+        return input;
+    }
 
     public override ISensor[] CreateSensors()
     {
@@ -35,13 +36,17 @@ public class AudioSensorComponent : SensorComponent
         return new[] { m_Sensor };
     }
 
+#if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
-        if (m_Sensor?.Output?.AudioLevel == null) return;
-        float lerpT = m_Sensor.Output.AudioLevel * m_Sensor.Output.AudioLevel;
-
-        Gizmos.color = Color.Lerp(m_HearColor, m_MissColor, lerpT);
-        Gizmos.DrawWireSphere(transform.position, m_AudioRadius);
+        Color color = m_MissColor;
+        if (m_Sensor?.Output?.AudioLevel != null)
+        {
+            float lerpT = m_Sensor.Output.AudioLevel * m_Sensor.Output.AudioLevel;
+            color = Color.Lerp(m_HearColor, m_MissColor, lerpT);
+        }
+        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, m_AudioRadius);
     }
+#endif
 }
 

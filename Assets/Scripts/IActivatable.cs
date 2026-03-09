@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface IActivatable
 {
     public bool IsActive { get; }

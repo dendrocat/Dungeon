@@ -1,8 +1,8 @@
 public enum States
 {
-   Idle, Patrol,
-   Alert,
-   Attack, Cover,
-   Search,
-   Die
+    Idle, Patrol,
+    Alert,
+    Attack, Cover,
+    Search,
+    Die
 }

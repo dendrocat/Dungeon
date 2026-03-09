@@ -10,7 +10,7 @@ public class WeaponHandler : MonoBehaviour, IActivatable
 
     int m_Index = 0;
 
-	public bool IsActive => enabled;
+    public bool IsActive => enabled;
     public RangedWeapon Weapon { get; private set; } = null;
     public RangedWeapon Grenade { get; private set; } = null;
 
@@ -99,6 +99,6 @@ public class WeaponHandler : MonoBehaviour, IActivatable
     }
 
 
-	public void Activate() => enabled = true;
-	public void Deactivate() => enabled = false;
+    public void Activate() => enabled = true;
+    public void Deactivate() => enabled = false;
 }

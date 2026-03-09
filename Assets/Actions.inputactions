@@ -172,6 +172,17 @@
                 },
                 {
                     "name": "",
+                    "id": "7a902c2d-168c-469b-99f9-0efc46d33345",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeaponNum",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "55e013fc-c3b3-4a29-9fcf-f68a63006185",
                     "path": "<Pointer>/press",
                     "interactions": "",

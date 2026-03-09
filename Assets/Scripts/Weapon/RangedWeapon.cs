@@ -11,7 +11,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
     public RangedWeapon(in RangedWeaponStats stats, in Transform parent) : base(stats, parent)
     {
-		m_FirePoint = p_GObj.transform.FindChildWithTag("FirePoint");
+        m_FirePoint = p_GObj.transform.FindChildWithTag("FirePoint");
 
         if (m_FirePoint == null)
             Debug.LogError($"RangedWeapon {p_GObj.name}: fire point not found");

@@ -18,30 +18,47 @@ public abstract class BaseState
     Timer m_Timer;
     protected Enemy p_Enemy;
 
-    public BaseState()
+    void OnTimerEnded()
     {
-        m_Timer = new Timer(p_Time);
-        m_Timer.TimerEnded += () => StateEnded.Invoke(!p_IsExitTime);
+        Debug.Log($"{GetType()}: Timer ended");
+        StateEnded?.Invoke(!p_IsExitTime);
     }
 
     public void Enter(Enemy enemy)
     {
+        Debug.Log($"{enemy.name} entered in {GetType()}");
+        m_Timer = new Timer(p_Time);
+        m_Timer.TimerEnded += OnTimerEnded;
+
         p_Enemy = enemy;
-        m_Timer?.Reset();
+        OnEnter();
     }
     protected virtual void OnEnter() { }
 
     public void Update(float dt)
     {
-        m_Timer?.Update(dt);
-		OnUpdate(dt);
+        m_Timer.Update(dt);
+        OnUpdate(dt);
     }
     protected virtual void OnUpdate(float dt) { }
 
     public void Exit()
     {
+        Debug.Log($"{p_Enemy.name} exited from {GetType()}");
         p_Enemy = null;
         StateEnded = null;
+
+        m_Timer = null;
+        OnExit();
     }
     protected virtual void OnExit() { }
+
+    public void Continue()
+    {
+        Debug.Log($"{p_Enemy.name} continued {GetType()}");
+        m_Timer.Reset();
+
+        OnContinue();
+    }
+    protected virtual void OnContinue() { }
 }

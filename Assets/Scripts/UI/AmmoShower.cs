@@ -6,10 +6,10 @@ public class AmmoShower : MonoBehaviour
 {
     [SerializeField] WeaponHandler m_WeaponHandler;
 
-	[Space(10)]
+    [Space(10)]
     [SerializeField] TextMeshProUGUI m_Ammo;
-	
-	[Space(10)]
+
+    [Space(10)]
     [SerializeField] Image m_GrenadeImage;
     [SerializeField] Image[] m_GrenadeShower;
 
@@ -20,9 +20,9 @@ public class AmmoShower : MonoBehaviour
 
     void UpdateGrenades()
     {
-		var all_grenads = m_WeaponHandler.Grenade.Ammo + m_WeaponHandler.Grenade.AmmoInTube;
+        var all_grenads = m_WeaponHandler.Grenade.Ammo + m_WeaponHandler.Grenade.AmmoInTube;
         for (int i = 0; i < m_GrenadeShower.Length; ++i)
-            m_GrenadeShower[i].enabled = i < all_grenads; 
+            m_GrenadeShower[i].enabled = i < all_grenads;
         m_GrenadeImage.fillAmount = 1 - m_WeaponHandler.Grenade.ReloadTimer / m_WeaponHandler.Grenade.ReloadTime;
     }
 

@@ -8,17 +8,19 @@ public class Room : MonoBehaviour, IActivatable, IWaypoinsStore
     public static event UnityAction<Room> Activated;
 
     [SerializeField] Transform WaypointParent;
-    public IReadOnlyList<Transform> Waypoints { get; private set; }
+    public IReadOnlyList<IWaypoint> Waypoints { get; private set; }
 
     public bool IsActive { get; private set; }
 
     void Awake()
     {
-        Waypoints = WaypointParent.GetComponentsInChildren<Transform>();
+        Waypoints = WaypointParent.GetComponentsInChildren<IWaypoint>();
+        Debug.Log($"Found {Waypoints.Count} waypoints");
     }
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"{other.name} entered in room");
         Activate();
     }
 

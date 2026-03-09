@@ -7,32 +7,32 @@ using TriInspector;
 [HideMonoScript]
 public class StatesConfig : ScriptableObject
 {
-	[DisableInPlayMode]
+    [DisableInPlayMode]
     [SerializeField] States m_StartState;
-	
+
     [Serializable]
     public class StateEntry
     {
-		[LabelWidth(50)]
+        [LabelWidth(50)]
         [SerializeField] States m_State;
         [SerializeReference] BaseState m_MachineState;
 
-		public States State => m_State;
-		public BaseState MachineState => MachineState;
+        public States State => m_State;
+        public BaseState MachineState => m_MachineState;
     }
-	[DisableInPlayMode]
+    [DisableInPlayMode]
     [PropertySpace(15)]
-	[TableList(Draggable = true, AlwaysExpanded = true)]
+    [TableList(Draggable = true, AlwaysExpanded = true)]
     [SerializeField] List<StateEntry> m_Mapping;
 
     [Serializable]
     class TransitionEntry
     {
-		[LabelWidth(50)]
+        [LabelWidth(50)]
         [SerializeField] public States State;
         [SerializeField] public List<States> ExitStates;
     }
-	[DisableInPlayMode]
+    [DisableInPlayMode]
     [PropertySpace(15)]
     [TableList(Draggable = true, AlwaysExpanded = true)]
     [SerializeField] List<TransitionEntry> m_Transitions;

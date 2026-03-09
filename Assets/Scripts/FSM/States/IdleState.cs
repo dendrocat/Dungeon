@@ -1,6 +1,6 @@
 using System;
 
 [Serializable]
-public class IdleState : BaseState 
+public class IdleState : BaseState
 {
 }
