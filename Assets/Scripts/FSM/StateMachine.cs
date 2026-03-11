@@ -3,6 +3,11 @@ using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+using TriInspector;
+
+[DeclareBoxGroup("insp", Title = "Debug View")]
+#endif
 public class StateMachine : MonoBehaviour
 {
     public event UnityAction ChangeStateRequested;
@@ -11,12 +16,31 @@ public class StateMachine : MonoBehaviour
     [SerializeField] StatesConfig m_Config;
 
     StatesConfig.StateEntry m_ActiveState;
-    bool p_CanActiveState = false;
+
+    bool m_CanActiveState = false;
+    bool[] m_ExitStates = new bool[Enum.GetValues(typeof(States)).Length];
+
+#if UNITY_EDITOR
+    [Group("insp")]
+    [ShowInInspector]
+    States ActiveState => m_ActiveState?.State ?? States.Idle;
+#endif
+
+    void UpdateExitStates()
+    {
+        List<States> exits = m_Config.GetExitStates(m_ActiveState.State);
+        foreach (var state in exits)
+        {
+            m_ExitStates[(int)state] = true;
+        }
+    }
 
     void ActivateState()
     {
         m_ActiveState.MachineState.Enter(m_Enemy);
         m_ActiveState.MachineState.StateEnded += OnStateEnded;
+
+        UpdateExitStates();
     }
 
     void Awake()
@@ -27,15 +51,13 @@ public class StateMachine : MonoBehaviour
 
     public int GetActiveState()
     {
-        return Convert.ToInt32(m_ActiveState.State);
+        return (int)m_ActiveState.State;
     }
 
-    public IEnumerable<int> GetExitStates()
+    public IReadOnlyList<bool> GetExitStates()
     {
-        List<int> exits = m_Config.GetExitStates(m_ActiveState.State).ConvertAll(e => Convert.ToInt32(e));
-        if (!p_CanActiveState)
-            exits.Remove(GetActiveState());
-        return exits;
+        m_ExitStates[GetActiveState()] = m_CanActiveState;
+        return m_ExitStates;
     }
 
     public bool ChangeState(int state)
@@ -59,10 +81,20 @@ public class StateMachine : MonoBehaviour
 
     void OnStateEnded(bool canActive)
     {
-        Debug.Log($"FSM: {m_ActiveState.State} ended. Request next state");
-        p_CanActiveState = canActive;
+        Debug.Log($"FSM: {m_ActiveState.State} ended. This state can be active {canActive}. Request next state");
+        m_CanActiveState = canActive;
         ChangeStateRequested.Invoke();
     }
+
+#if UNITY_EDITOR
+    [Group("insp")]
+    [PropertySpace(20)]
+    [Button(ButtonSizes.Small)]
+    void ForceStateEnd(bool canActive)
+    {
+        OnStateEnded(canActive);
+    }
+#endif
 
     void Update()
     {

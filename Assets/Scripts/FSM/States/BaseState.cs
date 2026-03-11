@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Events;
 using System;
 using TriInspector;
@@ -8,27 +9,46 @@ public abstract class BaseState
 {
     public event UnityAction<bool> StateEnded;
 
-    [LabelText("IsExitTime"), LabelWidth(100)]
-    [SerializeField] protected bool p_IsExitTime = true;
+    [LabelWidth(100)]
+	[FormerlySerializedAs("HasTime")]
+    [SerializeField] bool m_HasTime = true;
 
-    [LabelText("Time"), LabelWidth(100)]
-    [SerializeField, Min(0), Unit(UnitAttribute.Second)] protected float p_Time = 10;
+    [ShowIf(nameof(m_HasTime))]
+    [LabelWidth(100)]
+	[FormerlySerializedAs("IsExitTime")]
+    [SerializeField] bool m_IsExitTime = true;
 
+    [ShowIf(nameof(m_HasTime))]
+    [LabelWidth(100)]
+	[FormerlySerializedAs("Time")]
+    [SerializeField, Min(0), Unit(UnitAttribute.Second)] float m_Time = 10;
 
+	bool m_Ended = false;
     Timer m_Timer;
     protected Enemy p_Enemy;
 
     void OnTimerEnded()
     {
         Debug.Log($"{GetType()}: Timer ended");
-        StateEnded?.Invoke(!p_IsExitTime);
+		m_Ended = m_IsExitTime;
+        StateEnded?.Invoke(!m_IsExitTime);
     }
+
+	protected void StateEnd() {
+		Debug.Log($"{GetType()}: state ended");
+		m_Ended = true;
+		StateEnded?.Invoke(false);
+	}
 
     public void Enter(Enemy enemy)
     {
+		m_Ended = false;
         Debug.Log($"{enemy.name} entered in {GetType()}");
-        m_Timer = new Timer(p_Time);
-        m_Timer.TimerEnded += OnTimerEnded;
+        if (m_HasTime)
+        {
+            m_Timer = new Timer(m_Time);
+            m_Timer.TimerEnded += OnTimerEnded;
+        }
 
         p_Enemy = enemy;
         OnEnter();
@@ -37,7 +57,8 @@ public abstract class BaseState
 
     public void Update(float dt)
     {
-        m_Timer.Update(dt);
+		if (m_Ended) return;
+        if (m_HasTime) m_Timer.Update(dt);
         OnUpdate(dt);
     }
     protected virtual void OnUpdate(float dt) { }
@@ -45,18 +66,18 @@ public abstract class BaseState
     public void Exit()
     {
         Debug.Log($"{p_Enemy.name} exited from {GetType()}");
+        OnExit();
+
         p_Enemy = null;
         StateEnded = null;
-
         m_Timer = null;
-        OnExit();
     }
     protected virtual void OnExit() { }
 
     public void Continue()
     {
         Debug.Log($"{p_Enemy.name} continued {GetType()}");
-        m_Timer.Reset();
+        if (m_HasTime) m_Timer.Reset();
 
         OnContinue();
     }

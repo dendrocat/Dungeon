@@ -1,11 +1,17 @@
 using UnityEngine;
 using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
-using System;
 
 [RequireComponent(typeof(StateMachine))]
 public class EnemyAgent : Agent, IActivatable
 {
+	[SerializeField] RayPerceptionSensorComponent3D m_RaySensorComponent;
+	public RayPerceptionSensor RaySensor => m_RaySensorComponent.RaySensor;
+
+	[SerializeField] AudioSensorComponent m_AudioSensorComponent;
+	public AudioSensor AudioSensor => m_AudioSensorComponent.AudioSensor;
+
     public bool IsActive => enabled;
 
     StateMachine fsm;
@@ -13,7 +19,7 @@ public class EnemyAgent : Agent, IActivatable
     public override void Initialize()
     {
         fsm = GetComponent<StateMachine>();
-        fsm.ChangeStateRequested += RequestAction;
+        fsm.ChangeStateRequested += RequestDecision;
     }
 
     void Start()
@@ -24,7 +30,7 @@ public class EnemyAgent : Agent, IActivatable
     void OnNum(int state)
     {
         this.state = state - 1;
-        Debug.Log($"On Numed");
+        Debug.Log($"On Numed: state {(States)this.state}");
     }
 
     int state = 0;
@@ -36,18 +42,23 @@ public class EnemyAgent : Agent, IActivatable
         d[0] = state;
     }
 
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        base.CollectObservations(sensor);
+		Debug.Log($"{RaySensor == null}");
+		Debug.Log($"{AudioSensor == null}");
+    }
+
     public override void OnActionReceived(ActionBuffers actions)
     {
-        fsm.ChangeState(state);
+        fsm.ChangeState(actions.DiscreteActions[0]);
     }
 
     public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
-        for (int i = 0; i < Enum.GetValues(typeof(States)).Length; ++i)
-            actionMask.SetActionEnabled(0, i, false);
-
-        foreach (var st in fsm.GetExitStates())
-            actionMask.SetActionEnabled(0, st, true);
+		var exits = fsm.GetExitStates();
+		for (int i = 0; i < exits.Count; ++i)
+			actionMask.SetActionEnabled(0, i, exits[i]);
     }
 
     public void Activate() => enabled = true;

@@ -18,6 +18,7 @@ public class AudioSensorComponent : SensorComponent
     [SerializeField] Color m_MissColor = Color.white;
 
     AudioSensor m_Sensor;
+	public AudioSensor AudioSensor => m_Sensor;
 
     AudioInput GetAudioInput()
     {
@@ -40,9 +41,9 @@ public class AudioSensorComponent : SensorComponent
     void OnDrawGizmosSelected()
     {
         Color color = m_MissColor;
-        if (m_Sensor?.Output?.AudioLevel != null)
+        if (m_Sensor?.AudioOutput?.AudioLevel != null)
         {
-            float lerpT = m_Sensor.Output.AudioLevel * m_Sensor.Output.AudioLevel;
+            float lerpT = m_Sensor.AudioOutput.AudioLevel * m_Sensor.AudioOutput.AudioLevel;
             color = Color.Lerp(m_HearColor, m_MissColor, lerpT);
         }
         UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, m_AudioRadius);

@@ -20,15 +20,30 @@ MonoBehaviour:
   - m_State: 1
     m_MachineState:
       rid: 5901800330069540968
+  - m_State: 2
+    m_MachineState:
+      rid: 5901800443548270705
+  - m_State: 3
+    m_MachineState:
+      rid: 5901800443548270706
+  - m_State: 4
+    m_MachineState:
+      rid: 5901800443548270707
+  - m_State: 5
+    m_MachineState:
+      rid: 5901800443548270708
+  - m_State: 6
+    m_MachineState:
+      rid: 5901800443548270709
   m_Transitions:
   - State: 0
     ExitStates: 010000000200000006000000
   - State: 1
     ExitStates: 00000000010000000200000006000000
   - State: 2
-    ExitStates: 00000000010000000300000006000000
+    ExitStates: 030000000500000006000000
   - State: 3
-    ExitStates: 03000000040000000500000006000000
+    ExitStates: 040000000500000006000000
   - State: 4
     ExitStates: 030000000500000006000000
   - State: 5
@@ -41,11 +56,47 @@ MonoBehaviour:
     - rid: 5901800330069540959
       type: {class: IdleState, ns: , asm: Assembly-CSharp}
       data:
-        p_IsExitTime: 1
-        p_Time: 10
+        m_HasTime: 1
+        m_IsExitTime: 1
+        m_Time: 10
     - rid: 5901800330069540968
       type: {class: PatrolState, ns: , asm: Assembly-CSharp}
       data:
-        p_IsExitTime: 0
-        p_Time: 120
+        m_HasTime: 1
+        m_IsExitTime: 0
+        m_Time: 120
         m_StopTime: 10
+    - rid: 5901800443548270705
+      type: {class: AlertState, ns: , asm: Assembly-CSharp}
+      data:
+        m_HasTime: 1
+        m_IsExitTime: 0
+        m_Time: 2
+    - rid: 5901800443548270706
+      type: {class: AttackState, ns: , asm: Assembly-CSharp}
+      data:
+        m_HasTime: 1
+        m_IsExitTime: 1
+        m_Time: 10
+    - rid: 5901800443548270707
+      type: {class: CoverState, ns: , asm: Assembly-CSharp}
+      data:
+        m_HasTime: 0
+        m_IsExitTime: 1
+        m_Time: 10
+        m_DetectionRadius: 30
+        m_ObstacleLayer:
+          serializedVersion: 2
+          m_Bits: 2147483648
+    - rid: 5901800443548270708
+      type: {class: SearchState, ns: , asm: Assembly-CSharp}
+      data:
+        m_HasTime: 1
+        m_IsExitTime: 1
+        m_Time: 120
+    - rid: 5901800443548270709
+      type: {class: DieState, ns: , asm: Assembly-CSharp}
+      data:
+        m_HasTime: 0
+        m_IsExitTime: 1
+        m_Time: 10

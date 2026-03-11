@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.AI;
 using TriInspector;
 
@@ -6,6 +7,7 @@ using TriInspector;
 public class PatrolState : BaseState
 {
     [LabelWidth(100)]
+	[FormerlySerializedAs("StopTime")]
     [SerializeField, Min(0.1f), Unit(UnitAttribute.Second)] float m_StopTime = 10;
     NavMeshAgent m_Agent;
 

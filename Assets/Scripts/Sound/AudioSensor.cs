@@ -10,7 +10,7 @@ public struct AudioInput
 
 public class AudioOutput
 {
-    public Transform AudioEmitterPosition;
+    public Vector3 AudioPosition;
     public float AudioLevel;
 }
 
@@ -19,7 +19,7 @@ public class AudioSensor : ISensor
     AudioInput m_Input;
     AudioOutput m_Output;
 
-    public AudioOutput Output => m_Output;
+    public AudioOutput AudioOutput => m_Output;
 
     string m_Name;
 
@@ -50,7 +50,7 @@ public class AudioSensor : ISensor
                 if (m_Output.AudioLevel > emitter.GetAudioLevel()) continue;
                 audioLevel = emitter.GetAudioLevel();
                 audioLevel *= (1 - Vector3.Distance(hit.transform.position, m_Input.Transform.position) / m_Input.Radius);
-                m_Output.AudioEmitterPosition = hit.transform;
+                m_Output.AudioPosition = hit.transform.position;
             }
         }
     }
