@@ -11,7 +11,7 @@ public class Ammo : MonoBehaviour
     int m_Speed;
     protected float p_Lifetime;
 
-    [SerializeField] protected LayerMask HitMask;
+    protected LayerMask p_HitMask;
 
     public virtual void Init(in RangedWeaponStats stats)
     {
@@ -19,6 +19,7 @@ public class Ammo : MonoBehaviour
         m_Damage = stats.Damage;
         m_Speed = stats.AmmoSpeed;
 
+		p_HitMask = stats.HitMask;
         p_Lifetime = stats.Distance / m_Speed;
     }
 
@@ -44,7 +45,7 @@ public class Ammo : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         // Debug.Log(other.gameObject.name);
-        if (((1 << other.gameObject.layer) & HitMask.value) != 0) Attack(other.gameObject, m_Damage);
+        if (((1 << other.gameObject.layer) & p_HitMask.value) != 0) Attack(other.gameObject, m_Damage);
         Hitted?.Invoke();
         OnHit();
     }

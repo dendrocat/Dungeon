@@ -34,13 +34,13 @@ public class Grenade : Ammo
     {
         Exploded?.Invoke();
 
-        var colls = Physics.OverlapSphere(transform.position, m_ExplosionRadius, HitMask);
+        var colls = Physics.OverlapSphere(transform.position, m_ExplosionRadius, p_HitMask);
 
         foreach (var col in colls)
         {
-            var r = Vector3.Distance(transform.position, col.transform.position);
-            var m = 1 - r / m_ExplosionRadius;
-            Attack(col.gameObject, m_ExplosionDamage * m);
+            var dist = Vector3.Distance(transform.position, col.transform.position);
+            var damage = 1 - dist / m_ExplosionRadius;
+            Attack(col.gameObject, m_ExplosionDamage * damage);
         }
     }
 

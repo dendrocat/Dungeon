@@ -6,7 +6,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
     public int MaxAmmo => p_Stats.MaxAmmo;
     public int AmmoInTube { get; private set; }
 
-    float m_FireTimer = 0;
+    Timer m_FireTimer;
     Transform m_FirePoint;
 
     public RangedWeapon(in RangedWeaponStats stats, in Transform parent) : base(stats, parent)
@@ -15,6 +15,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
         if (m_FirePoint == null)
             Debug.LogError($"RangedWeapon {p_GObj.name}: fire point not found");
+        m_FireTimer = new Timer(60 / stats.FireRate);
     }
 
 
@@ -29,10 +30,10 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
         var res = base.CanAttack();
         if (AmmoInTube <= 0)
         {
-            if (!Reloading) Reload();
+            if (!IsReloading) Reload();
             return false;
         }
-        return res && m_FireTimer <= 0;
+        return res && m_FireTimer.Progress == 1f;
     }
 
     Vector3 ApplySpread(Vector3 dir)
@@ -44,12 +45,11 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
     protected override void OnAttack()
     {
-        m_FireTimer = 60 / p_Stats.FireRate;
-        Ray r = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
 
         Vector3 target;
-        if (Physics.Raycast(r, out var hit, p_Stats.Distance)) target = hit.point;
-        else target = r.direction * p_Stats.Distance;
+        if (Physics.Raycast(ray, out var hit, p_Stats.Distance)) target = hit.point;
+        else target = ray.direction * p_Stats.Distance;
 
         var baseDir = target - m_FirePoint.position;
         for (int i = 0; i < p_Stats.BulletRate; ++i)
@@ -61,6 +61,8 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
         }
         --AmmoInTube;
         if (AmmoInTube <= 0 && p_Stats.AutoReload) Reload();
+
+        m_FireTimer.Reset();
     }
 
     protected override bool CanReload()
@@ -70,11 +72,13 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
     protected override void AfterReload()
     {
+        base.AfterReload();
         var adding = Mathf.Min(Ammo, p_Stats.MaxAmmoInTube - AmmoInTube);
         AmmoInTube += adding;
         Ammo -= adding;
-        m_FireTimer = 0;
         Debug.Log($"{p_Stats.name} reloaded. InTube: {AmmoInTube}, Ammo: {Ammo}");
+
+        m_FireTimer.Reset();
     }
 
     public void AddAmmo(int ammo)
@@ -85,7 +89,6 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
     public override void OnUpdate()
     {
         base.OnUpdate();
-        if (m_FireTimer > 0)
-            m_FireTimer -= Time.deltaTime;
+        m_FireTimer.Update(Time.deltaTime);
     }
 }

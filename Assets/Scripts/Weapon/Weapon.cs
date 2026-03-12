@@ -1,27 +1,29 @@
 using UnityEngine;
 
-public abstract class Weapon<TStats> where TStats : WeaponStats
+public abstract class Weapon<TStats> :IWeapon where TStats : WeaponStats
 {
     protected TStats p_Stats;
     protected GameObject p_GObj;
 
-    public float ReloadTimer { get; private set; }
-    public int ReloadTime => p_Stats.ReloadTime;
-    public bool Reloading => ReloadTimer < p_Stats.ReloadTime;
+    Timer m_ReloadTimer;
+	public float ReloadProgress => m_ReloadTimer.Progress;
+    public bool IsReloading { get; private set; } = false;
 
     public bool Equiped { get; private set; } = false;
 
     public Weapon(in TStats stats, in Transform parent)
     {
         p_Stats = stats;
-        ReloadTimer = p_Stats.ReloadTime;
         p_GObj = Object.Instantiate(p_Stats.WeaponPrefab, parent);
         p_GObj.SetActive(false);
+
+        m_ReloadTimer = new Timer(p_Stats.ReloadTime);
+        m_ReloadTimer.TimerEnded += AfterReload;
     }
 
     protected virtual bool CanAttack()
     {
-        return !Reloading;
+        return !IsReloading;
     }
 
     public void Attack()
@@ -29,29 +31,27 @@ public abstract class Weapon<TStats> where TStats : WeaponStats
         if (!CanAttack()) return;
         OnAttack();
     }
-    protected abstract void OnAttack();
+    protected virtual void OnAttack() { }
 
     protected virtual bool CanReload()
     {
-        return !Reloading;
+        return !IsReloading;
     }
 
     public void Reload()
     {
         if (!CanReload()) return;
         Debug.Log($"{p_Stats.name} reloading...");
-        ReloadTimer = 0;
+        IsReloading = true;
+        m_ReloadTimer.Reset();
     }
 
-    protected abstract void AfterReload();
+    protected virtual void AfterReload() { IsReloading = false; }
 
     public virtual void OnUpdate()
     {
-        if (Reloading)
-        {
-            ReloadTimer += Time.deltaTime;
-            if (!Reloading) AfterReload();
-        }
+        if (IsReloading)
+            m_ReloadTimer.Update(Time.deltaTime);
     }
 
     public virtual void Equip()

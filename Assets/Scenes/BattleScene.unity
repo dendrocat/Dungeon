@@ -1007,7 +1007,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7266044318758266554}
   m_Father: {fileID: 933848565}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &364929240
@@ -1210,7 +1211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &445737650
 Transform:
   m_ObjectHideFlags: 0
@@ -1238,10 +1239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e6aa6c80f73914698282e40a55cf80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponHandler
-  m_Weapons:
-  - {fileID: 11400000, guid: 6039ea5dbf7e0744dbadcbff9129ba33, type: 2}
-  m_MeleeStats: {fileID: 0}
-  m_GrenadeStats: {fileID: 11400000, guid: 703964db9067aef4c85dd87308e2cbd1, type: 2}
+  m_WeaponStats: {fileID: 11400000, guid: 71efebb3878685a438e2111d48133811, type: 2}
 --- !u!1 &582263848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,8 +1891,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 968425030}
-  - component: {fileID: 968425031}
   - component: {fileID: 968425032}
+  - component: {fileID: 968425033}
   m_Layer: 0
   m_Name: WeaponHandler
   m_TagString: Untagged
@@ -1917,23 +1915,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 330585546}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &968425031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968425029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38e6aa6c80f73914698282e40a55cf80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponHandler
-  m_Weapons:
-  - {fileID: 11400000, guid: 6039ea5dbf7e0744dbadcbff9129ba33, type: 2}
-  - {fileID: 11400000, guid: a00b96a813d2461439b3c3327c344ff9, type: 2}
-  m_MeleeStats: {fileID: 0}
-  m_GrenadeStats: {fileID: 11400000, guid: 703964db9067aef4c85dd87308e2cbd1, type: 2}
 --- !u!114 &968425032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1949,6 +1930,23 @@ MonoBehaviour:
   FireVolume: 95
   MeleeVolume: 1
   GrenadeVolume: 0.1
+--- !u!114 &968425033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968425029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8df8eed4fdc2d614ab18eff7a3cdc49d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHandler
+  m_Weapons:
+  - {fileID: 11400000, guid: a00b96a813d2461439b3c3327c344ff9, type: 2}
+  - {fileID: 11400000, guid: 6039ea5dbf7e0744dbadcbff9129ba33, type: 2}
+  m_MeleeStats: {fileID: 0}
+  m_GrenadeStats: {fileID: 11400000, guid: 703964db9067aef4c85dd87308e2cbd1, type: 2}
 --- !u!1 &976227483
 GameObject:
   m_ObjectHideFlags: 0
@@ -2226,7 +2224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a034465328d086a4d80d6e146ec9f3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AmmoShower
-  m_WeaponHandler: {fileID: 968425031}
+  m_WeaponHandler: {fileID: 0}
   m_Ammo: {fileID: 976227485}
   m_GrenadeImage: {fileID: 1495557215}
   m_GrenadeShower:
@@ -4027,6 +4025,96 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 119f5df0ba6b2f242af8e176ce170a61, type: 2}
   m_BuildHeightMesh: 0
+--- !u!23 &5243871338488903565
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6094480296111700372}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6094480296111700372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7266044318758266554}
+  - component: {fileID: 8315124825387765875}
+  - component: {fileID: 5243871338488903565}
+  m_Layer: 0
+  m_Name: Sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7266044318758266554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6094480296111700372}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.258819, y: 0, z: 0, w: 0.9659259}
+  m_LocalPosition: {x: 0.63, y: 0.31, z: 1.0300002}
+  m_LocalScale: {x: 0.17, y: 0.15, z: 1.96}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 364929239}
+  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 0}
+--- !u!33 &8315124825387765875
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6094480296111700372}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

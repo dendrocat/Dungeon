@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AmmoShower : MonoBehaviour
 {
-    [SerializeField] WeaponHandler m_WeaponHandler;
+    [SerializeField] PlayerWeaponHandler m_WeaponHandler;
 
     [Space(10)]
     [SerializeField] TextMeshProUGUI m_Ammo;
@@ -23,7 +23,7 @@ public class AmmoShower : MonoBehaviour
         var all_grenads = m_WeaponHandler.Grenade.Ammo + m_WeaponHandler.Grenade.AmmoInTube;
         for (int i = 0; i < m_GrenadeShower.Length; ++i)
             m_GrenadeShower[i].enabled = i < all_grenads;
-        m_GrenadeImage.fillAmount = 1 - m_WeaponHandler.Grenade.ReloadTimer / m_WeaponHandler.Grenade.ReloadTime;
+        m_GrenadeImage.fillAmount = 1 - m_WeaponHandler.Grenade.ReloadProgress;
     }
 
     void Update()
