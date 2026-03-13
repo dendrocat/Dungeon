@@ -8,6 +8,7 @@ public class Health : MonoBehaviour, IDamagable
 
     [SerializeField, Min(10)] float m_MaxHealth = 100;
 
+	[TriInspector.ShowInInspector, TriInspector.DisableInEditMode]
     float m_Health;
 
     void Awake()

@@ -15,14 +15,13 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
         if (m_FirePoint == null)
             Debug.LogError($"RangedWeapon {p_GObj.name}: fire point not found");
-        m_FireTimer = new Timer(60 / stats.FireRate);
+        m_FireTimer = new Timer(60f / stats.FireRate);
     }
-
 
     public void SetAmmo(int ammoInTube, int ammo)
     {
-        AmmoInTube = ammoInTube;
-        Ammo = ammo;
+        AmmoInTube = Mathf.Min(ammoInTube, p_Stats.MaxAmmoInTube);
+        Ammo = Mathf.Min(ammo, p_Stats.MaxAmmo);
     }
 
     protected override bool CanAttack()
@@ -43,24 +42,26 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
         return Quaternion.Euler(hSpread, vSpread, 0) * dir;
     }
 
-    protected override void OnAttack()
+    protected override void OnAttack(Vector3? target = null)
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+        if (!target.HasValue)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
 
-        Vector3 target;
-        if (Physics.Raycast(ray, out var hit, p_Stats.Distance)) target = hit.point;
-        else target = ray.direction * p_Stats.Distance;
+            if (Physics.Raycast(ray, out var hit, p_Stats.Distance)) target = hit.point;
+            else target = ray.direction * p_Stats.Distance;
+        }
 
-        var baseDir = target - m_FirePoint.position;
+        var baseDir = (target.Value - m_FirePoint.position).normalized;
         for (int i = 0; i < p_Stats.BulletRate; ++i)
         {
-            var dir = ApplySpread(target - m_FirePoint.position);
+            var dir = ApplySpread(baseDir).normalized;
             var ammo = GameObject.Instantiate(p_Stats.AmmoPrefab, m_FirePoint.position, Quaternion.identity).GetComponent<Ammo>();
             ammo.Init(p_Stats);
             ammo.Launch(dir);
         }
         --AmmoInTube;
-        if (AmmoInTube <= 0 && p_Stats.AutoReload) Reload();
+        if (AmmoInTube <= 0) Reload();
 
         m_FireTimer.Reset();
     }

@@ -26,12 +26,12 @@ public abstract class Weapon<TStats> :IWeapon where TStats : WeaponStats
         return !IsReloading;
     }
 
-    public void Attack()
+    public void Attack(Vector3? target = null)
     {
         if (!CanAttack()) return;
-        OnAttack();
+        OnAttack(target);
     }
-    protected virtual void OnAttack() { }
+    protected virtual void OnAttack(Vector3? target = null) { }
 
     protected virtual bool CanReload()
     {

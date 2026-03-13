@@ -7,16 +7,12 @@ using UnityEngine;
 public class RangedWeaponStats : WeaponStats
 {
     [Group("set"), PropertyOrder(10)]
-    [SerializeField, Min(1), Unit("Bullets per minute")] int m_FireRate = 5;
+    [SerializeField, Min(1), Unit("Shoots per minute")] int m_FireRate = 5;
     public int FireRate => m_FireRate;
 
     [Group("set"), PropertyOrder(11)]
     [SerializeField, Min(1), Unit("Bullets per shoot")] int m_BulletRate = 1;
     public int BulletRate => m_BulletRate;
-
-    [Group("set"), PropertyOrder(12)]
-    [SerializeField] bool m_AutoReload = false;
-    public bool AutoReload => m_AutoReload;
 
     [Group("set/spread"), PropertyOrder(20)]
     [SerializeField, Slider(0.1f, 2f)] float x = 1f;

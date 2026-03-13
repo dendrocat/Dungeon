@@ -77,6 +77,7 @@ public abstract class BaseState
     public void Continue()
     {
         Debug.Log($"{p_Enemy.name} continued {GetType()}");
+		m_Ended = false;
         if (m_HasTime) m_Timer.Reset();
 
         OnContinue();

@@ -9,8 +9,11 @@ public class Enemy : Person
 {
 	[Group("set")]
 	[SerializeField, Slider(5, 20)] float m_InWalkSpeed = 10;
+	public float InWalkSpeed => m_InWalkSpeed;
 
-	[Group("set"), Slider(5, 20)] float m_InAttackSpeed = 20;
+	[Group("set")]
+	[SerializeField, Slider(5, 20)] float m_InAttackSpeed = 20;
+	public float InAttackSpeed => m_InAttackSpeed;
 
 	[Group("cmp")]
 	[SerializeField] Player m_Player;
@@ -22,6 +25,10 @@ public class Enemy : Person
 	[SerializeField] EnemyAgent m_MLAgent;
 	public EnemyAgent MLAgent => m_MLAgent;
 
+	[Group("cmp")]
+	[SerializeField] EnemyWeaponHandler m_WeaponHandler;
+	public EnemyWeaponHandler WeaponHandler => m_WeaponHandler;
+
 	void OnValidate() {
 		if (m_InAttackSpeed < m_InWalkSpeed) m_InAttackSpeed = m_InWalkSpeed;
 	}
@@ -30,6 +37,8 @@ public class Enemy : Person
     {
 		NavAgent = GetComponent<NavMeshAgent>();
 		NavAgent.speed = m_InWalkSpeed;
+
+		m_WeaponHandler.SetTarget(m_Player.transform);
     }
 
     public void Init(Player player)

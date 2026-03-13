@@ -1,17 +1,16 @@
 using UnityEngine;
 
-public class PlayerWeaponHandler : MonoBehaviour, IActivatable
+public class PlayerWeaponHandler : BaseWeaponHandler 
 {
+	protected override string StatsLabel => "Melee Weapon Stats";
     [SerializeField] RangedWeaponStats[] m_Weapons;
-    [SerializeField] WeaponStats m_MeleeStats;
     [SerializeField] RangedWeaponStats m_GrenadeStats;
 
     int[] m_Ammo, m_AmmoInTube;
 
     int m_Index = 0;
 
-    public bool IsActive => enabled;
-    public RangedWeapon Weapon { get; private set; } = null;
+    public RangedWeapon Weapon => (p_Weapon as RangedWeapon);
     public RangedWeapon Grenade { get; private set; } = null;
 
     void Awake()
@@ -28,16 +27,7 @@ public class PlayerWeaponHandler : MonoBehaviour, IActivatable
         Grenade.SetAmmo(m_GrenadeStats.MaxAmmoInTube, m_GrenadeStats.MaxAmmo - m_GrenadeStats.MaxAmmoInTube);
     }
 
-    void Start()
-    {
-        InputManager.Instance.WeaponNumed += ChangeWeapon;
-        InputManager.Instance.Reloaded += Reload;
-        InputManager.Instance.Throwed += ThrowGrenade;
-
-        ChangeWeapon(1);
-    }
-
-    void ChangeWeapon(int index)
+    public void ChangeWeapon(int index)
     {
         if (Weapon != null)
         {
@@ -47,22 +37,18 @@ public class PlayerWeaponHandler : MonoBehaviour, IActivatable
         }
 
         m_Index = index - 1;
-        Weapon = new RangedWeapon(m_Weapons[m_Index], transform);
-        Weapon.SetAmmo(m_AmmoInTube[m_Index], m_Ammo[m_Index]);
-        Weapon.Equip();
+		Debug.Log($"Weapon index: {m_Index}, m_Weapons cnt : {m_Weapons.Length}");
+        p_Weapon = new RangedWeapon(m_Weapons[m_Index], transform);
+        (p_Weapon as RangedWeapon).SetAmmo(m_AmmoInTube[m_Index], m_Ammo[m_Index]);
+        p_Weapon.Equip();
     }
 
-    void Attack()
+    public override void Attack()
     {
         if (Grenade.Equiped) Grenade.Unequip(false);
 
-        if (!Weapon.Equiped) Weapon.Equip();
-        Weapon.Attack();
-    }
-
-    void Reload()
-    {
-        Weapon.Reload();
+        if (!p_Weapon.Equiped) p_Weapon.Equip();
+        p_Weapon.Attack();
     }
 
     public void AddAmmo()
@@ -75,30 +61,25 @@ public class PlayerWeaponHandler : MonoBehaviour, IActivatable
         }
     }
 
-    void ThrowGrenade()
+    public void ThrowGrenade()
     {
         if (Grenade.IsReloading) return;
 
         Debug.Log("Throw Grenade");
-        Weapon.Unequip(false);
+        p_Weapon.Unequip(false);
         Grenade.Equip();
         Grenade.Attack();
     }
 
-    void Update()
+    protected override void Update()
     {
-        if (InputManager.Instance.Attack) Attack();
-        if (Weapon.Equiped) Weapon.OnUpdate();
+        if (p_Weapon.Equiped) p_Weapon.OnUpdate();
 
         Grenade.OnUpdate();
         if (Grenade.Equiped && (Grenade.Ammo <= 0 || Grenade.IsReloading))
         {
             Grenade.Unequip(false);
-            Weapon.Equip();
+            p_Weapon.Equip();
         }
     }
-
-
-    public void Activate() => enabled = true;
-    public void Deactivate() => enabled = false;
 }

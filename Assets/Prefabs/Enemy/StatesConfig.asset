@@ -76,7 +76,7 @@ MonoBehaviour:
       type: {class: AttackState, ns: , asm: Assembly-CSharp}
       data:
         m_HasTime: 1
-        m_IsExitTime: 1
+        m_IsExitTime: 0
         m_Time: 10
     - rid: 5901800443548270707
       type: {class: CoverState, ns: , asm: Assembly-CSharp}

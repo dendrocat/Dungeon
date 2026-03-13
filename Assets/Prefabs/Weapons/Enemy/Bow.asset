@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
-  m_Name: AK
+  m_Name: Bow
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
-  m_WeaponPrefab: {fileID: 7895784510436758991, guid: 81b3635a3b2fc0149adba002cdba776d, type: 3}
-  m_Damage: 10
+  m_WeaponPrefab: {fileID: 7691624403421222432, guid: 433e26ca0b2970048899e33ca9c7698a, type: 3}
+  m_Damage: 50
   m_Distance: 100
-  m_ReloadTime: 5
+  m_ReloadTime: 3
   m_HitMask:
     serializedVersion: 2
     m_Bits: 192
-  m_FireRate: 100
+  m_FireRate: 5
   m_BulletRate: 1
-  m_AutoReload: 0
   x: 1
   y: 1
-  m_AmmoPrefab: {fileID: 4418923189705824227, guid: a7d9d7b0fecb2ba49b955d627104fa2d, type: 3}
-  m_AmmoSpeed: 150
-  m_MaxAmmoInTube: 40
-  m_MaxAmmo: 320
+  m_AmmoPrefab: {fileID: 9174137156253274474, guid: 8c5859211fb1a084dbb7a43e75378bc5, type: 3}
+  m_AmmoSpeed: 30
+  m_MaxAmmoInTube: 1
+  m_MaxAmmo: 999
