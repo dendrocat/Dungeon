@@ -8,22 +8,24 @@ public class AttackState : BaseState
     NavMeshAgent m_Agent;
     Transform m_Player;
 
-    float stoppingDistanceForAttack = 1f;
     float baseStoppingDistance;
 
     float distanceOffset;
+
+    bool m_PlayerVisible;
 
     protected override void OnEnter()
     {
         m_AttackDistance = p_Enemy.WeaponHandler.AttackDistance;
         m_Agent = p_Enemy.NavAgent;
-        m_Player = p_Enemy.Player.transform;
+        m_Player = Director.Instance.PlayerTransform;
 
         baseStoppingDistance = m_Agent.stoppingDistance;
         m_Agent.stoppingDistance = m_AttackDistance;
-		m_Agent.speed = p_Enemy.InAttackSpeed;
+        m_Agent.speed = p_Enemy.InAttackSpeed;
 
         distanceOffset = m_AttackDistance / 3;
+
     }
 
     void SetDestination()
@@ -40,7 +42,7 @@ public class AttackState : BaseState
         if (dist < (m_AttackDistance / 2 + distanceOffset) && m_Agent.hasPath) m_Agent.ResetPath();
         if (dist <= m_AttackDistance)
         {
-			p_Enemy.transform.LookAt(m_Player);
+            p_Enemy.transform.LookAt(m_Player);
             p_Enemy.WeaponHandler.Attack();
         }
         else SetDestination();
@@ -49,7 +51,7 @@ public class AttackState : BaseState
     protected override void OnExit()
     {
         m_Agent.ResetPath();
-		m_Agent.speed = p_Enemy.InWalkSpeed;
+        m_Agent.speed = p_Enemy.InWalkSpeed;
         m_Agent.stoppingDistance = baseStoppingDistance;
 
         m_Agent = null;

@@ -10,39 +10,40 @@ public abstract class BaseState
     public event UnityAction<bool> StateEnded;
 
     [LabelWidth(100)]
-	[FormerlySerializedAs("HasTime")]
+    [FormerlySerializedAs("HasTime")]
     [SerializeField] bool m_HasTime = true;
 
     [ShowIf(nameof(m_HasTime))]
     [LabelWidth(100)]
-	[FormerlySerializedAs("IsExitTime")]
+    [FormerlySerializedAs("IsExitTime")]
     [SerializeField] bool m_IsExitTime = true;
 
     [ShowIf(nameof(m_HasTime))]
     [LabelWidth(100)]
-	[FormerlySerializedAs("Time")]
+    [FormerlySerializedAs("Time")]
     [SerializeField, Min(0), Unit(UnitAttribute.Second)] float m_Time = 10;
 
-	bool m_Ended = false;
+    bool m_Ended = false;
     Timer m_Timer;
     protected Enemy p_Enemy;
 
     void OnTimerEnded()
     {
         Debug.Log($"{GetType()}: Timer ended");
-		m_Ended = m_IsExitTime;
+        m_Ended = m_IsExitTime;
         StateEnded?.Invoke(!m_IsExitTime);
     }
 
-	protected void StateEnd() {
-		Debug.Log($"{GetType()}: state ended");
-		m_Ended = true;
-		StateEnded?.Invoke(false);
-	}
+    protected void StateEnd()
+    {
+        Debug.Log($"{GetType()}: state ended");
+        m_Ended = true;
+        StateEnded?.Invoke(false);
+    }
 
     public void Enter(Enemy enemy)
     {
-		m_Ended = false;
+        m_Ended = false;
         Debug.Log($"{enemy.name} entered in {GetType()}");
         if (m_HasTime)
         {
@@ -57,7 +58,7 @@ public abstract class BaseState
 
     public void Update(float dt)
     {
-		if (m_Ended) return;
+        if (m_Ended) return;
         if (m_HasTime) m_Timer.Update(dt);
         OnUpdate(dt);
     }
@@ -77,10 +78,12 @@ public abstract class BaseState
     public void Continue()
     {
         Debug.Log($"{p_Enemy.name} continued {GetType()}");
-		m_Ended = false;
+        m_Ended = false;
         if (m_HasTime) m_Timer.Reset();
 
         OnContinue();
     }
     protected virtual void OnContinue() { }
+
+    public virtual BaseState Clone() => (BaseState)MemberwiseClone();
 }

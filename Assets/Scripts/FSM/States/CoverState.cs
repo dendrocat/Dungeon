@@ -1,21 +1,24 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.AI;
 using TriInspector;
 
 [System.Serializable]
 public class CoverState : BaseState
 {
-	[LabelWidth(100)]
+    [LabelWidth(100)]
+    [FormerlySerializedAs("DetectionRadius")]
     [SerializeField, Min(1f)] float m_DetectionRadius;
 
-	[LabelWidth(100)]
+    [LabelWidth(100)]
+    [FormerlySerializedAs("ObstacleLayer")]
     [SerializeField] LayerMask m_ObstacleLayer;
 
     float GetScore(in Transform hit)
     {
         float dCoverEnemy, dCoverPlayer;
         dCoverEnemy = (hit.position - p_Enemy.transform.position).sqrMagnitude;
-        dCoverPlayer = (hit.position - p_Enemy.Player.transform.position).sqrMagnitude;
+        dCoverPlayer = (hit.position - Director.Instance.PlayerTransform.position).sqrMagnitude;
         return dCoverEnemy - dCoverPlayer;
     }
 
@@ -42,7 +45,7 @@ public class CoverState : BaseState
     protected override void OnEnter()
     {
         var cover = FindCover();
-        Vector3 directFromPlayer = (cover - p_Enemy.Player.transform.position).normalized;
+        Vector3 directFromPlayer = (cover - Director.Instance.PlayerTransform.position).normalized;
         Vector3 agentPos = cover + directFromPlayer * 5;
 
         if (NavMesh.SamplePosition(agentPos, out NavMeshHit hit, 10, NavMesh.AllAreas))
@@ -53,7 +56,7 @@ public class CoverState : BaseState
 
     protected override void OnUpdate(float dt)
     {
-		if (p_Enemy.NavAgent.remainingDistance < p_Enemy.NavAgent.stoppingDistance) StateEnd();
+        if (p_Enemy.NavAgent.remainingDistance < p_Enemy.NavAgent.stoppingDistance) StateEnd();
     }
 
     protected override void OnExit()

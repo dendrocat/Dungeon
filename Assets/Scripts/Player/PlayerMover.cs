@@ -23,12 +23,12 @@ public class PlayerMover : MonoBehaviour, IActivatable
 
 
     private Rigidbody m_Rig;
-    public float Speed {get; private set;} = 0;
+    public float Speed { get; private set; } = 0;
 
     void Awake()
     {
         m_Rig = GetComponent<Rigidbody>();
-		Speed = m_BaseSpeed;
+        Speed = m_BaseSpeed;
         CalcJumpForce();
     }
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public interface IWaypoint
 {
@@ -9,6 +8,7 @@ public interface IWaypoint
 
     Vector3 Position { get; }
 
+    void Free();
     void Occupy();
 }
 
@@ -26,19 +26,8 @@ public class Waypoint : MonoBehaviour, IWaypoint
 
     public Vector3 Position => transform.position;
 
+    public void Free() => --m_NumOccupied;
     public void Occupy() => ++m_NumOccupied;
-
-    void FixedUpdate()
-    {
-        if (!IsBusy) return;
-
-        var cols = Physics.OverlapSphere(transform.position, Radius, m_CheckMask);
-        foreach (var col in cols)
-        {
-            if (!col.TryGetComponent<NavMeshAgent>(out var agent)) continue;
-            if (Vector3.Distance(agent.destination, transform.position) <= Radius) --m_NumOccupied;
-        }
-    }
 
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()

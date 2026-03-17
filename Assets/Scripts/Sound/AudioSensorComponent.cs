@@ -18,7 +18,7 @@ public class AudioSensorComponent : SensorComponent
     [SerializeField] Color m_MissColor = Color.white;
 
     AudioSensor m_Sensor;
-	public AudioSensor AudioSensor => m_Sensor;
+    public AudioSensor AudioSensor => m_Sensor;
 
     AudioInput GetAudioInput()
     {

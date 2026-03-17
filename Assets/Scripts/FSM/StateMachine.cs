@@ -43,7 +43,7 @@ public class StateMachine : MonoBehaviour
         UpdateExitStates();
     }
 
-    void Awake()
+    void Start()
     {
         m_ActiveState = m_Config.GetStartState();
         ActivateState();

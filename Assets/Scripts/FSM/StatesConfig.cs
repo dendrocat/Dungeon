@@ -1,6 +1,6 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using TriInspector;
 
 [CreateAssetMenu(fileName = "StatesConfig", menuName = "Config/StatesConfig")]
@@ -19,7 +19,16 @@ public class StatesConfig : ScriptableObject
 
         public States State => m_State;
         public BaseState MachineState => m_MachineState;
+
+        public StateEntry Clone()
+        {
+            var se = new StateEntry();
+            se.m_State = m_State;
+            se.m_MachineState = m_MachineState.Clone();
+            return se;
+        }
     }
+
     [DisableInPlayMode]
     [PropertySpace(15)]
     [TableList(Draggable = true, AlwaysExpanded = true)]
@@ -45,7 +54,7 @@ public class StatesConfig : ScriptableObject
 
     public StateEntry GetState(States state)
     {
-        return m_Mapping.Find(e => e.State == state);
+        return m_Mapping.Find(e => e.State == state).Clone();
     }
 
     public List<States> GetExitStates(States state)

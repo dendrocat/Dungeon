@@ -19,7 +19,7 @@ public class Ammo : MonoBehaviour
         m_Damage = stats.Damage;
         m_Speed = stats.AmmoSpeed;
 
-		p_HitMask = stats.HitMask;
+        p_HitMask = stats.HitMask;
         p_Lifetime = stats.Distance / m_Speed;
     }
 

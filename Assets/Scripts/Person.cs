@@ -13,9 +13,7 @@ public class Person : MonoBehaviour, IDamagable
     {
         comps = GetComponentsInChildren<IActivatable>();
         p_Health.Died += Die;
-		OnAwake();
     }
-    protected virtual void OnAwake() { }
 
     public void TakeDamage(float damage)
     {

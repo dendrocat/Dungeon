@@ -1,21 +1,30 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(SphereCollider))]
-public class Room : MonoBehaviour, IActivatable, IWaypoinsStore
+public class Room : MonoBehaviour, IActivatable, IProvider<IWaypoint>, IProvider<Transform>
 {
-    public static event UnityAction<Room> Activated;
+    public static event UnityAction<IProvider<IWaypoint>> WapointsActivated;
+    public static event UnityAction<IProvider<Transform>> SpawnActivated;
 
     [SerializeField] Transform WaypointParent;
-    public IReadOnlyList<IWaypoint> Waypoints { get; private set; }
+    IReadOnlyList<IWaypoint> m_Waypoints;
+    IReadOnlyList<IWaypoint> IProvider<IWaypoint>.Items => m_Waypoints;
+
+    [SerializeField] Transform SpawnParent;
+    IReadOnlyList<Transform> m_SpawnPoints;
+    IReadOnlyList<Transform> IProvider<Transform>.Items => m_SpawnPoints;
 
     public bool IsActive { get; private set; }
 
     void Awake()
     {
-        Waypoints = WaypointParent.GetComponentsInChildren<IWaypoint>();
-        Debug.Log($"Found {Waypoints.Count} waypoints");
+        m_Waypoints = WaypointParent.GetComponentsInChildren<IWaypoint>();
+        Debug.Log($"{name}: found {m_Waypoints.Count} waypoints");
+        m_SpawnPoints = SpawnParent.GetComponentsInChildren<Transform>().Skip(1).ToArray();
+        Debug.Log($"{name}: found {m_SpawnPoints.Count} spawn points");
     }
 
     void OnTriggerEnter(Collider other)
@@ -32,7 +41,8 @@ public class Room : MonoBehaviour, IActivatable, IWaypoinsStore
     public void Activate()
     {
         IsActive = true;
-        Activated?.Invoke(this);
+        WapointsActivated?.Invoke(this);
+        SpawnActivated?.Invoke(this);
     }
     public void Deactivate()
     {

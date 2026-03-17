@@ -21,7 +21,7 @@ public class WeaponStats : ScriptableObject
     [SerializeField, Min(1), Unit(UnitAttribute.Second)] int m_ReloadTime = 5;
     public int ReloadTime => m_ReloadTime;
 
-	[Group("set"), PropertyOrder(100), PropertySpace(5)]
+    [Group("set"), PropertyOrder(100), PropertySpace(5)]
     [SerializeField] LayerMask m_HitMask;
-	public LayerMask HitMask => m_HitMask;
+    public LayerMask HitMask => m_HitMask;
 }

@@ -6,9 +6,8 @@ public class AlertState : BaseState
 {
     Vector3 GetPlayerPosFromRayPerception()
     {
-		// TODO: null when Heuristic
-		Debug.Log($"{p_Enemy.MLAgent.RaySensor == null}");
-		Debug.Log($"{p_Enemy.MLAgent.RaySensor.RayPerceptionOutput == null}");
+        Debug.Log($"{p_Enemy.MLAgent.RaySensor == null}");
+        Debug.Log($"{p_Enemy.MLAgent.RaySensor.RayPerceptionOutput == null}");
         var rayOutputs = p_Enemy.MLAgent.RaySensor.RayPerceptionOutput.RayOutputs;
         foreach (var rayOut in rayOutputs)
         {

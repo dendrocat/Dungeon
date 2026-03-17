@@ -7,48 +7,43 @@ using TriInspector;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : Person
 {
-	[Group("set")]
-	[SerializeField, Slider(5, 20)] float m_InWalkSpeed = 10;
-	public float InWalkSpeed => m_InWalkSpeed;
+    [Group("set")]
+    [SerializeField, Slider(5, 20)] float m_InWalkSpeed = 10;
+    public float InWalkSpeed => m_InWalkSpeed;
 
-	[Group("set")]
-	[SerializeField, Slider(5, 20)] float m_InAttackSpeed = 20;
-	public float InAttackSpeed => m_InAttackSpeed;
-
-	[Group("cmp")]
-	[SerializeField] Player m_Player;
-    public Player Player => m_Player; 
+    [Group("set")]
+    [SerializeField, Slider(5, 20)] float m_InAttackSpeed = 20;
+    public float InAttackSpeed => m_InAttackSpeed;
 
     public NavMeshAgent NavAgent { get; private set; }
-	
-	[Group("cmp")]
-	[SerializeField] EnemyAgent m_MLAgent;
-	public EnemyAgent MLAgent => m_MLAgent;
 
-	[Group("cmp")]
-	[SerializeField] EnemyWeaponHandler m_WeaponHandler;
-	public EnemyWeaponHandler WeaponHandler => m_WeaponHandler;
+    [Group("cmp")]
+    [SerializeField] EnemyAgent m_MLAgent;
+    public EnemyAgent MLAgent => m_MLAgent;
 
-	void OnValidate() {
-		if (m_InAttackSpeed < m_InWalkSpeed) m_InAttackSpeed = m_InWalkSpeed;
-	}
+    [Group("cmp")]
+    [SerializeField] EnemyWeaponHandler m_WeaponHandler;
+    public EnemyWeaponHandler WeaponHandler => m_WeaponHandler;
 
-    protected override void OnAwake()
+    public Transform PlayerTransform => Director.Instance.PlayerTransform;
+
+    void OnValidate()
     {
-		NavAgent = GetComponent<NavMeshAgent>();
-		NavAgent.speed = m_InWalkSpeed;
-
-		m_WeaponHandler.SetTarget(m_Player.transform);
+        if (m_InAttackSpeed < m_InWalkSpeed) m_InAttackSpeed = m_InWalkSpeed;
     }
 
-    public void Init(Player player)
+    void Start()
     {
-		m_Player = player;
+        NavAgent = GetComponent<NavMeshAgent>();
+        NavAgent.speed = m_InWalkSpeed;
+
+        m_WeaponHandler.SetTarget(Director.Instance.PlayerTransform);
     }
 
     protected override void Die()
     {
         base.Die();
+        NavAgent.ResetPath();
         NavAgent.enabled = false;
     }
 }

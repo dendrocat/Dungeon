@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public abstract class Weapon<TStats> :IWeapon where TStats : WeaponStats
+public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
 {
     protected TStats p_Stats;
     protected GameObject p_GObj;
 
     Timer m_ReloadTimer;
-	public float ReloadProgress => m_ReloadTimer.Progress;
+    public float ReloadProgress => m_ReloadTimer.Progress;
     public bool IsReloading { get; private set; } = false;
 
     public bool Equiped { get; private set; } = false;

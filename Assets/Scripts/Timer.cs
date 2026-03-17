@@ -16,8 +16,8 @@ public class Timer
     /// <summary>Total duration of the timer (in seconds).</summary>
     float m_MaxTimer;
 
-	/// <summary>Progress of the timer (0.0f - just started, 1f - finished).</summary>
-	public float Progress => m_Timer / m_MaxTimer;
+    /// <summary>Progress of the timer (0.0f - just started, 1f - finished).</summary>
+    public float Progress => m_Timer / m_MaxTimer;
 
     /// <summary>
     /// Initializes a new <c>Timer</c> with specified duration
@@ -38,10 +38,11 @@ public class Timer
     {
         if (m_Timer >= m_MaxTimer) return;
         m_Timer += dt;
-        if (m_Timer >= m_MaxTimer) {
-			m_Timer = m_MaxTimer;
-			TimerEnded?.Invoke();
-		}
+        if (m_Timer >= m_MaxTimer)
+        {
+            m_Timer = m_MaxTimer;
+            TimerEnded?.Invoke();
+        }
     }
 
     /// <summary>

@@ -7,19 +7,19 @@ using TriInspector;
 public class PatrolState : BaseState
 {
     [LabelWidth(100)]
-	[FormerlySerializedAs("StopTime")]
-    [SerializeField, Min(0.1f), Unit(UnitAttribute.Second)] float m_StopTime = 10;
+    [FormerlySerializedAs("StopTime")]
+    [SerializeField, Slider(0.1f, 10f), Unit(UnitAttribute.Second)] float m_StopTime = 10;
     NavMeshAgent m_Agent;
 
     Timer m_StopTimer;
     IWaypoint m_Waypoint;
 
-    void SetDestination()
+    protected virtual void SetDestination()
     {
         m_StopTimer.Reset(m_StopTime + Random.Range(-m_StopTime / 2, m_StopTime / 2));
 
-        m_Waypoint = WaypointsProvider.Instance.GetFreeWaypoint();
-        var waypoint = m_Waypoint.Position;
+        var n_Waypoint = Director.Instance.WaypointsProvider.GetFreeWaypoint();
+        var waypoint = n_Waypoint.Position;
         var nWaypoint = waypoint + Random.onUnitSphere * Waypoint.Radius;
 
         NavMeshHit hit;
@@ -29,6 +29,9 @@ public class PatrolState : BaseState
             waypoint = hit.position;
 
         m_Agent.SetDestination(waypoint);
+
+        m_Waypoint?.Free();
+        m_Waypoint = n_Waypoint;
         m_Waypoint.Occupy();
 
         Debug.Log($"{p_Enemy.name}: Moving to {m_Waypoint.Name}");

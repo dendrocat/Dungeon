@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerWeaponHandler : BaseWeaponHandler 
+public class PlayerWeaponHandler : BaseWeaponHandler
 {
-	protected override string StatsLabel => "Melee Weapon Stats";
+    protected override string StatsLabel => "Melee Weapon Stats";
     [SerializeField] RangedWeaponStats[] m_Weapons;
     [SerializeField] RangedWeaponStats m_GrenadeStats;
 
@@ -37,7 +37,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         }
 
         m_Index = index - 1;
-		Debug.Log($"Weapon index: {m_Index}, m_Weapons cnt : {m_Weapons.Length}");
+        Debug.Log($"Weapon index: {m_Index}, m_Weapons cnt : {m_Weapons.Length}");
         p_Weapon = new RangedWeapon(m_Weapons[m_Index], transform);
         (p_Weapon as RangedWeapon).SetAmmo(m_AmmoInTube[m_Index], m_Ammo[m_Index]);
         p_Weapon.Equip();
