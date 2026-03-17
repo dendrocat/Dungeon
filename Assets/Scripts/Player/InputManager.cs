@@ -8,6 +8,9 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; } = null;
 
     public Vector2 Move { get; private set; }
+    public bool IsCrouching { get; private set; }
+    public bool IsRunning { get; private set; }
+
     public Vector2 MouseDelta { get; private set; }
     public bool Attack { get; private set; }
 
@@ -63,5 +66,14 @@ public class InputManager : MonoBehaviour
     public void OnThrow(InputAction.CallbackContext ctx)
     {
         if (ctx.performed) Throwed.Invoke();
+    }
+
+    public void OnCrouch(InputAction.CallbackContext ctx)
+    {
+        IsCrouching = ctx.performed;
+    }
+    public void OnRun(InputAction.CallbackContext ctx)
+    {
+        IsRunning = ctx.performed;
     }
 }

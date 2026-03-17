@@ -511,6 +511,7 @@ GameObject:
   - component: {fileID: 179021937}
   - component: {fileID: 179021935}
   - component: {fileID: 179021938}
+  - component: {fileID: 179021940}
   - component: {fileID: 179021939}
   m_Layer: 6
   m_Name: Player
@@ -547,12 +548,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179021933}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c74b64b341022254baa5923b7026b73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMover
   m_BaseSpeed: 8
+  m_SpeedMultiplier: 2
   m_JumpHeight: 2
   m_GroundChecker: {fileID: 1760308932}
 --- !u!54 &179021936
@@ -612,7 +614,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179021933}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 744875c13bccfd74e9a7cef395a30884, type: 3}
   m_Name: 
@@ -634,6 +636,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
   p_Health: {fileID: 1956636655}
   m_WeaponHandler: {fileID: 968425033}
+--- !u!114 &179021940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179021933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e675203ae28b344e93d11568033a1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHeight
+  m_CameraCrouchHeight: 0
+  m_ColliderCrouchHeight: 1.5
+  m_ColliderCrouchCenter: -0.25
+  m_TransitionSpeed: 4
+  m_Cam: {fileID: 330585546}
+  m_Col: {fileID: 179021937}
 --- !u!1 &227985342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,7 +1687,7 @@ Transform:
   m_GameObject: {fileID: 968425029}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2159,6 +2179,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 008d28b1-17d3-405e-9c09-52741f78fe83
     m_ActionName: 'Player/Reload[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1089576199}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnCrouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5d1c5b86-0f1d-4c02-a163-2fb7bef51584
+    m_ActionName: 'Player/Crouch[/Keyboard/ctrl]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1089576199}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnRun
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 35dcf2db-cd00-406c-b5b0-9c950e6c51b8
+    m_ActionName: 'Player/Run[/Keyboard/shift]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3238,7 +3290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bded8afcf85dd46bdb11f05c28ea19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundChecker
-  m_CheckDistanse: 1
+  m_CheckDistanse: 1.1
   m_Skin: 0.05
   m_Layer:
     serializedVersion: 2
@@ -3627,7 +3679,7 @@ GameObject:
   - component: {fileID: 2091494514}
   - component: {fileID: 2091494513}
   - component: {fileID: 2091494517}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
