@@ -10,6 +10,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
 
     int m_Index = 0;
 
+    MeleeWeapon m_Melee;
     public RangedWeapon Weapon => (p_Weapon as RangedWeapon);
     public RangedWeapon Grenade { get; private set; } = null;
 
@@ -25,6 +26,8 @@ public class PlayerWeaponHandler : BaseWeaponHandler
 
         Grenade = new RangedWeapon(m_GrenadeStats, transform);
         Grenade.SetAmmo(m_GrenadeStats.MaxAmmoInTube, m_GrenadeStats.MaxAmmo - m_GrenadeStats.MaxAmmoInTube);
+
+        m_Melee = new MeleeWeapon(p_WeaponStats, transform);
     }
 
     public void ChangeWeapon(int index)
@@ -46,6 +49,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
     public override void Attack()
     {
         if (Grenade.Equiped) Grenade.Unequip(false);
+		if (m_Melee.Equiped) m_Melee.Unequip(false);
 
         if (!p_Weapon.Equiped) p_Weapon.Equip();
         p_Weapon.Attack();
@@ -65,10 +69,20 @@ public class PlayerWeaponHandler : BaseWeaponHandler
     {
         if (Grenade.IsReloading) return;
 
-        Debug.Log("Throw Grenade");
+        Debug.Log($"Throw Grenade: {Grenade.ReloadProgress}");
         p_Weapon.Unequip(false);
         Grenade.Equip();
         Grenade.Attack();
+    }
+
+    public void MeleeAttack()
+    {
+        if (m_Melee.IsReloading) return;
+
+        Debug.Log($"Melee Attack");
+        p_Weapon.Unequip(false);
+        m_Melee.Equip();
+        m_Melee.Attack();
     }
 
     protected override void Update()
@@ -76,9 +90,15 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         if (p_Weapon.Equiped) p_Weapon.OnUpdate();
 
         Grenade.OnUpdate();
+        m_Melee.OnUpdate();
         if (Grenade.Equiped && (Grenade.Ammo <= 0 || Grenade.IsReloading))
         {
             Grenade.Unequip(false);
+            p_Weapon.Equip();
+        }
+        if (m_Melee.Equiped && m_Melee.IsReloading)
+        {
+            m_Melee.Unequip(false);
             p_Weapon.Equip();
         }
     }

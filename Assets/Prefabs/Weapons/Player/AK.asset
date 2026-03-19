@@ -19,9 +19,8 @@ MonoBehaviour:
   m_HitMask:
     serializedVersion: 2
     m_Bits: 192
-  m_FireRate: 100
+  m_FireRate: 120
   m_BulletRate: 1
-  m_AutoReload: 0
   x: 1
   y: 1
   m_AmmoPrefab: {fileID: 4418923189705824227, guid: a7d9d7b0fecb2ba49b955d627104fa2d, type: 3}

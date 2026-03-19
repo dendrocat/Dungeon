@@ -7,33 +7,6 @@
             "id": "2d48e3e0-66c8-4447-848c-97acf91d0caa",
             "actions": [
                 {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "81529d9b-f19e-48c9-bce2-5f5c1f51d214",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Delta",
-                    "type": "Value",
-                    "id": "18f575af-a95d-4f2e-944d-bf60dd9763dc",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "2b8e9f9c-2a7c-409c-adfd-614bff93bdcd",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "c9f27089-e492-467c-9f41-829b28dd86b0",
@@ -70,6 +43,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Melee",
+                    "type": "Button",
+                    "id": "cf6925b1-debf-4691-b10e-5440b66f1b89",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "81529d9b-f19e-48c9-bce2-5f5c1f51d214",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Crouch",
                     "type": "Button",
                     "id": "5d1c5b86-0f1d-4c02-a163-2fb7bef51584",
@@ -86,6 +77,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "2b8e9f9c-2a7c-409c-adfd-614bff93bdcd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Delta",
+                    "type": "Value",
+                    "id": "18f575af-a95d-4f2e-944d-bf60dd9763dc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -295,6 +304,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a96eda7d-0efa-4ec0-90cd-20da1b32066f",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Melee",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

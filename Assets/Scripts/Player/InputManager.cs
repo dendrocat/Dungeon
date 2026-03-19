@@ -14,10 +14,11 @@ public class InputManager : MonoBehaviour
     public Vector2 MouseDelta { get; private set; }
     public bool Attack { get; private set; }
 
-    [HideInInspector] public event UnityAction Jumped;
-    [HideInInspector] public event UnityAction<int> WeaponNumed;
-    [HideInInspector] public event UnityAction Reloaded;
-    [HideInInspector] public event UnityAction Throwed;
+    public event UnityAction Jumped;
+    public event UnityAction<int> WeaponNumed;
+    public event UnityAction Reloaded;
+    public event UnityAction Throwed;
+    public event UnityAction MeleeAttacked;
 
     void Awake()
     {
@@ -42,7 +43,7 @@ public class InputManager : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) Jumped.Invoke();
+        if (ctx.performed) Jumped?.Invoke();
     }
 
 
@@ -54,26 +55,25 @@ public class InputManager : MonoBehaviour
 
     public void OnReloaded(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) Reloaded.Invoke();
+        if (ctx.performed) Reloaded?.Invoke();
     }
 
     public void OnWeaponNum(InputAction.CallbackContext ctx)
     {
         if (!ctx.performed) return;
-        WeaponNumed.Invoke(ctx.control.displayName[0] - '0');
+        WeaponNumed?.Invoke(ctx.control.displayName[0] - '0');
     }
 
     public void OnThrow(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed) Throwed.Invoke();
+        if (ctx.performed) Throwed?.Invoke();
     }
 
-    public void OnCrouch(InputAction.CallbackContext ctx)
+    public void OnMelee(InputAction.CallbackContext ctx)
     {
-        IsCrouching = ctx.performed;
+        if (ctx.performed) MeleeAttacked?.Invoke();
     }
-    public void OnRun(InputAction.CallbackContext ctx)
-    {
-        IsRunning = ctx.performed;
-    }
+
+    public void OnCrouch(InputAction.CallbackContext ctx) => IsCrouching = ctx.performed;
+    public void OnRun(InputAction.CallbackContext ctx) => IsRunning = ctx.performed;
 }

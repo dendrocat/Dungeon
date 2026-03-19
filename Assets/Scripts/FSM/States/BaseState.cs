@@ -29,7 +29,7 @@ public abstract class BaseState
 
     void OnTimerEnded()
     {
-        Debug.Log($"{GetType()}: Timer ended");
+        Debug.Log($"{GetType()}: timer state ended");
         m_Ended = m_IsExitTime;
         StateEnded?.Invoke(!m_IsExitTime);
     }

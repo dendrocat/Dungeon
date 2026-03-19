@@ -1,26 +1,32 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+using TriInspector;
 
+[DeclareBoxGroup("hset", Title = "Heath Settings")]
 public class Health : MonoBehaviour, IDamagable
 {
-    public event UnityAction<float> HealthChanged;
     public event UnityAction Died;
 
-    [SerializeField, Min(10)] float m_MaxHealth = 100;
+	[Group("hset")]
+	[LabelText("Health"), PropertyOrder(0)]
+    [ShowInInspector, DisableInEditMode]
+    protected float p_Health;
 
-    [TriInspector.ShowInInspector, TriInspector.DisableInEditMode]
-    float m_Health;
+	[Group("hset")]
+	[LabelText("Max health"), FormerlySerializedAs("MaxHealth")]
+    [SerializeField, Min(10)] 
+	protected float p_MaxHealth = 100;
 
-    void Awake()
+    protected virtual void Awake()
     {
-        m_Health = m_MaxHealth;
+        p_Health = p_MaxHealth;
     }
 
     public virtual void TakeDamage(float damage)
     {
-        if (m_Health <= 0) return;
-        m_Health -= damage;
-        HealthChanged?.Invoke(m_Health);
-        if (m_Health <= 0) Died?.Invoke();
+        if (p_Health <= 0) return;
+        p_Health -= damage;
+        if (p_Health <= 0) Died?.Invoke();
     }
 }

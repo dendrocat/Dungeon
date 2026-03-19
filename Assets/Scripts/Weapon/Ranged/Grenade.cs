@@ -5,11 +5,12 @@ using TriInspector;
 public class Grenade : Ammo
 {
     public event UnityAction Exploded;
-
+	// TODO: settings in stats
     [PropertySpace(10)]
     [SerializeField, Min(10)] float m_ExplosionDamage = 20;
     [SerializeField, Slider(5, 20)] int m_ExplosionRadius = 5;
     [SerializeField, Slider(1, 10)] float m_ExplosionTime = 5;
+	[SerializeField, Slider(1, 10000)] float m_ExplosionForce = 20;
 
     Timer m_ExplosionTimer;
 
@@ -39,8 +40,11 @@ public class Grenade : Ammo
         foreach (var col in colls)
         {
             var dist = Vector3.Distance(transform.position, col.transform.position);
-            var damage = 1 - dist / m_ExplosionRadius;
-            Attack(col.gameObject, m_ExplosionDamage * damage);
+            var multip = 1 - dist / m_ExplosionRadius;
+            Attack(col.gameObject, m_ExplosionDamage * multip);
+			col.attachedRigidbody.AddForce(
+				(col.transform.position - transform.position).normalized * m_ExplosionForce,
+				ForceMode.Impulse);
         }
     }
 

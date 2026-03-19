@@ -15,7 +15,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
         if (m_FirePoint == null)
             Debug.LogError($"RangedWeapon {p_GObj.name}: fire point not found");
-        m_FireTimer = new Timer(60f / stats.FireRate);
+        m_FireTimer = new Timer(60f / stats.FireRate, false);
     }
 
     public void SetAmmo(int ammoInTube, int ammo)
@@ -32,7 +32,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
             if (!IsReloading) Reload();
             return false;
         }
-        return res && m_FireTimer.Progress == 1f;
+        return res && (m_FireTimer.IsActive && m_FireTimer.Progress == 1f || !m_FireTimer.IsActive);
     }
 
     Vector3 ApplySpread(Vector3 dir)
@@ -63,6 +63,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
         --AmmoInTube;
         if (AmmoInTube <= 0) Reload();
 
+		m_FireTimer.Activate();
         m_FireTimer.Reset();
     }
 
@@ -91,5 +92,6 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
     {
         base.OnUpdate();
         m_FireTimer.Update(Time.deltaTime);
+		Debug.Log($"{p_GObj.name}: {m_FireTimer.Progress}");
     }
 }

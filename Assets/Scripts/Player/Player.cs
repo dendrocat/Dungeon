@@ -13,6 +13,7 @@ public class Player : Person
         InputManager.Instance.WeaponNumed += m_WeaponHandler.ChangeWeapon;
         InputManager.Instance.Reloaded += m_WeaponHandler.Reload;
         InputManager.Instance.Throwed += m_WeaponHandler.ThrowGrenade;
+		InputManager.Instance.MeleeAttacked += m_WeaponHandler.MeleeAttack;
 
         m_WeaponHandler.ChangeWeapon(1);
     }

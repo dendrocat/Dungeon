@@ -17,7 +17,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
         p_GObj = Object.Instantiate(p_Stats.WeaponPrefab, parent);
         p_GObj.SetActive(false);
 
-        m_ReloadTimer = new Timer(p_Stats.ReloadTime);
+        m_ReloadTimer = new Timer(p_Stats.ReloadTime, false);
         m_ReloadTimer.TimerEnded += AfterReload;
     }
 
@@ -43,15 +43,19 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
         if (!CanReload()) return;
         Debug.Log($"{p_Stats.name} reloading...");
         IsReloading = true;
+        m_ReloadTimer.Activate();
         m_ReloadTimer.Reset();
     }
 
-    protected virtual void AfterReload() { IsReloading = false; }
+    protected virtual void AfterReload()
+    {
+        IsReloading = false;
+        m_ReloadTimer.Deactivate();
+    }
 
     public virtual void OnUpdate()
     {
-        if (IsReloading)
-            m_ReloadTimer.Update(Time.deltaTime);
+        m_ReloadTimer.Update(Time.deltaTime);
     }
 
     public virtual void Equip()

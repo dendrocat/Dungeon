@@ -1,9 +1,10 @@
-using System;
+using Action = System.Action;
+using ArgumentException = System.ArgumentException;
 
 /// <summary>
 /// A simple reusable timer that invokes callback when time expires.
 /// </summary>
-public class Timer
+public class Timer : IActivatable
 {
     /// <summary>
     /// Event invoked when timer expires.
@@ -19,14 +20,18 @@ public class Timer
     /// <summary>Progress of the timer (0.0f - just started, 1f - finished).</summary>
     public float Progress => m_Timer / m_MaxTimer;
 
+	/// <inheritdoc/>
+    public bool IsActive { get; private set; }
+	
     /// <summary>
     /// Initializes a new <c>Timer</c> with specified duration
     /// </summary>
     /// <param name="seconds">Timer duration in seconds (must be > 0).</param>
-    public Timer(float seconds)
+    public Timer(float seconds, bool isActive = true)
     {
         if (seconds <= 0) throw new ArgumentException("Seconds must be > 0");
         m_MaxTimer = seconds;
+        IsActive = isActive;
     }
 
     /// <summary>
@@ -36,7 +41,7 @@ public class Timer
     /// <param name="dt">Delta time since last frame (Time.deltaTime or Time.fixedDeltaTime).</param>
     public void Update(float dt)
     {
-        if (m_Timer >= m_MaxTimer) return;
+        if (!IsActive || m_Timer >= m_MaxTimer) return;
         m_Timer += dt;
         if (m_Timer >= m_MaxTimer)
         {
@@ -57,6 +62,13 @@ public class Timer
     public void Reset(float seconds)
     {
         if (seconds <= 0) throw new ArgumentException("Seconds must be > 0");
-        m_Timer = 0; m_MaxTimer = seconds;
+        Reset();
+        m_MaxTimer = seconds;
     }
+
+	/// <inheritdoc/>
+    public void Activate() => IsActive = true;
+
+	/// <inheritdoc/>
+    public void Deactivate() => IsActive = false;
 }

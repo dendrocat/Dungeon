@@ -37,7 +37,7 @@ public class EnemyAgent : Agent, IActivatable
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        Debug.Log("Heuristic");
+        // Debug.Log("Heuristic");
         var d = actionsOut.DiscreteActions;
         d[0] = state;
     }
@@ -45,8 +45,8 @@ public class EnemyAgent : Agent, IActivatable
     public override void CollectObservations(VectorSensor sensor)
     {
         base.CollectObservations(sensor);
-        Debug.Log($"{RaySensor == null}");
-        Debug.Log($"{AudioSensor == null}");
+        // Debug.Log($"{RaySensor == null}");
+        // Debug.Log($"{AudioSensor == null}");
     }
 
     public override void OnActionReceived(ActionBuffers actions)

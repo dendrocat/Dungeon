@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5358ff499d5cb6642af442ce5dd351f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  m_MaxHealth: 100
+  p_MaxHealth: 100
 --- !u!1 &6186730146867442464
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +508,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
