@@ -49,10 +49,10 @@ public class PlayerWeaponHandler : BaseWeaponHandler
     public override void Attack()
     {
         if (Grenade.Equiped) Grenade.Unequip(false);
-		if (m_Melee.Equiped) m_Melee.Unequip(false);
+        if (m_Melee.Equiped) m_Melee.Unequip(false);
 
         if (!p_Weapon.Equiped) p_Weapon.Equip();
-        p_Weapon.Attack();
+        if (p_Weapon.Attack()) RaiseAttacked(m_Weapons[m_Index]);
     }
 
     public void AddAmmo()
@@ -72,7 +72,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         Debug.Log($"Throw Grenade: {Grenade.ReloadProgress}");
         p_Weapon.Unequip(false);
         Grenade.Equip();
-        Grenade.Attack();
+        if (Grenade.Attack()) RaiseAttacked(m_GrenadeStats);
     }
 
     public void MeleeAttack()
@@ -82,7 +82,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         Debug.Log($"Melee Attack");
         p_Weapon.Unequip(false);
         m_Melee.Equip();
-        m_Melee.Attack();
+        if (m_Melee.Attack()) RaiseAttacked(p_WeaponStats);
     }
 
     protected override void Update()

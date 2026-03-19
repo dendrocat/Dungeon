@@ -21,7 +21,7 @@ public class PlayerHealth : Health
     {
         base.Awake();
         m_UntilRegen = new Timer(m_RegenTime, false);
-        m_UntilRegen.TimerEnded += StartHeal;
+        m_UntilRegen.TimerEnded += Heal;
 
         m_Regen = new Timer(1, false);
         m_Regen.TimerEnded += Heal;
@@ -31,14 +31,8 @@ public class PlayerHealth : Health
     {
         base.TakeDamage(damage);
         HealthChanged?.Invoke(p_Health);
-        m_UntilRegen.Activate();
-    }
-
-    void StartHeal()
-    {
-        Heal();
-        m_UntilRegen.Deactivate();
-        m_Regen.Activate();
+        if (!m_UntilRegen.IsActive && !m_Regen.IsActive)
+            m_UntilRegen.Activate();
     }
 
     void Heal()
@@ -47,8 +41,9 @@ public class PlayerHealth : Health
         if (p_Health >= p_MaxHealth)
         {
             p_Health = p_MaxHealth;
-            m_Regen.Deactivate();
+            return;
         }
+        m_Regen.Activate();
         m_Regen.Reset();
     }
 

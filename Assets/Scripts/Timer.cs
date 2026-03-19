@@ -20,9 +20,9 @@ public class Timer : IActivatable
     /// <summary>Progress of the timer (0.0f - just started, 1f - finished).</summary>
     public float Progress => m_Timer / m_MaxTimer;
 
-	/// <inheritdoc/>
+    /// <inheritdoc/>
     public bool IsActive { get; private set; }
-	
+
     /// <summary>
     /// Initializes a new <c>Timer</c> with specified duration
     /// </summary>
@@ -41,12 +41,13 @@ public class Timer : IActivatable
     /// <param name="dt">Delta time since last frame (Time.deltaTime or Time.fixedDeltaTime).</param>
     public void Update(float dt)
     {
-        if (!IsActive || m_Timer >= m_MaxTimer) return;
+        if (!IsActive) return;
         m_Timer += dt;
         if (m_Timer >= m_MaxTimer)
         {
             m_Timer = m_MaxTimer;
             TimerEnded?.Invoke();
+            Deactivate();
         }
     }
 
@@ -66,9 +67,9 @@ public class Timer : IActivatable
         m_MaxTimer = seconds;
     }
 
-	/// <inheritdoc/>
+    /// <inheritdoc/>
     public void Activate() => IsActive = true;
 
-	/// <inheritdoc/>
+    /// <inheritdoc/>
     public void Deactivate() => IsActive = false;
 }

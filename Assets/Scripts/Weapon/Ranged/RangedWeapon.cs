@@ -26,13 +26,12 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
     protected override bool CanAttack()
     {
-        var res = base.CanAttack();
         if (AmmoInTube <= 0)
         {
             if (!IsReloading) Reload();
             return false;
         }
-        return res && (m_FireTimer.IsActive && m_FireTimer.Progress == 1f || !m_FireTimer.IsActive);
+        return base.CanAttack() && !m_FireTimer.IsActive;
     }
 
     Vector3 ApplySpread(Vector3 dir)
@@ -74,7 +73,6 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
     protected override void AfterReload()
     {
-        base.AfterReload();
         var adding = Mathf.Min(Ammo, p_Stats.MaxAmmoInTube - AmmoInTube);
         AmmoInTube += adding;
         Ammo -= adding;

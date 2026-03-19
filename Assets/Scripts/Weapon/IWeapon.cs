@@ -4,7 +4,7 @@ public interface IWeapon
     public bool IsReloading { get; }
     public bool Equiped { get; }
 
-    void Attack(UnityEngine.Vector3? target = null);
+    bool Attack(UnityEngine.Vector3? target = null);
     void Reload();
 
     void OnUpdate();

@@ -9,6 +9,10 @@ public class WeaponStats : ScriptableObject
     [SerializeField] GameObject m_WeaponPrefab;
     public GameObject WeaponPrefab => m_WeaponPrefab;
 
+    [Group("set"), PropertyOrder(1)]
+    [SerializeField] WeaponType m_Type;
+    public WeaponType Type => m_Type;
+
     [Group("set"), PropertyOrder(2)]
     [SerializeField, Min(1)] int m_Damage = 10;
     public int Damage => m_Damage;

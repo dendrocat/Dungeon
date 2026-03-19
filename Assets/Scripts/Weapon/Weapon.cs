@@ -7,7 +7,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
 
     Timer m_ReloadTimer;
     public float ReloadProgress => m_ReloadTimer.Progress;
-    public bool IsReloading { get; private set; } = false;
+    public bool IsReloading => m_ReloadTimer.IsActive;
 
     public bool Equiped { get; private set; } = false;
 
@@ -26,10 +26,11 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
         return !IsReloading;
     }
 
-    public void Attack(Vector3? target = null)
+    public bool Attack(Vector3? target = null)
     {
-        if (!CanAttack()) return;
+        if (!CanAttack()) return false;
         OnAttack(target);
+        return true;
     }
     protected virtual void OnAttack(Vector3? target = null) { }
 
@@ -42,16 +43,12 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     {
         if (!CanReload()) return;
         Debug.Log($"{p_Stats.name} reloading...");
-        IsReloading = true;
         m_ReloadTimer.Activate();
         m_ReloadTimer.Reset();
     }
 
     protected virtual void AfterReload()
-    {
-        IsReloading = false;
-        m_ReloadTimer.Deactivate();
-    }
+    { }
 
     public virtual void OnUpdate()
     {
