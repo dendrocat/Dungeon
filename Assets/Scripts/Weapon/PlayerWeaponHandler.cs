@@ -1,4 +1,5 @@
 using UnityEngine;
+using DomainLogging;
 
 public class PlayerWeaponHandler : BaseWeaponHandler
 {
@@ -40,7 +41,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         }
 
         m_Index = index - 1;
-        Debug.Log($"Weapon index: {m_Index}, m_Weapons cnt : {m_Weapons.Length}");
+        DomainDebug.Log($"Weapon index: {m_Index}, m_Weapons cnt : {m_Weapons.Length}", DomainType.Weapon);
         p_Weapon = new RangedWeapon(m_Weapons[m_Index], transform);
         (p_Weapon as RangedWeapon).SetAmmo(m_AmmoInTube[m_Index], m_Ammo[m_Index]);
         p_Weapon.Equip();
@@ -69,7 +70,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
     {
         if (Grenade.IsReloading) return;
 
-        Debug.Log($"Throw Grenade: {Grenade.ReloadProgress}");
+        DomainDebug.Log($"Throw Grenade: {Grenade.ReloadProgress}", DomainType.Weapon);
         p_Weapon.Unequip(false);
         Grenade.Equip();
         if (Grenade.Attack()) RaiseAttacked(m_GrenadeStats);
@@ -79,7 +80,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
     {
         if (m_Melee.IsReloading) return;
 
-        Debug.Log($"Melee Attack");
+        DomainDebug.Log($"Melee Attack", DomainType.Weapon);
         p_Weapon.Unequip(false);
         m_Melee.Equip();
         if (m_Melee.Attack()) RaiseAttacked(p_WeaponStats);

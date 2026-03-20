@@ -40,7 +40,7 @@ public class PlayerHeight : MonoBehaviour
 
         if (Mathf.Abs(camY - m_Cam.localPosition.y) > c_StopTransition)
         {
-            // Debug.Log($"{camY} {m_Cam.localPosition.y}");
+            // DomainLogging.DomainDebug.Log($"{camY} {m_Cam.localPosition.y}", DomainLogging.DomainType.Player);
             Vector3 camPos = m_Cam.localPosition;
             camPos.y = camY;
             m_Cam.localPosition = Vector3.Lerp(

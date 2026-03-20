@@ -1,4 +1,5 @@
 using UnityEngine;
+using DomainLogging;
 
 public class RangedWeapon : Weapon<RangedWeaponStats>
 {
@@ -14,7 +15,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
         m_FirePoint = p_GObj.transform.FindChildWithTag("FirePoint");
 
         if (m_FirePoint == null)
-            Debug.LogError($"RangedWeapon {p_GObj.name}: fire point not found");
+            DomainDebug.LogError($"RangedWeapon {p_GObj.name}: fire point not found", DomainType.Weapon);
         m_FireTimer = new Timer(60f / stats.FireRate, false);
     }
 
@@ -76,7 +77,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
         var adding = Mathf.Min(Ammo, p_Stats.MaxAmmoInTube - AmmoInTube);
         AmmoInTube += adding;
         Ammo -= adding;
-        Debug.Log($"{p_Stats.name} reloaded. InTube: {AmmoInTube}, Ammo: {Ammo}");
+        DomainDebug.Log($"{p_Stats.name} reloaded. InTube: {AmmoInTube}, Ammo: {Ammo}", DomainType.Weapon);
 
         m_FireTimer.Reset();
     }
@@ -90,6 +91,6 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
     {
         base.OnUpdate();
         m_FireTimer.Update(Time.deltaTime);
-		Debug.Log($"{p_GObj.name}: {m_FireTimer.Progress}");
+		DomainDebug.Log($"{p_GObj.name}: {m_FireTimer.Progress}", DomainType.Weapon);
     }
 }

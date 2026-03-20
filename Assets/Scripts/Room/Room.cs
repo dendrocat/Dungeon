@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using DomainLogging;
 
 [RequireComponent(typeof(SphereCollider))]
 public class Room : MonoBehaviour, IActivatable, IProvider<IWaypoint>, IProvider<Transform>
@@ -22,14 +23,14 @@ public class Room : MonoBehaviour, IActivatable, IProvider<IWaypoint>, IProvider
     void Awake()
     {
         m_Waypoints = WaypointParent.GetComponentsInChildren<IWaypoint>();
-        Debug.Log($"{name}: found {m_Waypoints.Count} waypoints");
+        DomainDebug.Log($"{name}: found {m_Waypoints.Count} waypoints", DomainType.Room);
         m_SpawnPoints = SpawnParent.GetComponentsInChildren<Transform>().Skip(1).ToArray();
-        Debug.Log($"{name}: found {m_SpawnPoints.Count} spawn points");
+        DomainDebug.Log($"{name}: found {m_SpawnPoints.Count} spawn points", DomainType.Room);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"{other.name} entered in room");
+        DomainDebug.Log($"{other.name} entered in room", DomainType.Room);
         Activate();
     }
 

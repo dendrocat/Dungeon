@@ -25,7 +25,7 @@ public class Ammo : MonoBehaviour
 
     public void Launch(Vector3 dir)
     {
-        // Debug.Log($"{m_Rig.name} lauched");
+        // DomainLogging.DomainDebug.Log($"{m_Rig.name} lauched", DomainLogging.DomainType.Weapon);
         dir = dir.normalized;
         transform.forward = dir.normalized;
         m_Rig.linearVelocity = dir * m_Speed;
@@ -44,7 +44,7 @@ public class Ammo : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        // Debug.Log(other.gameObject.name);
+        // DomainLogging.DomainDebug.Log(other.gameObject.name, DomainLogging.DomainType.Weapon);
         if (((1 << other.gameObject.layer) & p_HitMask.value) != 0) Attack(other.gameObject, m_Damage);
         Hitted?.Invoke();
         OnHit();

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using DomainLogging;
 
 [RequireComponent(typeof(WaypointsProvider), typeof(EnemySpawner))]
 public class Director : MonoBehaviour
@@ -29,6 +30,8 @@ public class Director : MonoBehaviour
             m_PlayerVisible = value;
         }
     }
+    int m_PlayerLightZoneCount = 0;
+    public bool PlayerLighted => m_PlayerLightZoneCount > 0;
 
     EnemySpawner m_Spawner;
     IReadOnlyList<Enemy> m_Enemies = null;
@@ -53,6 +56,7 @@ public class Director : MonoBehaviour
     void OnEnable()
     {
         m_Spawner.Spawned += OnEnemySpawned;
+        LightZone.PlayerInsideChanged += OnLightZonePlayerInsideChanged;
     }
 
     void OnDisable()
@@ -63,6 +67,12 @@ public class Director : MonoBehaviour
     void OnEnemySpawned(IReadOnlyList<Enemy> enemies)
     {
         m_Enemies = enemies;
+    }
+
+    void OnLightZonePlayerInsideChanged(bool playerInside)
+    {
+		m_PlayerLightZoneCount += playerInside ? 1 : -1; 
+		DomainDebug.Log($"Player lighted: {PlayerLighted}", DomainType.Director);
     }
 
 

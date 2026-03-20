@@ -1,5 +1,5 @@
-using TriInspector;
 using UnityEngine;
+using TriInspector;
 
 [DeclareFoldoutGroup("set", Title = "Settings", Expanded = true)]
 [DeclareFoldoutGroup("cmp", Title = "Components")]
@@ -45,7 +45,7 @@ public class PlayerMover : MonoBehaviour, IActivatable
     {
         m_JumpForce = new Vector3(0, Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * m_JumpHeight), 0);
         m_JumpForce *= m_Rig.mass;
-        // Debug.Log($"JumpForce: {m_JumpForce}");
+        // DomainLogging.DomainDebug.Log($"JumpForce: {m_JumpForce}", DomainLogging.DomainType.Player);
     }
 
     void Jump()

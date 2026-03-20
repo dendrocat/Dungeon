@@ -6,6 +6,7 @@ public class Person : MonoBehaviour, IDamagable
 {
     [LabelText("Health")]
     [SerializeField] protected Health p_Health;
+	public Health Health => p_Health;
 
     IEnumerable<IActivatable> comps;
 
@@ -15,6 +16,7 @@ public class Person : MonoBehaviour, IDamagable
         p_Health.Died += Die;
     }
 
+	/// <inheritdoc/>
     public void TakeDamage(float damage)
     {
         p_Health.TakeDamage(damage);

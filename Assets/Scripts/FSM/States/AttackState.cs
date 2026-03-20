@@ -42,8 +42,11 @@ public class AttackState : BaseState
         if (dist < (m_AttackDistance / 2 + distanceOffset) && m_Agent.hasPath) m_Agent.ResetPath();
         if (dist <= m_AttackDistance)
         {
-            p_Enemy.transform.LookAt(m_Player);
-            p_Enemy.WeaponHandler.Attack();
+            if (Director.Instance.PlayerVisible)
+            {
+                p_Enemy.transform.LookAt(m_Player);
+                p_Enemy.WeaponHandler.Attack();
+            }
         }
         else SetDestination();
     }

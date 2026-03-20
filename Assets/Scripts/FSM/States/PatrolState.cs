@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.AI;
 using TriInspector;
+using DomainLogging;
 
 [System.Serializable]
 public class PatrolState : BaseState
@@ -34,7 +35,7 @@ public class PatrolState : BaseState
         m_Waypoint = n_Waypoint;
         m_Waypoint.Occupy();
 
-        Debug.Log($"{p_Enemy.name}: Moving to {m_Waypoint.Name}");
+        DomainDebug.Log($"{p_Enemy.name}: Moving to {m_Waypoint.Name}", DomainType.State);
     }
 
     protected override void OnEnter()

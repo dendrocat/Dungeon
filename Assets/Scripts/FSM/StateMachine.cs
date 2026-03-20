@@ -1,12 +1,13 @@
-using UnityEngine;
-using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using DomainLogging;
 
 #if UNITY_EDITOR
 using TriInspector;
 
-[DeclareBoxGroup("insp", Title = "Debug View")]
+[DeclareBoxGroup("insp", Title = "DomainDebug View")]
 #endif
 public class StateMachine : MonoBehaviour
 {
@@ -62,9 +63,9 @@ public class StateMachine : MonoBehaviour
 
     public bool ChangeState(int state)
     {
-        Debug.Log($"FSM: Trying change state to {state}");
+        DomainDebug.Log($"Trying change state to {state}", DomainType.StateMachine);
         if (!Enum.IsDefined(typeof(States), state)) return false;
-        Debug.Log($"FSM: Changing state to {(States)state}");
+        DomainDebug.Log($"Changing state to {(States)state}", DomainType.StateMachine);
         if ((States)state == m_ActiveState.State)
         {
             m_ActiveState.MachineState.Continue();
@@ -81,7 +82,7 @@ public class StateMachine : MonoBehaviour
 
     void OnStateEnded(bool canActive)
     {
-        Debug.Log($"FSM: {m_ActiveState.State} ended. This state can be active {canActive}. Request next state");
+        DomainDebug.Log($"{m_ActiveState.State} ended. This state can be active {canActive}. Request next state", DomainType.StateMachine);
         m_CanActiveState = canActive;
         ChangeStateRequested.Invoke();
     }

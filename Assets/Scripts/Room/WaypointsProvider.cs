@@ -17,7 +17,7 @@ public class WaypointsProvider : MonoBehaviour, IProvider<IWaypoint>
     void GetWaypoints(IProvider<IWaypoint> store)
     {
         Items = store.Items;
-        Debug.Log($"Getted {Items.Count} waypoints");
+        DomainLogging.DomainDebug.Log($"Getted {Items.Count} waypoints", DomainLogging.DomainType.Room);
     }
 
     public IWaypoint GetFreeWaypoint()

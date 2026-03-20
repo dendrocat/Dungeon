@@ -1,4 +1,5 @@
 using UnityEngine;
+using DomainLogging;
 
 public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
 {
@@ -42,7 +43,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     public void Reload()
     {
         if (!CanReload()) return;
-        Debug.Log($"{p_Stats.name} reloading...");
+        DomainDebug.Log($"{p_Stats.name} reloading...", DomainType.Weapon);
         m_ReloadTimer.Activate();
         m_ReloadTimer.Reset();
     }
@@ -59,7 +60,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     {
         p_GObj.SetActive(true);
         Equiped = true;
-        // Debug.Log($"{p_GObj.name} equiped");
+        // DomainDebug.Log($"{p_GObj.name} equiped", DomainType.Weapon);
     }
 
     public void Unequip(bool destroy = true)
@@ -68,6 +69,6 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
         else p_GObj.SetActive(false);
 
         Equiped = false;
-        // Debug.Log($"{p_GObj.name} unequiped");
+        // DomainDebug.Log($"{p_GObj.name} unequiped", DomainType.Weapon);
     }
 }

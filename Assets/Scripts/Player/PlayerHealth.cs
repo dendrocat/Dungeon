@@ -27,6 +27,7 @@ public class PlayerHealth : Health
         m_Regen.TimerEnded += Heal;
     }
 
+    /// <inheritdoc/>
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
@@ -41,6 +42,7 @@ public class PlayerHealth : Health
         if (p_Health >= p_MaxHealth)
         {
             p_Health = p_MaxHealth;
+            m_UntilRegen.Reset();
             return;
         }
         m_Regen.Activate();

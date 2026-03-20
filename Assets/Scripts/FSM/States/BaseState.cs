@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Events;
-using System;
 using TriInspector;
+using DomainLogging;
 
-[Serializable]
+[System.Serializable]
 public abstract class BaseState
 {
     public event UnityAction<bool> StateEnded;
@@ -29,14 +29,14 @@ public abstract class BaseState
 
     void OnTimerEnded()
     {
-        Debug.Log($"{GetType()}: timer state ended");
+        DomainDebug.Log($"{GetType()}: timer state ended", DomainType.State);
         m_Ended = m_IsExitTime;
         StateEnded?.Invoke(!m_IsExitTime);
     }
 
     protected void StateEnd()
     {
-        Debug.Log($"{GetType()}: state ended");
+        DomainDebug.Log($"{GetType()}: state ended", DomainType.State);
         m_Ended = true;
         StateEnded?.Invoke(false);
     }
@@ -44,7 +44,7 @@ public abstract class BaseState
     public void Enter(Enemy enemy)
     {
         m_Ended = false;
-        Debug.Log($"{enemy.name} entered in {GetType()}");
+        DomainDebug.Log($"{enemy.name} entered in {GetType()}", DomainType.State);
         if (m_HasTime)
         {
             m_Timer = new Timer(m_Time);
@@ -66,7 +66,7 @@ public abstract class BaseState
 
     public void Exit()
     {
-        Debug.Log($"{p_Enemy.name} exited from {GetType()}");
+        DomainDebug.Log($"{p_Enemy.name} exited from {GetType()}", DomainType.State);
         OnExit();
 
         p_Enemy = null;
@@ -77,7 +77,7 @@ public abstract class BaseState
 
     public void Continue()
     {
-        Debug.Log($"{p_Enemy.name} continued {GetType()}");
+        DomainDebug.Log($"{p_Enemy.name} continued {GetType()}", DomainType.State);
         m_Ended = false;
         if (m_HasTime) m_Timer.Reset();
 
