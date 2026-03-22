@@ -60,6 +60,7 @@ public abstract class BaseState
     {
         if (m_Ended) return;
         if (m_HasTime) m_Timer.Update(dt);
+        if (p_Enemy.Health.Value <= 0) StateEnd();
         OnUpdate(dt);
     }
     protected virtual void OnUpdate(float dt) { }

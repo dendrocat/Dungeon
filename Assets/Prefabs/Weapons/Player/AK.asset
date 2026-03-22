@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AK
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
   m_WeaponPrefab: {fileID: 7895784510436758991, guid: 81b3635a3b2fc0149adba002cdba776d, type: 3}
+  m_Type: 2
   m_Damage: 10
   m_Distance: 100
   m_ReloadTime: 5

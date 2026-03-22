@@ -1,5 +1,5 @@
-using TriInspector;
 using UnityEngine;
+using TriInspector;
 
 [CreateAssetMenu(fileName = "WeaponStats", menuName = "Config/WeaponStats")]
 [DeclareBoxGroup("set", Title = "Weapon Parameters")]

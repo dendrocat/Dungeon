@@ -62,6 +62,7 @@ public class Director : MonoBehaviour
     void OnDisable()
     {
         m_Spawner.Spawned -= OnEnemySpawned;
+        LightZone.PlayerInsideChanged -= OnLightZonePlayerInsideChanged;
     }
 
     void OnEnemySpawned(IReadOnlyList<Enemy> enemies)
@@ -71,8 +72,8 @@ public class Director : MonoBehaviour
 
     void OnLightZonePlayerInsideChanged(bool playerInside)
     {
-		m_PlayerLightZoneCount += playerInside ? 1 : -1; 
-		DomainDebug.Log($"Player lighted: {PlayerLighted}", DomainType.Director);
+        m_PlayerLightZoneCount += playerInside ? 1 : -1;
+        DomainDebug.Log($"Player lighted: {PlayerLighted}", DomainType.Director);
     }
 
 

@@ -91,7 +91,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1696689871507783837}
   - component: {fileID: 4482628517723414528}
-  - component: {fileID: 4855359127478468351}
+  - component: {fileID: 2792013713426039360}
+  - component: {fileID: 5027850626566552563}
   - component: {fileID: 5159506912116803680}
   m_Layer: 0
   m_Name: MLAgent
@@ -128,8 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Policies.BehaviorParameters
   m_BrainParameters:
-    VectorObservationSize: 0
-    NumStackedVectorObservations: 2
+    VectorObservationSize: 12
+    NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
       BranchSizes: 07000000
@@ -140,13 +141,26 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 1
-  m_BehaviorName: Enemy
+  m_BehaviorName: Soldier
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_DeterministicInference: 0
   m_ObservableAttributeHandling: 0
---- !u!114 &4855359127478468351
+--- !u!114 &2792013713426039360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863866851735982237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b08cf983e52d5468833deb75f5dafd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentValidator
+  m_Config: {fileID: 11400000, guid: dd67901390f80b646bce5d6df5a389eb, type: 2}
+--- !u!114 &5027850626566552563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,6 +178,7 @@ MonoBehaviour:
   MaxStep: 0
   m_RaySensorComponent: {fileID: 4423352815678042844}
   m_AudioSensorComponent: {fileID: 3959914069372701306}
+  m_Enemy: {fileID: 5733970047708815108}
 --- !u!114 &5159506912116803680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,7 +478,7 @@ GameObject:
   - component: {fileID: 1120878781128378878}
   - component: {fileID: 5733970047708815108}
   m_Layer: 7
-  m_Name: Enemy1
+  m_Name: Soldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -576,5 +591,5 @@ MonoBehaviour:
   p_Health: {fileID: 2433358112803897518}
   m_InWalkSpeed: 10
   m_InAttackSpeed: 20
-  m_MLAgent: {fileID: 4855359127478468351}
+  m_MLAgent: {fileID: 5027850626566552563}
   m_WeaponHandler: {fileID: 3511707028197208452}

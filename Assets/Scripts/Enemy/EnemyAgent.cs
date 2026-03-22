@@ -16,12 +16,14 @@ public class EnemyAgent : Agent, IActivatable
     public bool IsActive => enabled;
 
     StateMachine fsm;
-	[SerializeField] Enemy m_Enemy;
+    Enemy m_Enemy;
 
     public override void Initialize()
     {
         fsm = GetComponent<StateMachine>();
         fsm.ChangeStateRequested += RequestDecision;
+
+		m_Enemy = GetComponentInParent<Enemy>();
     }
 
     void Start()
@@ -46,19 +48,19 @@ public class EnemyAgent : Agent, IActivatable
 
     public override void CollectObservations(VectorSensor sensor)
     {
-		// Player position
-		sensor.AddObservation(Vector3.Distance(Director.Instance.PlayerTransform.position, m_Enemy.transform.position));
-		sensor.AddObservation(Vector3.Angle(Director.Instance.PlayerTransform.forward, m_Enemy.transform.forward));
+        // Player position
+        sensor.AddObservation(Vector3.Distance(Director.Instance.PlayerTransform.position, m_Enemy.transform.position));
+        sensor.AddObservation(Vector3.Angle(Director.Instance.PlayerTransform.forward, m_Enemy.transform.forward));
 
-		// Player visibility
-		sensor.AddObservation(Director.Instance.PlayerVisible);
-		sensor.AddObservation(Director.Instance.PlayerLighted);
+        // Player visibility
+        sensor.AddObservation(Director.Instance.PlayerVisible);
+        sensor.AddObservation(Director.Instance.PlayerLighted);
 
-		// Health
-		sensor.AddObservation(m_Enemy.Health.Value / m_Enemy.Health.Max);
+        // Health
+        sensor.AddObservation(m_Enemy.Health.Value / m_Enemy.Health.Max);
 
-		// FSM state
-		sensor.AddOneHotObservation(fsm.GetActiveState(), 7);
+        // FSM state
+        sensor.AddOneHotObservation(fsm.GetActiveState(), 7);
     }
 
     public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)

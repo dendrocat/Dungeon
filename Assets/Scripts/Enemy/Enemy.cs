@@ -3,7 +3,6 @@ using UnityEngine.AI;
 using TriInspector;
 
 [DeclareBoxGroup("set", Title = "Settings")]
-[DeclareFoldoutGroup("cmp", Title = "Components")]
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : Person
 {
@@ -24,8 +23,6 @@ public class Enemy : Person
     [Group("cmp")]
     [SerializeField] EnemyWeaponHandler m_WeaponHandler;
     public EnemyWeaponHandler WeaponHandler => m_WeaponHandler;
-
-    public Transform PlayerTransform => Director.Instance.PlayerTransform;
 
     void OnValidate()
     {

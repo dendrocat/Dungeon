@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         for (int i = 0; i < lst.Count; ++i)
-            lst[i].name = $"Enemy_{i + 1}";
+            lst[i].name = $"{lst[i].name.Replace("(Clone)", "")}_{i + 1}";
 
         Spawned?.Invoke(lst);
     }
