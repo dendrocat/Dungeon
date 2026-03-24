@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 5733970047708815108}
   m_Layer: 7
   m_Name: Tank
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -589,7 +589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed4acdaf55ccdd4ba06f87b5ebfed4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  p_Health: {fileID: 0}
+  p_Health: {fileID: 6889229190786145794}
   m_InWalkSpeed: 10
   m_InAttackSpeed: 20
   m_MLAgent: {fileID: 8259541082178049179}

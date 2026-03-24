@@ -1,19 +1,21 @@
 using UnityEngine;
 using UnityEngine.AI;
+using DomainLogging;
 
 [System.Serializable]
 public class AlertState : BaseState
 {
     Vector3 GetPlayerPosFromRayPerception()
     {
-        Debug.Log($"{p_Enemy.MLAgent.RaySensor == null}");
-        Debug.Log($"{p_Enemy.MLAgent.RaySensor.RayPerceptionOutput == null}");
-        var rayOutputs = p_Enemy.MLAgent.RaySensor.RayPerceptionOutput.RayOutputs;
-        foreach (var rayOut in rayOutputs)
-        {
-            if (rayOut.HitTaggedObject)
-                return rayOut.HitGameObject.transform.position;
-        }
+        DomainDebug.Log($"{p_Enemy.MLAgent.RaySensor == null}", DomainType.State);
+        DomainDebug.Log($"{p_Enemy.MLAgent.RaySensor?.RayPerceptionOutput == null}", DomainType.State);
+        var rayOutputs = p_Enemy.MLAgent.RaySensor?.RayPerceptionOutput?.RayOutputs;
+        if (rayOutputs != null)
+            foreach (var rayOut in rayOutputs)
+            {
+                if (rayOut.HitTaggedObject)
+                    return rayOut.HitGameObject.transform.position;
+            }
         return Vector3.positiveInfinity;
     }
 

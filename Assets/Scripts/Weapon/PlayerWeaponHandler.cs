@@ -9,7 +9,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
 
     int[] m_Ammo, m_AmmoInTube;
 
-    int m_Index = 0;
+    int m_Index = -1;
 
     MeleeWeapon m_Melee;
     public RangedWeapon Weapon => (p_Weapon as RangedWeapon);

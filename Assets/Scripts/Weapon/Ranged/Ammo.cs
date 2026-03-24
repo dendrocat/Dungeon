@@ -9,7 +9,6 @@ public class Ammo : MonoBehaviour
 
     int m_Damage;
     int m_Speed;
-    protected float p_Lifetime;
 
     protected LayerMask p_HitMask;
 
@@ -17,10 +16,10 @@ public class Ammo : MonoBehaviour
     {
         m_Rig = GetComponent<Rigidbody>();
         m_Damage = stats.Damage;
-        m_Speed = stats.AmmoSpeed;
+        m_Speed = stats.AmmoStats.AmmoSpeed;
 
-        p_HitMask = stats.HitMask;
-        p_Lifetime = stats.Distance / m_Speed;
+        p_HitMask = stats.AmmoStats.HitMask;
+		Destroy(gameObject, 1000);
     }
 
     public void Launch(Vector3 dir)
@@ -29,7 +28,6 @@ public class Ammo : MonoBehaviour
         dir = dir.normalized;
         transform.forward = dir.normalized;
         m_Rig.linearVelocity = dir * m_Speed;
-        Destroy(gameObject, p_Lifetime);
     }
 
     protected void Attack(GameObject target, float damage)
@@ -44,7 +42,7 @@ public class Ammo : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        // DomainLogging.DomainDebug.Log(other.gameObject.name, DomainLogging.DomainType.Weapon);
+        DomainLogging.DomainDebug.Log($"{name} hitted to {other.gameObject.name}", DomainLogging.DomainType.Weapon);
         if (((1 << other.gameObject.layer) & p_HitMask.value) != 0) Attack(other.gameObject, m_Damage);
         Hitted?.Invoke();
         OnHit();

@@ -17,14 +17,10 @@ MonoBehaviour:
   m_Damage: 2
   m_Distance: 100
   m_ReloadTime: 5
-  m_HitMask:
-    serializedVersion: 2
-    m_Bits: 192
-  m_FireRate: 120
+  m_FireRate: 360
   m_BulletRate: 1
-  x: 1
-  y: 1
-  m_AmmoPrefab: {fileID: 4418923189705824227, guid: a7d9d7b0fecb2ba49b955d627104fa2d, type: 3}
-  m_AmmoSpeed: 150
   m_MaxAmmoInTube: 40
   m_MaxAmmo: 320
+  x: 1
+  y: 1
+  m_AmmoStats: {fileID: 11400000, guid: dadb4a131d82446488e10083e0d42d04, type: 2}

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using DomainLogging;
 
 [RequireComponent(typeof(WaypointsProvider), typeof(EnemySpawner))]
 public class Director : MonoBehaviour
@@ -12,9 +11,9 @@ public class Director : MonoBehaviour
     public static Director Instance { get; private set; }
     public WaypointsProvider WaypointsProvider { get; private set; }
 
-
     [SerializeField] Player m_Player;
     public Transform PlayerTransform => m_Player.transform;
+	public bool PlayerLighted => m_Player.IsLighted;
     public Vector3? LastPlayerPos { get; private set; } = null;
 
     bool m_PlayerVisible = false;
@@ -28,8 +27,6 @@ public class Director : MonoBehaviour
             m_PlayerVisible = value;
         }
     }
-    int m_PlayerLightZoneCount = 0;
-    public bool PlayerLighted => m_PlayerLightZoneCount > 0;
 
     EnemySpawner m_Spawner;
     IReadOnlyList<Enemy> m_Enemies = null;
@@ -55,26 +52,17 @@ public class Director : MonoBehaviour
     void OnEnable()
     {
         m_Spawner.Spawned += OnEnemySpawned;
-        LightZone.PlayerInsideChanged += OnLightZonePlayerInsideChanged;
     }
 
     void OnDisable()
     {
         m_Spawner.Spawned -= OnEnemySpawned;
-        LightZone.PlayerInsideChanged -= OnLightZonePlayerInsideChanged;
     }
 
     void OnEnemySpawned(IReadOnlyList<Enemy> enemies)
     {
         m_Enemies = enemies;
     }
-
-    void OnLightZonePlayerInsideChanged(bool playerInside)
-    {
-        m_PlayerLightZoneCount += playerInside ? 1 : -1;
-        DomainDebug.Log($"Player lighted: {PlayerLighted}", DomainType.Director);
-    }
-
 
     bool GetPlayerVisible(Enemy enemy)
     {
@@ -90,11 +78,6 @@ public class Director : MonoBehaviour
         if (playerVisibility) LastPlayerPos = null;
         else LastPlayerPos = m_Player.transform.position;
 
-    }
-
-    void OnChased()
-    {
-        LastPlayerPos = null;
     }
 
     void FixedUpdate()

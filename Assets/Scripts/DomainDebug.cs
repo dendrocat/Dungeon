@@ -27,11 +27,11 @@ namespace DomainLogging
         { DomainType.Training, true },
         { DomainType.StateMachine, false },
         { DomainType.State, false },
-        { DomainType.Player, false },
-        { DomainType.Room, false },
+        { DomainType.Player, true },
+        { DomainType.Room, true },
         { DomainType.Sound, false },
         { DomainType.UI, true },
-        { DomainType.Weapon, false },
+        { DomainType.Weapon, true },
     };
 
 

@@ -52,9 +52,9 @@ public class PlayerHeight : MonoBehaviour
                 m_Cam.localPosition = camPos;
 
             Vector3 colCen = m_Col.center;
-            colCen.y = InputManager.Instance.IsCrouching ? m_ColliderCrouchCenter : m_ColliderStayCenter;
+            colCen.y = IInput.Instance.IsCrouching ? m_ColliderCrouchCenter : m_ColliderStayCenter;
             m_Col.center = colCen;
-            m_Col.height = InputManager.Instance.IsCrouching ? m_ColliderCrouchHeight : m_ColliderStayHeight;
+            m_Col.height = IInput.Instance.IsCrouching ? m_ColliderCrouchHeight : m_ColliderStayHeight;
         }
 
 

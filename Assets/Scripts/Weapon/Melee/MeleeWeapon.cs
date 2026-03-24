@@ -9,7 +9,7 @@ public class MeleeWeapon : Weapon<WeaponStats>
     protected override void OnAttack(Vector3? target = null)
     {
         base.OnAttack();
-        Collider[] cols = Physics.OverlapSphere(p_GObj.transform.position, p_Stats.Distance, p_Stats.HitMask);
+        Collider[] cols = Physics.OverlapSphere(p_GObj.transform.position, p_Stats.Distance);
         foreach (var col in cols)
             col.GetComponent<IDamagable>()?.TakeDamage(p_Stats.Damage);
 		Reload();

@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public interface IInput
 {
-    public static IInput Instance { get; private set; } = null;
+    public static IInput Instance { get; protected set; } = null;
 
     public Vector2 Move { get; }
     public bool IsCrouching { get; }

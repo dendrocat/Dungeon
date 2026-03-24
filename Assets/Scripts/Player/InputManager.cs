@@ -5,13 +5,12 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour, IInput
 {
-    public static IInput Instance { get; private set; } = null;
-
     public Vector2 Move { get; private set; }
     public bool IsCrouching { get; private set; }
     public bool IsRunning { get; private set; }
 
     public Vector2 MouseDelta { get; private set; }
+
     public bool Attack { get; private set; }
 
     public event UnityAction Jumped;
@@ -22,13 +21,13 @@ public class InputManager : MonoBehaviour, IInput
 
     void Awake()
     {
-        if (Instance != null) { Destroy(gameObject); return; }
-        Instance = this;
+        if (IInput.Instance != null) { Destroy(gameObject); return; }
+		IInput.Instance = this;
     }
 
     void OnDestroy()
     {
-        if (Instance == (this as IInput)) Instance = null;
+        if (IInput.Instance == (this as IInput)) IInput.Instance = null;
     }
 
     public void OnMove(InputAction.CallbackContext ctx)

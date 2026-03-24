@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2029220706443886993}
   - component: {fileID: 4418923189705824227}
   - component: {fileID: 3734948464885131670}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2583260675540395578}
   serializedVersion: 5
-  m_Mass: 0.1
+  m_Mass: 0.01
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -76,7 +76,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -96,9 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553194a1a7dc7ae40a21ceb4a5993ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ammo
-  HitMask:
-    serializedVersion: 2
-    m_Bits: 192
 --- !u!114 &3734948464885131670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +120,7 @@ GameObject:
   - component: {fileID: 7165634366831994943}
   - component: {fileID: 1131156419405187927}
   - component: {fileID: 6631257095844734302}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

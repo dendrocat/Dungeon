@@ -10,20 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
-  m_Name: Bow
+  m_Name: Shotgun
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
-  m_WeaponPrefab: {fileID: 7691624403421222432, guid: 433e26ca0b2970048899e33ca9c7698a, type: 3}
+  m_WeaponPrefab: {fileID: 7895784510436758991, guid: b19f1c35bf9ec1d4fa08b5d424d3e243, type: 3}
   m_Type: 2
-  m_Damage: 50
-  m_Distance: 100
-  m_ReloadTime: 3
-  m_HitMask:
-    serializedVersion: 2
-    m_Bits: 192
-  m_FireRate: 5
-  m_BulletRate: 1
-  m_MaxAmmoInTube: 1
-  m_MaxAmmo: 999
-  x: 1
-  y: 1
-  m_AmmoStats: {fileID: 11400000, guid: 59e21d5bf94b81c4284b0b4e53d81fc5, type: 2}
+  m_Damage: 10
+  m_Distance: 20
+  m_ReloadTime: 5
+  m_FireRate: 100
+  m_BulletRate: 5
+  m_MaxAmmoInTube: 40
+  m_MaxAmmo: 12
+  x: 7.19
+  y: 5.45
+  m_AmmoStats: {fileID: 11400000, guid: 46b4fca8094053f4eab9be845ab44963, type: 2}

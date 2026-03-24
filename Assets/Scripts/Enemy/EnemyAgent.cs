@@ -28,7 +28,7 @@ public class EnemyAgent : Agent, IActivatable
 
     void Start()
     {
-        InputManager.Instance.WeaponNumed += OnNum;
+        IInput.Instance.WeaponNumed += OnNum;
     }
 
     void OnNum(int state)

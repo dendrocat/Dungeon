@@ -42,6 +42,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
         return Quaternion.Euler(hSpread, vSpread, 0) * dir;
     }
 
+	const float c_HitFailedDistance = 200;
     protected override void OnAttack(Vector3? target = null)
     {
         if (!target.HasValue)
@@ -49,21 +50,21 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
             Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
 
             if (Physics.Raycast(ray, out var hit, p_Stats.Distance)) target = hit.point;
-            else target = ray.direction * p_Stats.Distance;
+            else target = ray.direction * c_HitFailedDistance; 
         }
 
         var baseDir = (target.Value - m_FirePoint.position).normalized;
         for (int i = 0; i < p_Stats.BulletRate; ++i)
         {
             var dir = ApplySpread(baseDir).normalized;
-            var ammo = GameObject.Instantiate(p_Stats.AmmoPrefab, m_FirePoint.position, Quaternion.identity).GetComponent<Ammo>();
+            var ammo = GameObject.Instantiate(p_Stats.AmmoStats.AmmoPrefab, m_FirePoint.position, Quaternion.identity).GetComponent<Ammo>();
             ammo.Init(p_Stats);
             ammo.Launch(dir);
         }
         --AmmoInTube;
         if (AmmoInTube <= 0) Reload();
 
-		m_FireTimer.Activate();
+        m_FireTimer.Activate();
         m_FireTimer.Reset();
     }
 
@@ -91,6 +92,6 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
     {
         base.OnUpdate();
         m_FireTimer.Update(Time.deltaTime);
-		DomainDebug.Log($"{p_GObj.name}: {m_FireTimer.Progress}", DomainType.Weapon);
+        // DomainDebug.Log($"{p_GObj.name}: {m_FireTimer.Progress}", DomainType.Weapon);
     }
 }
