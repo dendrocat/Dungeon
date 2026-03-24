@@ -3,9 +3,9 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
-public class InputManager : MonoBehaviour
+public class InputManager : MonoBehaviour, IInput
 {
-    public static InputManager Instance { get; private set; } = null;
+    public static IInput Instance { get; private set; } = null;
 
     public Vector2 Move { get; private set; }
     public bool IsCrouching { get; private set; }
@@ -28,7 +28,7 @@ public class InputManager : MonoBehaviour
 
     void OnDestroy()
     {
-        if (Instance == this) Instance = null;
+        if (Instance == (this as IInput)) Instance = null;
     }
 
     public void OnMove(InputAction.CallbackContext ctx)

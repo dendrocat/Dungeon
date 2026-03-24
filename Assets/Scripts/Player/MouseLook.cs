@@ -16,13 +16,13 @@ public class MouseLook : MonoBehaviour, IActivatable
     [Required, Group("cmp")]
     [SerializeField] Transform m_Cam;
 
-    InputManager m_Input;
+    IInput m_Input;
 
     float xRot = 0;
 
     void Start()
     {
-        m_Input = InputManager.Instance;
+        m_Input = IInput.Instance;
     }
 
     void Update()

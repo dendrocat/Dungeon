@@ -17,8 +17,6 @@ public class Director : MonoBehaviour
     public Transform PlayerTransform => m_Player.transform;
     public Vector3? LastPlayerPos { get; private set; } = null;
 
-    [SerializeField, Min(3)] float m_ChaseTime;
-
     bool m_PlayerVisible = false;
     public bool PlayerVisible
     {
@@ -46,6 +44,7 @@ public class Director : MonoBehaviour
         Instance = this;
         WaypointsProvider = GetComponent<WaypointsProvider>();
         m_Spawner = GetComponent<EnemySpawner>();
+
     }
 
     void OnDestroy()
@@ -90,6 +89,12 @@ public class Director : MonoBehaviour
     {
         if (playerVisibility) LastPlayerPos = null;
         else LastPlayerPos = m_Player.transform.position;
+
+    }
+
+    void OnChased()
+    {
+        LastPlayerPos = null;
     }
 
     void FixedUpdate()

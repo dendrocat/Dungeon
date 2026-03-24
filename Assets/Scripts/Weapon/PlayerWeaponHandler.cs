@@ -33,6 +33,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
 
     public void ChangeWeapon(int index)
     {
+        if (index - 1 == m_Index) return;
         if (Weapon != null)
         {
             m_Ammo[m_Index] = Weapon.Ammo;

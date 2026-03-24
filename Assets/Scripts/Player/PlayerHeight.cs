@@ -36,7 +36,7 @@ public class PlayerHeight : MonoBehaviour
 
     void Update()
     {
-        float camY = InputManager.Instance.IsCrouching ? m_CameraCrouchHeight : m_CameraStayHeight;
+        float camY = IInput.Instance.IsCrouching ? m_CameraCrouchHeight : m_CameraStayHeight;
 
         if (Mathf.Abs(camY - m_Cam.localPosition.y) > c_StopTransition)
         {

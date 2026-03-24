@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 using TriInspector;
 
 [DeclareBoxGroup("hset", Title = "Heath Settings")]
-public class Health : MonoBehaviour, IDamagable
+public abstract class Health : MonoBehaviour, IDamagable
 {
     public event UnityAction Died;
 
@@ -12,7 +12,7 @@ public class Health : MonoBehaviour, IDamagable
 
     [Group("hset")]
     [LabelText("Health"), PropertyOrder(0)]
-    [ShowInInspector, DisableInEditMode]
+    [ShowInInspector, ReadOnly]
     public float Value => p_Health;
 
     [Group("hset")]

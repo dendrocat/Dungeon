@@ -24,6 +24,8 @@ public class Enemy : Person
     [SerializeField] EnemyWeaponHandler m_WeaponHandler;
     public EnemyWeaponHandler WeaponHandler => m_WeaponHandler;
 
+    public new EnemyHealth Health => (p_Health as EnemyHealth);
+
     void OnValidate()
     {
         if (m_InAttackSpeed < m_InWalkSpeed) m_InAttackSpeed = m_InWalkSpeed;

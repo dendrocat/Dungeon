@@ -9,10 +9,10 @@ public class Player : Person
     void Start()
     {
         if (!m_WeaponHandler.IsActive) return;
-        InputManager.Instance.WeaponNumed += m_WeaponHandler.ChangeWeapon;
-        InputManager.Instance.Reloaded += m_WeaponHandler.Reload;
-        InputManager.Instance.Throwed += m_WeaponHandler.ThrowGrenade;
-        InputManager.Instance.MeleeAttacked += m_WeaponHandler.MeleeAttack;
+		IInput.Instance.WeaponNumed += m_WeaponHandler.ChangeWeapon;
+        IInput.Instance.Reloaded += m_WeaponHandler.Reload;
+        IInput.Instance.Throwed += m_WeaponHandler.ThrowGrenade;
+        IInput.Instance.MeleeAttacked += m_WeaponHandler.MeleeAttack;
 
         m_WeaponHandler.ChangeWeapon(1);
     }
@@ -20,7 +20,7 @@ public class Player : Person
     void Update()
     {
         if (!m_WeaponHandler.IsActive) return;
-        if (InputManager.Instance.Attack) m_WeaponHandler.Attack();
+        if (IInput.Instance.Attack) m_WeaponHandler.Attack();
     }
 }
 

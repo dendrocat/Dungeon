@@ -40,9 +40,10 @@ public class AttackState : BaseState
     {
         var dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
         if (dist < (m_AttackDistance / 2 + distanceOffset) && m_Agent.hasPath) m_Agent.ResetPath();
+
+        if (!Director.Instance.PlayerVisible) { StateEnd(); return; }
         if (dist <= m_AttackDistance)
         {
-            if (Director.Instance.PlayerVisible)
             {
                 p_Enemy.transform.LookAt(m_Player);
                 p_Enemy.WeaponHandler.Attack();

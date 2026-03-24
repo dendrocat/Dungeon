@@ -22,7 +22,7 @@ public class PlayerMover : MonoBehaviour, IActivatable
     [Required, Group("cmp")]
     [SerializeField] GroundChecker m_GroundChecker;
 
-    InputManager m_Input;
+    IInput m_Input;
 
 
     private Rigidbody m_Rig;
@@ -37,7 +37,7 @@ public class PlayerMover : MonoBehaviour, IActivatable
 
     void Start()
     {
-        m_Input = InputManager.Instance;
+        m_Input = IInput.Instance;
         m_Input.Jumped += Jump;
     }
 

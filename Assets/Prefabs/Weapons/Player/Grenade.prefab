@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b059ee906c2d9524ab6f3db8a0a61e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grenade
-  m_ExplosionDamage: 100
+  m_ExplosionDamage: 30
   m_ExplosionRadius: 7
   m_ExplosionTime: 3.6
   m_ExplosionForce: 5617

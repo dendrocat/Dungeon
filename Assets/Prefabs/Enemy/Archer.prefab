@@ -178,7 +178,6 @@ MonoBehaviour:
   MaxStep: 0
   m_RaySensorComponent: {fileID: 4423352815678042844}
   m_AudioSensorComponent: {fileID: 3959914069372701306}
-  m_Enemy: {fileID: 5733970047708815108}
 --- !u!114 &5159506912116803680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,7 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3648955337487038079}
-  - component: {fileID: 2433358112803897518}
+  - component: {fileID: 7734448147917710441}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -361,7 +360,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8618284813384665187}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2433358112803897518
+--- !u!114 &7734448147917710441
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -370,10 +369,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4359266972882722614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5358ff499d5cb6642af442ce5dd351f8, type: 3}
+  m_Script: {fileID: 11500000, guid: c1939bd6e4a4ca64da4edd7f4db09e70, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   p_MaxHealth: 100
+  m_Heal: 30
+  m_HealCount: 3
 --- !u!1 &6186730146867442464
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed4acdaf55ccdd4ba06f87b5ebfed4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  p_Health: {fileID: 2433358112803897518}
+  p_Health: {fileID: 0}
   m_InWalkSpeed: 10
   m_InAttackSpeed: 20
   m_MLAgent: {fileID: 8595829265320426716}

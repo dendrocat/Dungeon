@@ -12,8 +12,6 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
     EnemyAgent m_Agent;
     Enemy m_Enemy;
 
-    public bool ShouldEndEpisode { get; private set; } = false;
-
     void Awake()
     {
         m_Enemy = GetComponentInParent<Enemy>();
@@ -22,9 +20,8 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
 
     float EstimateDie(States next)
     {
-        if (next == States.Die)
+        if (next == States.Die && m_Enemy.Health.Value <= 0)
             return m_Config.Rewards.Correct + m_Config.Rewards.Die;
-        ShouldEndEpisode = true;
         return m_Config.Rewards.Incorrect;
     }
 
@@ -48,11 +45,30 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
 
     float EstimateAttack()
     {
-        return m_Config.Rewards.Correct;
+        var checkDist = !Director.Instance.PlayerLighted;
+        foreach (var hit in m_Agent.RaySensor.RayPerceptionOutput.RayOutputs)
+        {
+            if (hit.HitTaggedObject)
+            {
+                if (checkDist && Vector3.Distance(hit.HitGameObject.transform.position, m_Enemy.transform.position) > m_Config.Detection.RayLength)
+                    return m_Config.Rewards.Incorrect;
+                return m_Config.Rewards.Correct;
+            }
+        }
+        return m_Config.Rewards.Incorrect;
     }
 
     float EstimateCover()
     {
+        if (m_Enemy.Health.RemainingHealCount <= 0)
+            return m_Config.Rewards.Incorrect;
+        return m_Config.Rewards.Correct;
+    }
+
+    float EstimateSearch()
+    {
+        if (Director.Instance.PlayerVisible)
+            return m_Config.Rewards.Incorrect;
         return m_Config.Rewards.Correct;
     }
 
@@ -60,17 +76,21 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
     {
         States next = (States)nextState;
 
-        if (m_Enemy.Health.Value <= 0) return EstimateDie(next);
-
+        if (next == States.Die || m_Enemy.Health.Value <= 0)
+            return EstimateDie(next);
         if (next == States.Alert) return EstimateAlert();
         if (next == States.Attack) return EstimateAttack();
         if (next == States.Cover) return EstimateCover();
+        if (next == States.Search) return EstimateSearch();
         return m_Config.Rewards.Correct;
     }
 
     public void OnActionReceived(ActionBuffers actionBuffers)
     {
-        EstimateAgentAction(actionBuffers.DiscreteActions[0]);
+        var rate = EstimateAgentAction(actionBuffers.DiscreteActions[0]);
+        m_Agent.AddReward(rate);
+        if (rate == m_Config.Rewards.Incorrect)
+            EpisodeEndingRequested?.Invoke();
     }
 
     public void WriteDiscreteActionMask(IDiscreteActionMask actionMask) { }
