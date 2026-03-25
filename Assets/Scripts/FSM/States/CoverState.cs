@@ -8,6 +8,7 @@ public class CoverState : BaseState
 {
     [LabelWidth(100)]
     [FormerlySerializedAs("DetectionRadius")]
+	[Unit(UnitAttribute.Meter)]
     [SerializeField, Min(1f)] float m_DetectionRadius;
 
     [LabelWidth(100)]

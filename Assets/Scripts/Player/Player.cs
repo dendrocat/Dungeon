@@ -17,6 +17,7 @@ public class Player : Person
         IInput.Instance.Reloaded += m_WeaponHandler.Reload;
         IInput.Instance.Throwed += m_WeaponHandler.ThrowGrenade;
         IInput.Instance.MeleeAttacked += m_WeaponHandler.MeleeAttack;
+		Enemy.Died += m_WeaponHandler.AddAmmo;
 
         m_WeaponHandler.ChangeWeapon(1);
     }

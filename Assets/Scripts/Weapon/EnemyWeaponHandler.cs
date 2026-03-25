@@ -11,7 +11,7 @@ public class EnemyWeaponHandler : BaseWeaponHandler
             p_Weapon = new RangedWeapon(stats, transform);
             (p_Weapon as RangedWeapon).SetAmmo(stats.MaxAmmoInTube, stats.MaxAmmo);
         }
-        else p_Weapon = new MeleeWeapon(p_WeaponStats, transform);
+        else p_Weapon = new MeleeWeapon(p_WeaponStats as MeleeWeaponStats, transform);
         p_Weapon.Equip();
     }
 

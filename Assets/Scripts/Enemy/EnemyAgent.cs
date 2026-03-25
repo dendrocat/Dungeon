@@ -5,15 +5,13 @@ using Unity.MLAgents.Actuators;
 using DomainLogging;
 
 [RequireComponent(typeof(StateMachine))]
-public class EnemyAgent : Agent, IActivatable
+public class EnemyAgent : Agent
 {
     [SerializeField] RayPerceptionSensorComponent3D m_RaySensorComponent;
     public RayPerceptionSensor RaySensor => m_RaySensorComponent.RaySensor;
 
     [SerializeField] AudioSensorComponent m_AudioSensorComponent;
     public AudioSensor AudioSensor => m_AudioSensorComponent.AudioSensor;
-
-    public bool IsActive => enabled;
 
     StateMachine fsm;
     Enemy m_Enemy;
@@ -41,7 +39,7 @@ public class EnemyAgent : Agent, IActivatable
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        DomainDebug.Log("Heuristic", DomainType.Agent);
+        // DomainDebug.Log("Heuristic", DomainType.Agent);
         var d = actionsOut.DiscreteActions;
         d[0] = state;
     }
@@ -74,7 +72,4 @@ public class EnemyAgent : Agent, IActivatable
     {
         fsm.ChangeState(actions.DiscreteActions[0]);
     }
-
-    public void Activate() => enabled = true;
-    public void Deactivate() => enabled = false;
 }

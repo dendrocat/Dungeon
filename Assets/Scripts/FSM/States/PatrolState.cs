@@ -9,7 +9,8 @@ public class PatrolState : BaseState
 {
     [LabelWidth(100)]
     [FormerlySerializedAs("StopTime")]
-    [SerializeField, Slider(0.1f, 10f), Unit(UnitAttribute.Second)] float m_StopTime = 10;
+    [Unit(UnitAttribute.Second)]
+    [SerializeField, Slider(0.1f, 10f)] float m_StopTime = 10;
     NavMeshAgent m_Agent;
 
     Timer m_StopTimer;
@@ -17,8 +18,6 @@ public class PatrolState : BaseState
 
     protected virtual void SetDestination()
     {
-        m_StopTimer.Reset(m_StopTime + Random.Range(-m_StopTime / 2, m_StopTime / 2));
-
         var n_Waypoint = Director.Instance.WaypointsProvider.GetFreeWaypoint();
         var waypoint = n_Waypoint.Position;
         var nWaypoint = waypoint + Random.onUnitSphere * Waypoint.Radius;
@@ -34,6 +33,8 @@ public class PatrolState : BaseState
         m_Waypoint?.Free();
         m_Waypoint = n_Waypoint;
         m_Waypoint.Occupy();
+
+        m_StopTimer.Reset(m_StopTime + Random.Range(-m_StopTime / 2, m_StopTime / 2));
 
         DomainDebug.Log($"{p_Enemy.name}: Moving to {m_Waypoint.Name}", DomainType.State);
     }
@@ -52,7 +53,10 @@ public class PatrolState : BaseState
 
     protected override void OnUpdate(float dt)
     {
-        if (m_Agent.remainingDistance < m_Agent.stoppingDistance + 0.5f) m_StopTimer.Update(dt);
+        if (!m_StopTimer.IsActive && m_Agent.remainingDistance < m_Agent.stoppingDistance + 0.5f)
+            m_StopTimer.Activate();
+        m_StopTimer.Update(dt);
+        // DomainDebug.Log($"{p_Enemy.name} stop timer isActive: {m_StopTimer.IsActive}, progress {m_StopTimer.Progress}", DomainType.State);
     }
 
     protected override void OnExit()

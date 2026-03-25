@@ -16,4 +16,4 @@ MonoBehaviour:
   m_AmmoSpeed: 30
   m_HitMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 128

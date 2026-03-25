@@ -8,10 +8,12 @@ public class SearchState : PatrolState
 {
     [LabelWidth(100)]
     [FormerlySerializedAs("SearchRange")]
+	[Unit(UnitAttribute.Meter)]
     [SerializeField, MinMaxSlider(5, 40)] Vector2 m_SearchRange = new(5, 30);
 
 	[LabelWidth(100)]
 	[FormerlySerializedAs("RangeGrowTime")]
+	[Unit(UnitAttribute.Second)]
 	[SerializeField, Min(10)] float m_GrowTime = 10;
 	Timer m_GrowTimer;
 
@@ -19,7 +21,9 @@ public class SearchState : PatrolState
 
 	[LabelWidth(100)]
     [FormerlySerializedAs("ChaseTime")]
+	[Unit(UnitAttribute.Second)]
     [SerializeField, Min(3)] float m_ChaseTime = 5;
+
     Timer m_ChaseTimer;
 
     protected override void OnEnter()

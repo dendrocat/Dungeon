@@ -9,6 +9,7 @@ public class AgentValidatorConfig : ScriptableObject
     [System.Serializable]
     public class DetectionConfig
     {
+		[Unit(UnitAttribute.Meter)]
         [SerializeField, Slider(5f, 20f)] float m_RayLength = 10f;
         public float RayLength => m_RayLength;
 

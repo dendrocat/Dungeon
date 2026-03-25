@@ -20,8 +20,9 @@ public abstract class BaseState
 
     [ShowIf(nameof(m_HasTime))]
     [LabelWidth(100)]
-    [FormerlySerializedAs("Time")]
-    [SerializeField, Min(0), Unit(UnitAttribute.Second)] float m_Time = 10;
+	[FormerlySerializedAs("Time")]
+    [Unit(UnitAttribute.Second)]
+    [SerializeField, Min(0)] float m_Time = 10;
 
     bool m_Ended = false;
     Timer m_Timer;

@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AmmoStats
   m_AmmoPrefab: {fileID: 4418923189705824227, guid: a7d9d7b0fecb2ba49b955d627104fa2d, type: 3}
   m_AmmoSpeed: 30
+  m_HitMask:
+    serializedVersion: 2
+    m_Bits: 192

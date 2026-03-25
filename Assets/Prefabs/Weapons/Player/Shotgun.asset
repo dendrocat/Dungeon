@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
   m_WeaponPrefab: {fileID: 7895784510436758991, guid: b19f1c35bf9ec1d4fa08b5d424d3e243, type: 3}
-  m_Type: 2
-  m_Damage: 10
+  p_Type: 2
+  m_Damage: 7
   m_Distance: 20
   m_ReloadTime: 5
   m_FireRate: 100
   m_BulletRate: 5
-  m_MaxAmmoInTube: 40
-  m_MaxAmmo: 12
+  m_MaxAmmoInTube: 6
+  m_MaxAmmo: 60
   x: 7.19
   y: 5.45
   m_AmmoStats: {fileID: 11400000, guid: 46b4fca8094053f4eab9be845ab44963, type: 2}

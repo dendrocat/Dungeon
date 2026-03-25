@@ -10,6 +10,7 @@ public class AmmoStats : ScriptableObject
     public Ammo AmmoPrefab => m_AmmoPrefab;
 
     [Group("set")]
+	[Unit(UnitAttribute.MeterPerSecond)]
     [SerializeField, Min(1)] int m_AmmoSpeed = 100;
     public int AmmoSpeed => m_AmmoSpeed;
 

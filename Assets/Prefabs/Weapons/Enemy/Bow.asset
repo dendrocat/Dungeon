@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: Bow
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
   m_WeaponPrefab: {fileID: 7691624403421222432, guid: 433e26ca0b2970048899e33ca9c7698a, type: 3}
-  m_Type: 2
+  p_Type: 2
   m_Damage: 50
   m_Distance: 100
   m_ReloadTime: 3
-  m_HitMask:
-    serializedVersion: 2
-    m_Bits: 192
   m_FireRate: 5
   m_BulletRate: 1
   m_MaxAmmoInTube: 1

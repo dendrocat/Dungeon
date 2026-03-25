@@ -9,7 +9,6 @@ public class Grenade : Ammo
 
     float m_ExplosionDamage = 20;
     int m_ExplosionRadius = 5;
-    float m_ExplosionForce = 20;
 
     void OnDrawGizmos()
     {
@@ -21,10 +20,9 @@ public class Grenade : Ammo
     public override void Init(in RangedWeaponStats stats)
     {
         base.Init(stats);
-		GrenadeStats s = stats.AmmoStats as GrenadeStats;
-		m_ExplosionDamage = s.ExplosionDamage;
-		m_ExplosionRadius = s.ExplosionRadius;
-		m_ExplosionForce = s.ExplosionForce;
+        GrenadeStats s = stats.AmmoStats as GrenadeStats;
+        m_ExplosionDamage = s.ExplosionDamage;
+        m_ExplosionRadius = s.ExplosionRadius;
 
         m_ExplosionTimer = new Timer(s.ExplosionTime);
         m_ExplosionTimer.TimerEnded += Explode;
@@ -43,11 +41,8 @@ public class Grenade : Ammo
             var dist = Vector3.Distance(transform.position, col.transform.position);
             var multip = 1 - dist / m_ExplosionRadius;
             Attack(col.gameObject, m_ExplosionDamage * multip);
-            col.attachedRigidbody.AddForce(
-                (col.transform.position - transform.position).normalized * m_ExplosionForce,
-                ForceMode.Impulse);
         }
-		Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     void Update()

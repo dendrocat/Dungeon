@@ -2,8 +2,7 @@ using UnityEngine;
 using TriInspector;
 
 [DeclareFoldoutGroup("set", Title = "Settings", Expanded = true)]
-[DeclareFoldoutGroup("cmp", Title = "Components")]
-[RequireComponent(typeof(PlayerWeaponHandler))]
+[RequireComponent(typeof(BaseWeaponHandler))]
 public class WeaponAudioEmitter : MonoBehaviour, IAudioEmitter
 {
     [Group("set")]
@@ -23,7 +22,7 @@ public class WeaponAudioEmitter : MonoBehaviour, IAudioEmitter
 
     void Awake()
     {
-        GetComponent<PlayerWeaponHandler>().Attacked += OnAttacked;
+        GetComponent<BaseWeaponHandler>().Attacked += OnAttacked;
         m_AudioTimer = new Timer(m_AudioTime, false);
         m_AudioTimer.TimerEnded += () => m_Type = WeaponType.None;
     }

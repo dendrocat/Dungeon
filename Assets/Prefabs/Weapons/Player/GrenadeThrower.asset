@@ -13,17 +13,14 @@ MonoBehaviour:
   m_Name: GrenadeThrower
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
   m_WeaponPrefab: {fileID: 5796934852874072609, guid: cf2b7ce24617d0f41ac6fb6d2642bccf, type: 3}
-  m_Type: 3
+  p_Type: 3
   m_Damage: 1
   m_Distance: 100
   m_ReloadTime: 5
-  m_HitMask:
-    serializedVersion: 2
-    m_Bits: 192
   m_FireRate: 100
   m_BulletRate: 1
   m_MaxAmmoInTube: 1
-  m_MaxAmmo: 3
+  m_MaxAmmo: 999
   x: 0.2
   y: 0.2
   m_AmmoStats: {fileID: 11400000, guid: 4c7b95f581278e64ea0f2cfe82707f08, type: 2}

@@ -63,14 +63,14 @@ public class StateMachine : MonoBehaviour
 
     public bool ChangeState(int state)
     {
-        DomainDebug.Log($"Trying change state to {state}", DomainType.StateMachine);
+        DomainDebug.Log($"{m_Enemy.name}: Trying change state to {state}", DomainType.StateMachine);
         if (!Enum.IsDefined(typeof(States), state)) return false;
-        DomainDebug.Log($"Changing state to {(States)state}", DomainType.StateMachine);
         if ((States)state == m_ActiveState.State)
         {
             m_ActiveState.MachineState.Continue();
             return true;
         }
+        DomainDebug.Log($"{m_Enemy.name}: Changing state to {(States)state}", DomainType.StateMachine);
 
         m_ActiveState.MachineState.Exit();
 
@@ -82,7 +82,7 @@ public class StateMachine : MonoBehaviour
 
     void OnStateEnded(bool canActive)
     {
-        DomainDebug.Log($"{m_ActiveState.State} ended. This state can be active {canActive}. Request next state", DomainType.StateMachine);
+        DomainDebug.Log($"{m_Enemy.name}: {m_ActiveState.State} ended. This state can be active {canActive}. Request next state", DomainType.StateMachine);
         m_CanActiveState = canActive;
         ChangeStateRequested.Invoke();
     }

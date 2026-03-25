@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074a0def78dfe454082775f1f3173203, type: 3}
-  m_Name: Tank
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponStats
+  m_Script: {fileID: 11500000, guid: 8bb3671aabe8cf64f9728c3e20c89712, type: 3}
+  m_Name: TankWeapon
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeWeaponStats
   m_WeaponPrefab: {fileID: 6468306000038308540, guid: da848a62c37141a478dfb04b2d3107a6, type: 3}
-  m_Type: 1
+  p_Type: 1
   m_Damage: 60
   m_Distance: 4
-  m_ReloadTime: 20
+  m_ReloadTime: 15
+  m_BackDamage: 120
   m_HitMask:
     serializedVersion: 2
     m_Bits: 64

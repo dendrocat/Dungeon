@@ -19,7 +19,7 @@ public class Ammo : MonoBehaviour
         m_Speed = stats.AmmoStats.AmmoSpeed;
 
         p_HitMask = stats.AmmoStats.HitMask;
-		Destroy(gameObject, 1000);
+		Destroy(gameObject, 60);
     }
 
     public void Launch(Vector3 dir)

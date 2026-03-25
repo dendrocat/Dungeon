@@ -7,7 +7,8 @@ namespace DomainLogging
     public enum DomainType
     {
         None,
-        Director, Enemy,
+        Person,
+        Director,
         Agent, Training,
         StateMachine, State,
         Player,
@@ -21,17 +22,17 @@ namespace DomainLogging
     {
         static IReadOnlyDomainDict m_Enabled = new DomainDict(){
         { DomainType.None, true },
+        { DomainType.Person, true },
         { DomainType.Director, true },
-        { DomainType.Enemy, false },
-        { DomainType.Agent, true },
+        { DomainType.Agent, false },
         { DomainType.Training, true },
         { DomainType.StateMachine, false },
         { DomainType.State, false },
         { DomainType.Player, true },
         { DomainType.Room, true },
         { DomainType.Sound, false },
-        { DomainType.UI, true },
-        { DomainType.Weapon, true },
+        { DomainType.UI, false },
+        { DomainType.Weapon, false },
     };
 
 

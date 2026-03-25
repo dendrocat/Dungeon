@@ -1,17 +1,28 @@
 using UnityEngine;
 
-public class MeleeWeapon : Weapon<WeaponStats>
+public class MeleeWeapon : Weapon<MeleeWeaponStats>
 {
 
-    public MeleeWeapon(in WeaponStats stats, in Transform parent) : base(stats, parent)
+    public MeleeWeapon(in MeleeWeaponStats stats, in Transform parent) : base(stats, parent)
     { }
+
+    bool IsBack(Transform target)
+    {
+        return Vector3.Dot(target.forward, (p_GObj.transform.position - target.position).normalized) < 0;
+    }
 
     protected override void OnAttack(Vector3? target = null)
     {
         base.OnAttack();
-        Collider[] cols = Physics.OverlapSphere(p_GObj.transform.position, p_Stats.Distance);
+        Collider[] cols = Physics.OverlapSphere(p_GObj.transform.position, p_Stats.Distance, p_Stats.HitMask);
+
+        int damage;
         foreach (var col in cols)
-            col.GetComponent<IDamagable>()?.TakeDamage(p_Stats.Damage);
-		Reload();
+        {
+            if (IsBack(col.transform)) damage = p_Stats.BackDamage;
+            else damage = p_Stats.Damage;
+            col.GetComponent<IDamagable>()?.TakeDamage(damage);
+        }
+        Reload();
     }
 }

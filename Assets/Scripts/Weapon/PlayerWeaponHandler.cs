@@ -4,6 +4,7 @@ using DomainLogging;
 public class PlayerWeaponHandler : BaseWeaponHandler
 {
     protected override string StatsLabel => "Melee Weapon Stats";
+    [TriInspector.PropertyOrder(10)]
     [SerializeField] RangedWeaponStats[] m_Weapons;
     [SerializeField] RangedWeaponStats m_GrenadeStats;
 
@@ -21,19 +22,20 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         m_AmmoInTube = new int[m_Weapons.Length];
         for (int i = 0; i < m_Weapons.Length; ++i)
         {
-            m_Ammo[i] = m_Weapons[i].MaxAmmo;
+            m_Ammo[i] = m_Weapons[i].MaxAmmo - m_Weapons[i].MaxAmmoInTube;
             m_AmmoInTube[i] = m_Weapons[i].MaxAmmoInTube;
         }
 
         Grenade = new RangedWeapon(m_GrenadeStats, transform);
         Grenade.SetAmmo(m_GrenadeStats.MaxAmmoInTube, m_GrenadeStats.MaxAmmo - m_GrenadeStats.MaxAmmoInTube);
 
-        m_Melee = new MeleeWeapon(p_WeaponStats, transform);
+        m_Melee = new MeleeWeapon(p_WeaponStats as MeleeWeaponStats, transform);
     }
 
     public void ChangeWeapon(int index)
     {
-        if (index - 1 == m_Index) return;
+        index = (index - 1) % m_Weapons.Length;
+        if (index == m_Index) return;
         if (Weapon != null)
         {
             m_Ammo[m_Index] = Weapon.Ammo;
@@ -41,7 +43,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
             Weapon.Unequip();
         }
 
-        m_Index = index - 1;
+        m_Index = index;
         DomainDebug.Log($"Weapon index: {m_Index}, m_Weapons cnt : {m_Weapons.Length}", DomainType.Weapon);
         p_Weapon = new RangedWeapon(m_Weapons[m_Index], transform);
         (p_Weapon as RangedWeapon).SetAmmo(m_AmmoInTube[m_Index], m_Ammo[m_Index]);
@@ -57,13 +59,22 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         if (p_Weapon.Attack()) RaiseAttacked(m_Weapons[m_Index]);
     }
 
+    int GetAdding(RangedWeaponStats stats)
+    {
+        return Random.Range(1, Mathf.FloorToInt(m_Weapons[m_Index].MaxAmmo * 0.15f));
+    }
+
     public void AddAmmo()
     {
-        Weapon.AddAmmo(Random.Range(5, 16));
+        int add = GetAdding(m_Weapons[m_Index]);
+        Weapon.AddAmmo(add);
+        DomainDebug.Log($"{m_Weapons[m_Index].name} added {add} bullets", DomainType.Weapon);
         for (int i = 0; i < m_Weapons.Length; ++i)
         {
             if (m_Index == i) continue;
-            m_Ammo[i] = Mathf.Min(m_Ammo[i] + Random.Range(5, 16), m_Weapons[i].MaxAmmo);
+            add = GetAdding(m_Weapons[i]);
+            DomainDebug.Log($"{m_Weapons[i].name} added {add} bullets", DomainType.Weapon);
+            m_Ammo[i] = Mathf.Min(m_Ammo[i] + add, m_Weapons[i].MaxAmmo);
         }
     }
 
