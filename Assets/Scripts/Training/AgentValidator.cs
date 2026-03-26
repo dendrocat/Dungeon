@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.MLAgents.Actuators;
 using UnityEngine.Events;
+using DomainLogging;
 
 [RequireComponent(typeof(EnemyAgent))]
 public class AgentValidator : MonoBehaviour, IActionReceiver
@@ -16,6 +17,7 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
     {
         m_Enemy = GetComponentInParent<Enemy>();
         m_Agent = m_Enemy.MLAgent;
+		m_Agent.ActionReceived += OnActionReceived;
     }
 
     float EstimateDie(States next)
@@ -69,8 +71,16 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
     {
         if (Director.Instance.PlayerVisible)
             return m_Config.Rewards.Incorrect;
+		if (!Director.Instance.LastPlayerPos.HasValue)
+			return m_Config.Rewards.Incorrect;
         return m_Config.Rewards.Correct;
     }
+
+	float EstimateIdlePatrol() {
+		if (Director.Instance.PlayerVisible)
+			return m_Config.Rewards.Incorrect;
+		return m_Config.Rewards.Correct;
+	}
 
     public float EstimateAgentAction(int nextState)
     {
@@ -82,6 +92,7 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
         if (next == States.Attack) return EstimateAttack();
         if (next == States.Cover) return EstimateCover();
         if (next == States.Search) return EstimateSearch();
+		if (next == States.Idle || next == States.Patrol) return EstimateIdlePatrol();
         return m_Config.Rewards.Correct;
     }
 
@@ -89,6 +100,7 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
     {
         var rate = EstimateAgentAction(actionBuffers.DiscreteActions[0]);
         m_Agent.AddReward(rate);
+		DomainDebug.Log($"Agent: {m_Enemy.name} getted {rate}. All reward: {m_Agent.GetCumulativeReward()}", DomainType.Agent);
         if (rate == m_Config.Rewards.Incorrect)
             EpisodeEndingRequested?.Invoke();
     }

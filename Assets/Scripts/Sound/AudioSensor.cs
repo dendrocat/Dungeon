@@ -26,6 +26,7 @@ public class AudioSensor : ISensor
     public AudioSensor(AudioInput input, string name)
     {
         m_Name = name;
+		m_Input = input;
         m_Output = new();
     }
 

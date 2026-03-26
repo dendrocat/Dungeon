@@ -46,8 +46,8 @@ public class Timer : IActivatable
         if (m_Timer >= m_MaxTimer)
         {
             m_Timer = m_MaxTimer;
-            TimerEnded?.Invoke();
             Deactivate();
+            TimerEnded?.Invoke();
         }
     }
 

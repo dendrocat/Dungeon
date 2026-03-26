@@ -21,7 +21,7 @@ public abstract class BaseWeaponHandler : MonoBehaviour, IActivatable
         if (p_Weapon.Attack()) RaiseAttacked(p_WeaponStats);
     }
     public virtual void Reload() { p_Weapon.Reload(); }
-    protected virtual void Update() { p_Weapon.OnUpdate(); }
+    protected virtual void FixedUpdate() { p_Weapon.Update(Time.fixedDeltaTime); }
 
     protected void RaiseAttacked(WeaponStats stats) => Attacked?.Invoke(stats);
 }

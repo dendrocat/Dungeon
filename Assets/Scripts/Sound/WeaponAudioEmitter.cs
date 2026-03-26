@@ -47,8 +47,8 @@ public class WeaponAudioEmitter : MonoBehaviour, IAudioEmitter
         if (m_FireVolume < m_MeleeVolume) m_FireVolume = 2 * m_MeleeVolume;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        m_AudioTimer.Update(Time.deltaTime);
+        m_AudioTimer.Update(Time.fixedDeltaTime);
     }
 }

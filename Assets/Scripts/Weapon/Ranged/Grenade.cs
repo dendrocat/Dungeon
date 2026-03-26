@@ -45,8 +45,8 @@ public class Grenade : Ammo
         Destroy(gameObject);
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        m_ExplosionTimer.Update(Time.deltaTime);
+        m_ExplosionTimer.Update(Time.fixedDeltaTime);
     }
 }

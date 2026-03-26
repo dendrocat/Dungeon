@@ -61,7 +61,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
 
     int GetAdding(RangedWeaponStats stats)
     {
-        return Random.Range(1, Mathf.FloorToInt(m_Weapons[m_Index].MaxAmmo * 0.15f));
+        return Random.Range(0, Mathf.Max(2, Mathf.FloorToInt(m_Weapons[m_Index].MaxAmmo * 0.15f)));
     }
 
     public void AddAmmo()
@@ -76,6 +76,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
             DomainDebug.Log($"{m_Weapons[i].name} added {add} bullets", DomainType.Weapon);
             m_Ammo[i] = Mathf.Min(m_Ammo[i] + add, m_Weapons[i].MaxAmmo);
         }
+        Grenade.AddAmmo(GetAdding(m_GrenadeStats));
     }
 
     public void ThrowGrenade()
@@ -98,12 +99,12 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         if (m_Melee.Attack()) RaiseAttacked(p_WeaponStats);
     }
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
-        if (p_Weapon.Equiped) p_Weapon.OnUpdate();
+        if (p_Weapon.Equiped) p_Weapon.Update(Time.fixedDeltaTime);
 
-        Grenade.OnUpdate();
-        m_Melee.OnUpdate();
+        Grenade.Update(Time.fixedDeltaTime);
+        m_Melee.Update(Time.fixedDeltaTime);
         if (Grenade.Equiped && (Grenade.Ammo <= 0 || Grenade.IsReloading))
         {
             Grenade.Unequip(false);

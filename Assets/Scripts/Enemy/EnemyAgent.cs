@@ -1,48 +1,58 @@
 using UnityEngine;
+using UnityEngine.Events;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
-using DomainLogging;
+// using DomainLogging;
 
 [RequireComponent(typeof(StateMachine))]
 public class EnemyAgent : Agent
 {
+    public event UnityAction<ActionBuffers> ActionReceived;
+
     [SerializeField] RayPerceptionSensorComponent3D m_RaySensorComponent;
     public RayPerceptionSensor RaySensor => m_RaySensorComponent.RaySensor;
 
     [SerializeField] AudioSensorComponent m_AudioSensorComponent;
     public AudioSensor AudioSensor => m_AudioSensorComponent.AudioSensor;
 
+    [SerializeField, Min(1)] float m_UpdateSensorTime = 1;
+    Timer m_UpdateTimer;
+
     StateMachine fsm;
     Enemy m_Enemy;
+
 
     public override void Initialize()
     {
         fsm = GetComponent<StateMachine>();
         fsm.ChangeStateRequested += RequestDecision;
 
-		m_Enemy = GetComponentInParent<Enemy>();
+        m_Enemy = GetComponentInParent<Enemy>();
+
+        m_UpdateTimer = new Timer(m_UpdateSensorTime);
+        m_UpdateTimer.TimerEnded += UpdateSensors;
     }
 
-    void Start()
-    {
-        IInput.Instance.WeaponNumed += OnNum;
-    }
-
-    void OnNum(int state)
-    {
-        this.state = state - 1;
-        // DomainDebug.Log($"On Numed: state {(States)this.state}", DomainType.Agent);
-    }
-
-    int state = 0;
-
-    public override void Heuristic(in ActionBuffers actionsOut)
-    {
-        // DomainDebug.Log("Heuristic", DomainType.Agent);
-        var d = actionsOut.DiscreteActions;
-        d[0] = state;
-    }
+    // void Start()
+    // {
+    //     IInput.Instance.WeaponNumed += OnNum;
+    // }
+    //
+    // void OnNum(int state)
+    // {
+    //     this.state = state - 1;
+    //     // DomainDebug.Log($"On Numed: state {(States)this.state}", DomainType.Agent);
+    // }
+    //
+    // int state = 0;
+    //
+    // public override void Heuristic(in ActionBuffers actionsOut)
+    // {
+    //     // DomainDebug.Log("Heuristic", DomainType.Agent);
+    //     var d = actionsOut.DiscreteActions;
+    //     d[0] = state;
+    // }
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -70,6 +80,21 @@ public class EnemyAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        ActionReceived?.Invoke(actions);
         fsm.ChangeState(actions.DiscreteActions[0]);
+    }
+
+    void UpdateSensors()
+    {
+        RaySensor?.Update();
+        AudioSensor?.Update();
+
+        m_UpdateTimer.Reset();
+        m_UpdateTimer.Activate();
+    }
+
+    void FixedUpdate()
+    {
+        m_UpdateTimer.Update(Time.fixedDeltaTime);
     }
 }

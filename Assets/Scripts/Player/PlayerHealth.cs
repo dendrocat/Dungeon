@@ -49,9 +49,9 @@ public class PlayerHealth : Health
         m_Regen.Reset();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        m_UntilRegen.Update(Time.deltaTime);
-        m_Regen.Update(Time.deltaTime);
+        m_UntilRegen.Update(Time.fixedDeltaTime);
+        m_Regen.Update(Time.fixedDeltaTime);
     }
 }

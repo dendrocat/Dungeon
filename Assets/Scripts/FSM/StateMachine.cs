@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 using DomainLogging;
@@ -57,7 +58,13 @@ public class StateMachine : MonoBehaviour
 
     public IReadOnlyList<bool> GetExitStates()
     {
-        m_ExitStates[GetActiveState()] = m_CanActiveState;
+        if (m_ExitStates[GetActiveState()])
+            m_ExitStates[GetActiveState()] = m_CanActiveState;
+        // StringBuilder s = new();
+        // for (int i = 0; i < m_ExitStates.Length; ++i) {
+        // 	s.AppendLine($"{(States)i} can {m_ExitStates[i]}");
+        // }
+        // DomainDebug.Log($"Exit config: {s.ToString()}", DomainType.StateMachine);
         return m_ExitStates;
     }
 
@@ -97,8 +104,8 @@ public class StateMachine : MonoBehaviour
     }
 #endif
 
-    void Update()
+    void FixedUpdate()
     {
-        m_ActiveState.MachineState.Update(Time.deltaTime);
+        m_ActiveState.MachineState.Update(Time.fixedDeltaTime);
     }
 }

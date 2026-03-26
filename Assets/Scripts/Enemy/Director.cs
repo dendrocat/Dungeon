@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using DomainLogging;
 
 [RequireComponent(typeof(WaypointsProvider), typeof(EnemySpawner))]
 public class Director : MonoBehaviour
@@ -13,7 +14,7 @@ public class Director : MonoBehaviour
 
     [SerializeField] Player m_Player;
     public Transform PlayerTransform => m_Player.transform;
-	public bool PlayerLighted => m_Player.IsLighted;
+    public bool PlayerLighted => m_Player.IsLighted;
     public Vector3? LastPlayerPos { get; private set; } = null;
 
     bool m_PlayerVisible = false;
@@ -41,7 +42,10 @@ public class Director : MonoBehaviour
         Instance = this;
         WaypointsProvider = GetComponent<WaypointsProvider>();
         m_Spawner = GetComponent<EnemySpawner>();
-
+    }
+    public void SetPlayer(Player player)
+    {
+        m_Player = player;
     }
 
     void OnDestroy()
@@ -69,7 +73,10 @@ public class Director : MonoBehaviour
         if (enemy.MLAgent.RaySensor?.RayPerceptionOutput?.RayOutputs == null)
             return false;
         foreach (var outputs in enemy.MLAgent.RaySensor.RayPerceptionOutput.RayOutputs)
+        {
+			// DomainLogging.DomainDebug.Log($"Check ray out: {outputs.HasHit} {outputs.HitGameObject?.tag} {outputs.HitTaggedObject}", DomainType.Director);
             if (outputs.HitTaggedObject) return true;
+        }
         return false;
     }
 
@@ -83,6 +90,7 @@ public class Director : MonoBehaviour
     void FixedUpdate()
     {
         PlayerVisible = m_Enemies?.Any(GetPlayerVisible) ?? false;
+        DomainDebug.Log($"PlayerVisible: {m_PlayerVisible}", DomainType.Director);
     }
 
 }

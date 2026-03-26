@@ -20,7 +20,7 @@ MonoBehaviour:
   m_FireRate: 100
   m_BulletRate: 1
   m_MaxAmmoInTube: 1
-  m_MaxAmmo: 999
+  m_MaxAmmo: 3
   x: 0.2
   y: 0.2
   m_AmmoStats: {fileID: 11400000, guid: 4c7b95f581278e64ea0f2cfe82707f08, type: 2}

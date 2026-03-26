@@ -7,7 +7,8 @@ public class TrainingArea : MonoBehaviour
 {
     [SerializeField] AgentValidatorConfig m_Config;
     [SerializeField] EnemySpawner m_Spawner;
-    [SerializeField] Player m_Player;
+    [SerializeField] Player m_PlayerPrefab = null;
+    Player m_Player = null;
     [SerializeField] Vector2 m_PlayerSpawnZone;
     [SerializeField] LayerMask m_ObstacleMask;
 
@@ -22,6 +23,8 @@ public class TrainingArea : MonoBehaviour
         m_Spawner.Spawned += RegisterEnemies;
         Player.Died += OnPlayerDied;
         Enemy.Died += OnEnemyDied;
+
+        AgentValidator.EpisodeEndingRequested += EndEpisode;
     }
 
     void SetPlayer()
@@ -38,8 +41,17 @@ public class TrainingArea : MonoBehaviour
                 nPos = Vector3.positiveInfinity;
         }
         DomainDebug.Log($"Setting player to {nPos}", DomainType.Training);
-        m_Player.transform.position = nPos;
+        if (m_Player != null)
+        {
+            Destroy(m_Player.gameObject);
+        }
+        if (m_PlayerPrefab != null)
+        {
+            m_Player = Instantiate(m_PlayerPrefab.gameObject, nPos, Quaternion.identity).GetComponent<Player>();
+            Director.Instance.SetPlayer(m_Player);
+        }
     }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.tan;
@@ -75,7 +87,7 @@ public class TrainingArea : MonoBehaviour
     void OnPlayerDied()
     {
         m_Group.AddGroupReward(m_Config.Rewards.PlayerKill);
-        m_Group.EndGroupEpisode();
+        OnEnvironmentReseted();
     }
 
     void OnEnemyDied()
@@ -83,7 +95,15 @@ public class TrainingArea : MonoBehaviour
         ++m_DiedEnemies;
         if (m_DiedEnemies != m_Group.GetRegisteredAgents().Count) return;
         m_Group.AddGroupReward(m_Config.Rewards.GroupDie);
-        m_Group.EndGroupEpisode();
+        OnEnvironmentReseted();
+    }
+
+    void EndEpisode()
+    {
+        DomainDebug.Log($"Episode ended", DomainType.Training);
+        // m_Group.EndGroupEpisode();
+        // m_Player.GetComponentInChildren<Agent>()?.EndEpisode();
+        // OnEnvironmentReseted();
     }
 
 }

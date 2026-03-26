@@ -43,7 +43,7 @@ MonoBehaviour:
   - State: 2
     ExitStates: 030000000500000006000000
   - State: 3
-    ExitStates: 040000000500000006000000
+    ExitStates: 04000000030000000500000006000000
   - State: 4
     ExitStates: 030000000500000006000000
   - State: 5
@@ -58,7 +58,7 @@ MonoBehaviour:
       data:
         m_HasTime: 1
         m_IsExitTime: 1
-        m_Time: 10
+        m_Time: 15
     - rid: 5901800330069540968
       type: {class: PatrolState, ns: , asm: Assembly-CSharp}
       data:
@@ -70,8 +70,8 @@ MonoBehaviour:
       type: {class: AlertState, ns: , asm: Assembly-CSharp}
       data:
         m_HasTime: 1
-        m_IsExitTime: 0
-        m_Time: 2
+        m_IsExitTime: 1
+        m_Time: 30
     - rid: 5901800443548270706
       type: {class: AttackState, ns: , asm: Assembly-CSharp}
       data:
@@ -93,11 +93,10 @@ MonoBehaviour:
       data:
         m_HasTime: 1
         m_IsExitTime: 1
-        m_Time: 120
-        m_StopTime: 10
+        m_Time: 60
+        m_StopTime: 4
         m_SearchRange: {x: 5, y: 30}
         m_GrowTime: 10
-        m_ChaseTime: 5
     - rid: 5901800443548270709
       type: {class: DieState, ns: , asm: Assembly-CSharp}
       data:

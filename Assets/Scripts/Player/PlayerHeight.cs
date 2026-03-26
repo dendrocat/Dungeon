@@ -34,7 +34,7 @@ public class PlayerHeight : MonoBehaviour
         m_ColliderStayCenter = m_Col.center.y;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float camY = IInput.Instance.IsCrouching ? m_CameraCrouchHeight : m_CameraStayHeight;
 
@@ -46,7 +46,7 @@ public class PlayerHeight : MonoBehaviour
             m_Cam.localPosition = Vector3.Lerp(
                     m_Cam.localPosition,
                     camPos,
-                    m_TransitionSpeed * Time.deltaTime
+                    m_TransitionSpeed * Time.fixedDeltaTime
             );
             if (Mathf.Abs(camY - m_Cam.localPosition.y) < c_StopTransition)
                 m_Cam.localPosition = camPos;

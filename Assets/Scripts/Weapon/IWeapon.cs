@@ -7,7 +7,7 @@ public interface IWeapon
     bool Attack(UnityEngine.Vector3? target = null);
     void Reload();
 
-    void OnUpdate();
+    void Update(float dt);
 
     void Equip();
     void Unequip(bool destroy);

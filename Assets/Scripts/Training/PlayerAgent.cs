@@ -39,8 +39,11 @@ public class PlayerAgent : Agent, IInput
     void OnDied()
     {
         AddReward(-100);
+		EndEpisode();
     }
 
+    public override void Heuristic(in ActionBuffers actionsOut)
+    { }
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -53,16 +56,15 @@ public class PlayerAgent : Agent, IInput
     public override void OnActionReceived(ActionBuffers actions)
     {
         var inp = actions.ContinuousActions;
-        Move = new Vector2((inp[0] - 0.5f) * 2, (inp[1] - 0.5f) * 2).normalized;
-        MouseDelta = new Vector2((inp[2] - 0.5f) * 2, 0).normalized;
-        IsCrouching = inp[3] > 0.5f;
-        IsRunning = inp[4] > 0.5f;
-        Attack = inp[5] > 0.5f;
+        Move = new Vector2(inp[0], inp[1]).normalized;
+        MouseDelta = new Vector2(inp[2], 0);
+        IsCrouching = inp[3] > 0;
+        IsRunning = inp[4] > 0;
+        Attack = inp[5] > 0;
 
-        if (inp[6] > 0.5f) Jumped?.Invoke();
-        if (inp[7] > 0.5f) Reloaded?.Invoke();
-        if (inp[8] > 0.5f) Throwed?.Invoke();
-        if (inp[9] > 0.5f) MeleeAttacked?.Invoke();
-        WeaponNumed?.Invoke(Mathf.FloorToInt(3 * inp[10]));
+        if (inp[6] > 0) Reloaded?.Invoke();
+        if (inp[7] > 0) Throwed?.Invoke();
+        if (inp[8] > 0) MeleeAttacked?.Invoke();
+        WeaponNumed?.Invoke(Mathf.FloorToInt(3 * (inp[9] + 1) * 0.5f) + 1);
     }
 }

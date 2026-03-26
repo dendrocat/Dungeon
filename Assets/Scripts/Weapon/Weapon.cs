@@ -51,10 +51,14 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     protected virtual void AfterReload()
     { }
 
-    public virtual void OnUpdate()
+    public void Update(float dt)
     {
-        m_ReloadTimer.Update(Time.deltaTime);
+        m_ReloadTimer.Update(dt);
+        OnUpdate(dt);
     }
+
+    protected virtual void OnUpdate(float dt)
+    { }
 
     public virtual void Equip()
     {

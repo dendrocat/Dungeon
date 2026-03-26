@@ -25,9 +25,9 @@ public class MouseLook : MonoBehaviour, IActivatable
         m_Input = IInput.Instance;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        var dt = m_Input.MouseDelta * m_Sensivity * Time.deltaTime;
+        var dt = m_Input.MouseDelta * m_Sensivity * Time.fixedDeltaTime;
 
         xRot -= dt.y;
         xRot = Mathf.Clamp(xRot, -m_MaxAngle, m_MaxAngle);
