@@ -39,7 +39,7 @@ public class Grenade : Ammo
         foreach (var col in colls)
         {
             var dist = Vector3.Distance(transform.position, col.transform.position);
-            var multip = 1 - dist / m_ExplosionRadius;
+            var multip = Mathf.Clamp01(1 - dist / m_ExplosionRadius);
             Attack(col.gameObject, m_ExplosionDamage * multip);
         }
         Destroy(gameObject);

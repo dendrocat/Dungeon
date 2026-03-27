@@ -26,7 +26,7 @@ public class AudioSensor : ISensor
     public AudioSensor(AudioInput input, string name)
     {
         m_Name = name;
-		m_Input = input;
+        m_Input = input;
         m_Output = new();
     }
 
@@ -48,9 +48,12 @@ public class AudioSensor : ISensor
         {
             foreach (var emitter in hit.GetComponentsInChildren<IAudioEmitter>())
             {
-                if (m_Output.AudioLevel > emitter.GetAudioLevel()) continue;
                 audioLevel = emitter.GetAudioLevel();
-                audioLevel *= (1 - Vector3.Distance(hit.transform.position, m_Input.Transform.position) / m_Input.Radius);
+                var dist = Vector3.Distance(hit.transform.position, m_Input.Transform.position);
+                audioLevel *= Mathf.Clamp01(1 - dist / m_Input.Radius);
+
+                if (m_Output.AudioLevel < audioLevel) continue;
+                m_Output.AudioLevel = audioLevel;
                 m_Output.AudioPosition = hit.transform.position;
             }
         }

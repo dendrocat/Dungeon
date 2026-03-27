@@ -101,9 +101,9 @@ public class TrainingArea : MonoBehaviour
     void EndEpisode()
     {
         DomainDebug.Log($"Episode ended", DomainType.Training);
-        // m_Group.EndGroupEpisode();
-        // m_Player.GetComponentInChildren<Agent>()?.EndEpisode();
-        // OnEnvironmentReseted();
+        m_Group.EndGroupEpisode();
+        m_Player.GetComponentInChildren<Agent>()?.EndEpisode();
+        OnEnvironmentReseted();
     }
 
 }
