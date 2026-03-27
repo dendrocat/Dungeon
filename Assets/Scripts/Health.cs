@@ -19,7 +19,7 @@ public abstract class Health : MonoBehaviour, IDamagable
     [LabelText("Max health"), FormerlySerializedAs("MaxHealth")]
     [SerializeField, Min(10)]
     protected float p_MaxHealth = 100;
-	public float Max => p_MaxHealth;
+    public float Max => p_MaxHealth;
 
     protected virtual void Awake()
     {

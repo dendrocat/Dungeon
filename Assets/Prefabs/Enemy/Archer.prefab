@@ -51,10 +51,10 @@ MonoBehaviour:
   m_RaysPerDirection: 4
   m_MaxRayDegrees: 60
   m_SphereCastRadius: 1
-  m_RayLength: 20
+  m_RayLength: 50
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2147484667
   m_ObservationStacks: 1
   m_AlternatingRayOrder: 0
   m_UseBatchedRaycasts: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioSensorComponent
   m_SensorName: AudioSensor
-  m_AudioRadius: 10
+  m_AudioRadius: 20
   m_AudioMask:
     serializedVersion: 2
     m_Bits: 256
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Policies.BehaviorParameters
   m_BrainParameters:
-    VectorObservationSize: 12
+    VectorObservationSize: 11
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: Archer
+  m_BehaviorName: Enemy
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1

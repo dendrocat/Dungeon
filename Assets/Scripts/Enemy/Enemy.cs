@@ -38,11 +38,4 @@ public class Enemy : Person
 
         m_WeaponHandler.SetTarget(Director.Instance.PlayerTransform);
     }
-
-    protected override void Die()
-    {
-        base.Die();
-        NavAgent.ResetPath();
-        NavAgent.enabled = false;
-    }
 }

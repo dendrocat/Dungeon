@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8306274832488280466}
   - component: {fileID: 8828609211340557486}
   - component: {fileID: 7146510858894351253}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 5188076427120684424}
   - component: {fileID: 1237673096499679094}
   - component: {fileID: 6723045653138809120}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,10 +186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b059ee906c2d9524ab6f3db8a0a61e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grenade
-  m_ExplosionDamage: 30
-  m_ExplosionRadius: 7
-  m_ExplosionTime: 3.6
-  m_ExplosionForce: 5617
 --- !u!114 &6723045653138809120
 MonoBehaviour:
   m_ObjectHideFlags: 0

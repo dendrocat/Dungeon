@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: ValidatorConfig
   m_EditorClassIdentifier: Assembly-CSharp::AgentValidatorConfig
   m_Detection:
-    m_RayLength: 10
+    m_RayLengthScale: 0.5
     m_AudioLevel: 0.5
-  m_ScorePlayerKill: 100
-  m_ScoreDie: -100
-  m_ScoreCorrect: 50
-  m_ScoreIncorrect: -200
+  m_Rewards:
+    m_PlayerKill: 300
+    m_Die: -100
+    m_GroupDie: -150
+    m_Correct: 300
+    m_Incorrect: -500

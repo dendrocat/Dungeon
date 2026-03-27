@@ -25,8 +25,13 @@ public abstract class Person : MonoBehaviour, IDamagable
     /// <inheritdoc/>
     public void TakeDamage(float damage)
     {
+        if (damage < 0)
+        {
+            // DomainDebug.LogError($"{name} recieved negative damage: {damage}", DomainType.Person);
+            return;
+        }
         p_Health.TakeDamage(damage);
-        DomainDebug.Log($"{name} taken {damage}. Remainig health: {p_Health.Value}", DomainType.Person);
+        DomainDebug.Log($"{name} recieved {damage}. Remaining health: {p_Health.Value}", DomainType.Person);
     }
 
     protected virtual void Die()

@@ -21,7 +21,7 @@ public class AttackState : BaseState
         m_Player = Director.Instance.PlayerTransform;
 
         baseStoppingDistance = m_Agent.stoppingDistance;
-        m_Agent.stoppingDistance = m_AttackDistance;
+        m_Agent.stoppingDistance = m_AttackDistance * 0.8f;
         m_Agent.speed = p_Enemy.InAttackSpeed;
 
         distanceOffset = m_AttackDistance / 3;
@@ -30,7 +30,8 @@ public class AttackState : BaseState
 
     void SetDestination()
     {
-        NavMesh.SamplePosition(m_Player.position,
+        Vector3 offset = (p_Enemy.transform.position - m_Player.position).normalized * m_Agent.stoppingDistance;
+        NavMesh.SamplePosition(m_Player.position + offset,
                 out var hit, 10f, NavMesh.AllAreas);
 
         m_Agent.SetDestination(hit.position);
@@ -38,23 +39,19 @@ public class AttackState : BaseState
 
     protected override void OnUpdate(float dt)
     {
-        var dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
-        if (dist < (m_AttackDistance / 2 + distanceOffset) && m_Agent.hasPath) m_Agent.ResetPath();
-
         if (!Director.Instance.PlayerVisible) { StateEnd(); return; }
+
+        var dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
         if (dist <= m_AttackDistance)
         {
-            {
-                p_Enemy.transform.LookAt(m_Player);
-                p_Enemy.WeaponHandler.Attack();
-            }
+            p_Enemy.transform.LookAt(m_Player);
+            p_Enemy.WeaponHandler.Attack();
         }
         else SetDestination();
     }
 
     protected override void OnExit()
     {
-        m_Agent.ResetPath();
         m_Agent.speed = p_Enemy.InWalkSpeed;
         m_Agent.stoppingDistance = baseStoppingDistance;
 

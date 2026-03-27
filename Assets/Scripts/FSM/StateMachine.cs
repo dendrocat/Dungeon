@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+// using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 using DomainLogging;
@@ -31,18 +31,25 @@ public class StateMachine : MonoBehaviour
     void UpdateExitStates()
     {
         List<States> exits = m_Config.GetExitStates(m_ActiveState.State);
+        for (int i = 0; i < m_ExitStates.Length; ++i) m_ExitStates[i] = false;
         foreach (var state in exits)
-        {
             m_ExitStates[(int)state] = true;
-        }
     }
 
     void ActivateState()
     {
-        m_ActiveState.MachineState.Enter(m_Enemy);
-        m_ActiveState.MachineState.StateEnded += OnStateEnded;
-
         UpdateExitStates();
+        m_ActiveState.MachineState.StateEnded += OnStateEnded;
+        m_ActiveState.MachineState.Enter(m_Enemy);
+        // if (m_ActiveState.State == States.Alert)
+        // {
+        //     StringBuilder s = new();
+        //     for (int i = 0; i < m_ExitStates.Length; ++i)
+        //     {
+        //         s.AppendLine($"{(States)i} can {m_ExitStates[i]}");
+        //     }
+        //     DomainDebug.Log($"Exit config from {m_ActiveState.State}: {s.ToString()}", DomainType.StateMachine);
+        // }
     }
 
     void Start()
@@ -60,18 +67,13 @@ public class StateMachine : MonoBehaviour
     {
         if (m_ExitStates[GetActiveState()])
             m_ExitStates[GetActiveState()] = m_CanActiveState;
-        // StringBuilder s = new();
-        // for (int i = 0; i < m_ExitStates.Length; ++i) {
-        // 	s.AppendLine($"{(States)i} can {m_ExitStates[i]}");
-        // }
-        // DomainDebug.Log($"Exit config: {s.ToString()}", DomainType.StateMachine);
         return m_ExitStates;
     }
 
     public bool ChangeState(int state)
     {
-        DomainDebug.Log($"{m_Enemy.name}: Trying change state to {state}", DomainType.StateMachine);
-        if (!Enum.IsDefined(typeof(States), state)) return false;
+        // DomainDebug.Log($"{m_Enemy.name}: Trying change state to {state}", DomainType.StateMachine);
+        // if (!Enum.IsDefined(typeof(States), state)) return false;
         if ((States)state == m_ActiveState.State)
         {
             m_ActiveState.MachineState.Continue();

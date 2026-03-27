@@ -751,6 +751,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cristal (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 268033820553801498, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2901657184466376353, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.5
@@ -791,6 +795,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3025237470374465255, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356526403247727245, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353302593726210536, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -812,6 +828,10 @@ PrefabInstance:
     - target: {fileID: 268033820553801498, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
       propertyPath: m_Name
       value: Cristal (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 268033820553801498, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2901657184466376353, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -852,6 +872,18 @@ PrefabInstance:
     - target: {fileID: 2901657184466376353, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3025237470374465255, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356526403247727245, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353302593726210536, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -906,6 +938,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cristal (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 268033820553801498, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2901657184466376353, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.82
@@ -946,6 +982,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3025237470374465255, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356526403247727245, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353302593726210536, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -967,7 +1015,7 @@ GameObject:
   - component: {fileID: 526224442}
   - component: {fileID: 526224443}
   - component: {fileID: 526224444}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1031,7 +1079,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 544226829}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MainLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1381,7 +1429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 745021857}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2097,7 +2145,7 @@ GameObject:
   - component: {fileID: 1074597077}
   - component: {fileID: 1074597079}
   - component: {fileID: 1074597078}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Area Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2619,7 +2667,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1258211123}
   - component: {fileID: 1258211124}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: NavMesh Modifier Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2927,6 +2975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Director
   m_Player: {fileID: 0}
+  m_AgentConfig: {fileID: 11400000, guid: dd67901390f80b646bce5d6df5a389eb, type: 2}
 --- !u!114 &1426416999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3778,6 +3827,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cristal (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 268033820553801498, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2901657184466376353, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -28.424
@@ -3817,6 +3870,18 @@ PrefabInstance:
     - target: {fileID: 2901657184466376353, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3025237470374465255, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356526403247727245, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353302593726210536, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4168,6 +4233,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cristal
       objectReference: {fileID: 0}
+    - target: {fileID: 268033820553801498, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2901657184466376353, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.85
@@ -4207,6 +4276,18 @@ PrefabInstance:
     - target: {fileID: 2901657184466376353, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3025237470374465255, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356526403247727245, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6353302593726210536, guid: 62a97305dc3d7b242b0b2aedb4484d0a, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

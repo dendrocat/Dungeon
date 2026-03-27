@@ -26,12 +26,13 @@ public class EnemyAgent : Agent
     public override void Initialize()
     {
         fsm = GetComponent<StateMachine>();
-        fsm.ChangeStateRequested += RequestDecision;
+        fsm.ChangeStateRequested += OnChangeStateRequested;
 
         m_Enemy = GetComponentInParent<Enemy>();
 
         m_UpdateTimer = new Timer(m_UpdateSensorTime);
         m_UpdateTimer.TimerEnded += UpdateSensors;
+        UpdateSensors();
     }
 
     // void Start()
@@ -54,13 +55,24 @@ public class EnemyAgent : Agent
     //     d[0] = state;
     // }
 
+    void OnChangeStateRequested()
+    {
+        if (m_Enemy.Health.Value <= 0)
+        {
+            fsm.ChangeState((int)States.Die);
+            return;
+        }
+        RequestDecision();
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Player position
-        sensor.AddObservation(Vector3.Distance(Director.Instance.PlayerTransform.position, m_Enemy.transform.position));
-        sensor.AddObservation(Vector3.Angle(Director.Instance.PlayerTransform.forward, m_Enemy.transform.forward));
+        // // Player position
+        // sensor.AddObservation(Vector3.Distance(Director.Instance.PlayerTransform.position, m_Enemy.transform.position));
+        // sensor.AddObservation(Vector3.Angle(Director.Instance.PlayerTransform.forward, m_Enemy.transform.forward));
 
         // Player visibility
+        sensor.AddObservation(Director.Instance.IsPlayerVisibleFrom(m_Enemy));
         sensor.AddObservation(Director.Instance.PlayerVisible);
         sensor.AddObservation(Director.Instance.PlayerLighted);
 

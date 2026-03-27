@@ -8,7 +8,7 @@ public class CoverState : BaseState
 {
     [LabelWidth(100)]
     [FormerlySerializedAs("DetectionRadius")]
-	[Unit(UnitAttribute.Meter)]
+    [Unit(UnitAttribute.Meter)]
     [SerializeField, Min(1f)] float m_DetectionRadius;
 
     [LabelWidth(100)]
@@ -62,12 +62,8 @@ public class CoverState : BaseState
 
     void Heal()
     {
-		p_Enemy.Health.Heal();
+        if (p_Enemy.Health.Value / p_Enemy.Health.Max <= 0.5f)
+            p_Enemy.Health.Heal();
         StateEnd();
-    }
-
-    protected override void OnExit()
-    {
-        p_Enemy.NavAgent.ResetPath();
     }
 }

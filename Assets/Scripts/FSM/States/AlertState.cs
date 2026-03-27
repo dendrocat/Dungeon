@@ -1,14 +1,11 @@
 using UnityEngine;
 using UnityEngine.AI;
-using DomainLogging;
 
 [System.Serializable]
 public class AlertState : BaseState
 {
     Vector3 GetPlayerPosFromRayPerception()
     {
-        // DomainDebug.Log($"{p_Enemy.MLAgent.RaySensor == null}", DomainType.State);
-        // DomainDebug.Log($"{p_Enemy.MLAgent.RaySensor?.RayPerceptionOutput == null}", DomainType.State);
         var rayOutputs = p_Enemy.MLAgent.RaySensor?.RayPerceptionOutput?.RayOutputs;
         if (rayOutputs != null)
             foreach (var rayOut in rayOutputs)
@@ -26,6 +23,11 @@ public class AlertState : BaseState
 
     protected override void OnEnter()
     {
+        if (Director.Instance.PlayerVisible)
+        {
+            StateEnd();
+            return;
+        }
         var pos = GetPlayerPosFromRayPerception();
         if (pos.Equals(Vector3.positiveInfinity)) pos = GetAudioPos();
 
@@ -37,10 +39,5 @@ public class AlertState : BaseState
     protected override void OnUpdate(float dt)
     {
         if (p_Enemy.NavAgent.remainingDistance <= p_Enemy.NavAgent.stoppingDistance) StateEnd();
-    }
-
-    protected override void OnExit()
-    {
-        p_Enemy.NavAgent.ResetPath();
     }
 }

@@ -54,7 +54,7 @@ public class PatrolState : BaseState
 
     protected override void OnUpdate(float dt)
     {
-        if (!m_StopTimer.IsActive && m_Agent.remainingDistance < m_Agent.stoppingDistance + 0.5f)
+        if (m_Agent.remainingDistance < m_Agent.stoppingDistance + 0.5f)
             m_StopTimer.Update(dt);
         if (Director.Instance.PlayerVisible) StateEnd();
         // DomainDebug.Log($"{p_Enemy.name} stop timer isActive: {m_StopTimer.IsActive}, progress {m_StopTimer.Progress}", DomainType.State);
@@ -62,9 +62,7 @@ public class PatrolState : BaseState
 
     protected override void OnExit()
     {
-        m_Agent.ResetPath();
         m_Agent = null;
-
         m_StopTimer = null;
     }
 

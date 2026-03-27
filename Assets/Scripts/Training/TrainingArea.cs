@@ -24,7 +24,7 @@ public class TrainingArea : MonoBehaviour
         Player.Died += OnPlayerDied;
         Enemy.Died += OnEnemyDied;
 
-        AgentValidator.EpisodeEndingRequested += EndEpisode;
+        AgentValidator.EpisodeEndingRequested += OnEndEpisodeRequested;
     }
 
     void SetPlayer()
@@ -36,11 +36,11 @@ public class TrainingArea : MonoBehaviour
             nPos.x = Random.Range(-m_PlayerSpawnZone.x / 2, m_PlayerSpawnZone.x / 2);
             nPos.z = Random.Range(-m_PlayerSpawnZone.y / 2, m_PlayerSpawnZone.y / 2);
 
-            DomainDebug.Log($"Try pos: {nPos}", DomainType.Training);
+            // DomainDebug.Log($"Try pos: {nPos}", DomainType.Training);
             if (Physics.CheckSphere(nPos, 2, m_ObstacleMask))
                 nPos = Vector3.positiveInfinity;
         }
-        DomainDebug.Log($"Setting player to {nPos}", DomainType.Training);
+        // DomainDebug.Log($"Setting player to {nPos}", DomainType.Training);
         if (m_Player != null)
         {
             Destroy(m_Player.gameObject);
@@ -63,14 +63,18 @@ public class TrainingArea : MonoBehaviour
 
     void OnEnvironmentReseted()
     {
-        DomainLogging.DomainDebug.Log($"Test reseting", DomainType.Training);
+        // DomainLogging.DomainDebug.Log($"EnvironmentReseted", DomainType.Training);
         if (m_Enemies != null)
         {
+            m_Group.Dispose();
             foreach (var enemy in m_Enemies)
             {
                 Destroy(enemy.gameObject);
             }
-            m_Group.Dispose();
+        }
+        foreach (var obj in FindObjectsByType<Ammo>(FindObjectsSortMode.None))
+        {
+            Destroy(obj.gameObject);
         }
         SetPlayer();
         m_DiedEnemies = 0;
@@ -82,25 +86,33 @@ public class TrainingArea : MonoBehaviour
         m_Group = new SimpleMultiAgentGroup();
         foreach (var enemy in enemies)
             m_Group.RegisterAgent(enemy.MLAgent);
+        DomainDebug.Log($"Registered {enemies.Count}. All agent in group: {m_Group.GetRegisteredAgents().Count}", DomainType.Training);
     }
 
     void OnPlayerDied()
     {
         m_Group.AddGroupReward(m_Config.Rewards.PlayerKill);
-        OnEnvironmentReseted();
+        EndEpisode();
     }
 
     void OnEnemyDied()
     {
         ++m_DiedEnemies;
-        if (m_DiedEnemies != m_Group.GetRegisteredAgents().Count) return;
+        if (m_DiedEnemies != m_Enemies.Count) return;
         m_Group.AddGroupReward(m_Config.Rewards.GroupDie);
-        OnEnvironmentReseted();
+        EndEpisode();
+    }
+
+    void OnEndEpisodeRequested()
+    {
+        DomainDebug.Log($"OnEndEpisodeRequested: {m_Group.GetRegisteredAgents().Count}:{m_Enemies.Count}", DomainType.Training);
+        if (m_Group.GetRegisteredAgents().Count > 0) return;
+        EndEpisode();
     }
 
     void EndEpisode()
     {
-        DomainDebug.Log($"Episode ended", DomainType.Training);
+        DomainDebug.LogWarning($"Episode ended\nDied: {m_DiedEnemies}\n\nPlayerDied: {m_Player.Health.Value == 0}", DomainType.Training);
         m_Group.EndGroupEpisode();
         m_Player.GetComponentInChildren<Agent>()?.EndEpisode();
         OnEnvironmentReseted();

@@ -16,6 +16,7 @@ public class Director : MonoBehaviour
     public Transform PlayerTransform => m_Player.transform;
     public bool PlayerLighted => m_Player.IsLighted;
     public Vector3? LastPlayerPos { get; private set; } = null;
+    [SerializeField] AgentValidatorConfig m_AgentConfig;
 
     bool m_PlayerVisible = false;
     public bool PlayerVisible
@@ -23,9 +24,10 @@ public class Director : MonoBehaviour
         get => m_PlayerVisible;
         private set
         {
-            if (m_PlayerVisible != value)
-                PlayerVisibilityChanged?.Invoke(m_PlayerVisible);
+            if (m_PlayerVisible == value)
+                return;
             m_PlayerVisible = value;
+            PlayerVisibilityChanged?.Invoke(value);
         }
     }
 
@@ -42,6 +44,8 @@ public class Director : MonoBehaviour
         Instance = this;
         WaypointsProvider = GetComponent<WaypointsProvider>();
         m_Spawner = GetComponent<EnemySpawner>();
+
+        PlayerVisibilityChanged += OnVisibilityChanged;
     }
     public void SetPlayer(Player player)
     {
@@ -65,32 +69,38 @@ public class Director : MonoBehaviour
 
     void OnEnemySpawned(IReadOnlyList<Enemy> enemies)
     {
+        m_PlayerVisible = false;
         m_Enemies = enemies;
     }
 
-    bool GetPlayerVisible(Enemy enemy)
+    public bool IsPlayerVisibleFrom(Enemy enemy)
     {
-        if (enemy.MLAgent.RaySensor?.RayPerceptionOutput?.RayOutputs == null)
-            return false;
-        foreach (var outputs in enemy.MLAgent.RaySensor.RayPerceptionOutput.RayOutputs)
+		if (!enemy.gameObject.activeSelf) return false;
+        var rays = enemy.MLAgent.RaySensor?.RayPerceptionOutput?.RayOutputs;
+        if (rays == null) return false;
+        foreach (var hit in rays)
         {
-			// DomainLogging.DomainDebug.Log($"Check ray out: {outputs.HasHit} {outputs.HitGameObject?.tag} {outputs.HitTaggedObject}", DomainType.Director);
-            if (outputs.HitTaggedObject) return true;
+            if (hit.HitTaggedObject)
+            {
+                var dist = (hit.HitGameObject.transform.position - hit.StartPositionWorld).magnitude;
+                // DomainDebug.Log($"Check ray out: {hit.HitTaggedObject} {dist / hit.ScaledRayLength}", DomainType.Director);
+                if (PlayerLighted || dist / hit.ScaledRayLength <= m_AgentConfig.Detection.RayLengthScale)
+                    return true;
+            }
         }
         return false;
     }
 
     void OnVisibilityChanged(bool playerVisibility)
     {
+        DomainDebug.Log($"PlayerVisibilityChanged to {m_PlayerVisible}", DomainType.Director);
         if (playerVisibility) LastPlayerPos = null;
         else LastPlayerPos = m_Player.transform.position;
-
     }
 
     void FixedUpdate()
     {
-        PlayerVisible = m_Enemies?.Any(GetPlayerVisible) ?? false;
-        DomainDebug.Log($"PlayerVisible: {m_PlayerVisible}", DomainType.Director);
+        PlayerVisible = m_Enemies?.Any(IsPlayerVisibleFrom) ?? false;
     }
 
 }

@@ -20,7 +20,7 @@ public abstract class BaseState
 
     [ShowIf(nameof(m_HasTime))]
     [LabelWidth(100)]
-	[FormerlySerializedAs("Time")]
+    [FormerlySerializedAs("Time")]
     [Unit(UnitAttribute.Second)]
     [SerializeField, Min(0)] float m_Time = 10;
 
@@ -70,6 +70,8 @@ public abstract class BaseState
     {
         DomainDebug.Log($"{p_Enemy.name} exited from {GetType()}", DomainType.State);
         OnExit();
+        if (p_Enemy.NavAgent.enabled && p_Enemy.NavAgent.isOnNavMesh)
+            p_Enemy.NavAgent.ResetPath();
 
         p_Enemy = null;
         StateEnded = null;
