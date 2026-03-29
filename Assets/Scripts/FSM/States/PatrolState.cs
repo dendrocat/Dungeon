@@ -62,6 +62,9 @@ public class PatrolState : BaseState
 
     protected override void OnExit()
     {
+		m_Waypoint?.Free();
+		m_Waypoint = null;
+
         m_Agent = null;
         m_StopTimer = null;
     }
