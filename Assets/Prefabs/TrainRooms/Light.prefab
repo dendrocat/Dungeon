@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2901657184466376353}
   m_Layer: 0
-  m_Name: Cristal
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,7 +117,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7352368456758816598
 Transform:
   m_ObjectHideFlags: 0

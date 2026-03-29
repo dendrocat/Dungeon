@@ -31,7 +31,8 @@ public class Room : MonoBehaviour, IActivatable, IProvider<IWaypoint>, IProvider
     void OnTriggerEnter(Collider other)
     {
         DomainDebug.Log($"{other.name} entered in room", DomainType.Room);
-        Activate();
+        if (!IsActive)
+            Activate();
     }
 
     void OnTriggerExit(Collider other)

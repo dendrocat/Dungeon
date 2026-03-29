@@ -7,6 +7,7 @@ using DomainLogging;
 [RequireComponent(typeof(WaypointsProvider), typeof(EnemySpawner))]
 public class Director : MonoBehaviour
 {
+    //TODO: add reaction to enemy dying or removing
     public event UnityAction<bool> PlayerVisibilityChanged;
 
     public static Director Instance { get; private set; }
@@ -75,7 +76,7 @@ public class Director : MonoBehaviour
 
     public bool IsPlayerVisibleFrom(Enemy enemy)
     {
-		if (!enemy.gameObject.activeSelf) return false;
+        if (!enemy.gameObject.activeSelf) return false;
         var rays = enemy.MLAgent.RaySensor?.RayPerceptionOutput?.RayOutputs;
         if (rays == null) return false;
         foreach (var hit in rays)

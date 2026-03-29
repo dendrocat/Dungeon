@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.MLAgents;
+using TriInspector;
 using DomainLogging;
 
 public class TrainingArea : MonoBehaviour
@@ -11,6 +12,10 @@ public class TrainingArea : MonoBehaviour
     Player m_Player = null;
     [SerializeField] Vector2 m_PlayerSpawnZone;
     [SerializeField] LayerMask m_ObstacleMask;
+
+    [AssetsOnly]
+    [SerializeField] Room[] m_TrainRooms = null;
+    Room m_TrainRoom = null;
 
     SimpleMultiAgentGroup m_Group;
     IReadOnlyCollection<Enemy> m_Enemies;
@@ -27,6 +32,26 @@ public class TrainingArea : MonoBehaviour
         AgentValidator.EpisodeEndingRequested += OnEndEpisodeRequested;
     }
 
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.tan;
+        Vector3 size = Vector3.up;
+        size.x = m_PlayerSpawnZone.x;
+        size.z = m_PlayerSpawnZone.y;
+        Gizmos.DrawCube(transform.position + Vector3.up, size);
+    }
+
+    [DisableInEditMode]
+    [Button]
+    void SetRoom()
+    {
+        var prefab = m_TrainRooms[Random.Range(0, m_TrainRooms.Length)];
+        m_TrainRoom = Instantiate(prefab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<Room>();
+        DomainDebug.Log($"Setting room");
+    }
+
+    [DisableInEditMode]
+    [Button]
     void SetPlayer()
     {
         Vector3 nPos = Vector3.positiveInfinity;
@@ -40,30 +65,18 @@ public class TrainingArea : MonoBehaviour
             if (Physics.CheckSphere(nPos, 2, m_ObstacleMask))
                 nPos = Vector3.positiveInfinity;
         }
-        // DomainDebug.Log($"Setting player to {nPos}", DomainType.Training);
-        if (m_Player != null)
-        {
-            Destroy(m_Player.gameObject);
-        }
         if (m_PlayerPrefab != null)
         {
+            DomainDebug.Log($"Setting player to {nPos}", DomainType.Training);
             m_Player = Instantiate(m_PlayerPrefab.gameObject, nPos, Quaternion.identity).GetComponent<Player>();
             Director.Instance.SetPlayer(m_Player);
         }
     }
 
-    void OnDrawGizmosSelected()
+    [DisableInEditMode]
+    [Button]
+    void ClearArea()
     {
-        Gizmos.color = Color.tan;
-        Vector3 size = Vector3.up;
-        size.x = m_PlayerSpawnZone.x;
-        size.z = m_PlayerSpawnZone.y;
-        Gizmos.DrawCube(transform.position + Vector3.up, size);
-    }
-
-    void OnEnvironmentReseted()
-    {
-        // DomainLogging.DomainDebug.Log($"EnvironmentReseted", DomainType.Training);
         if (m_Enemies != null)
         {
             m_Group.Dispose();
@@ -71,11 +84,26 @@ public class TrainingArea : MonoBehaviour
             {
                 Destroy(enemy.gameObject);
             }
+            m_Enemies = null;
         }
         foreach (var obj in FindObjectsByType<Ammo>(FindObjectsSortMode.None))
         {
             Destroy(obj.gameObject);
         }
+        if (m_TrainRoom != null) Destroy(m_TrainRoom.gameObject);
+        if (m_Player != null) Destroy(m_Player.gameObject);
+        DomainDebug.Log("Area cleared");
+    }
+
+
+    [DisableInEditMode]
+    [Button("Reset Environment")]
+    void OnEnvironmentReseted()
+    {
+        // DomainLogging.DomainDebug.Log($"EnvironmentReseted", DomainType.Training);
+        ClearArea();
+
+        SetRoom();
         SetPlayer();
         m_DiedEnemies = 0;
     }
@@ -98,6 +126,7 @@ public class TrainingArea : MonoBehaviour
     void OnEnemyDied()
     {
         ++m_DiedEnemies;
+        DomainDebug.Log($"Died: {m_DiedEnemies}:{m_Enemies.Count}", DomainType.Training);
         if (m_DiedEnemies != m_Enemies.Count) return;
         m_Group.AddGroupReward(m_Config.Rewards.GroupDie);
         EndEpisode();

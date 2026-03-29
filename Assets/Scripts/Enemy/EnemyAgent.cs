@@ -48,12 +48,12 @@ public class EnemyAgent : Agent
     //
     // int state = 0;
     //
-    // public override void Heuristic(in ActionBuffers actionsOut)
-    // {
-    //     // DomainDebug.Log("Heuristic", DomainType.Agent);
-    //     var d = actionsOut.DiscreteActions;
-    //     d[0] = state;
-    // }
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        // DomainDebug.Log("Heuristic", DomainType.Agent);
+        // var d = actionsOut.DiscreteActions;
+        // d[0] = state;
+    }
 
     void OnChangeStateRequested()
     {
