@@ -18,7 +18,7 @@ public class PatrolState : BaseState
 
     protected virtual void SetDestination()
     {
-        var n_Waypoint = Director.Instance.WaypointsProvider.GetFreeWaypoint();
+        var n_Waypoint = p_Enemy.WaypointProvider.GetFreeWaypoint();
         var waypoint = n_Waypoint.Position;
         var nWaypoint = waypoint + Random.onUnitSphere * Waypoint.Radius;
 
@@ -62,8 +62,8 @@ public class PatrolState : BaseState
 
     protected override void OnExit()
     {
-		m_Waypoint?.Free();
-		m_Waypoint = null;
+        m_Waypoint?.Free();
+        m_Waypoint = null;
 
         m_Agent = null;
         m_StopTimer = null;

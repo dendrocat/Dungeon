@@ -19,8 +19,7 @@ public class PlayerHeight : MonoBehaviour
 
     [Group("set")]
     [SerializeField, Slider(0.5f, 10f)] float m_TransitionSpeed = 4f;
-	const float c_StopTransition = 0.001f; 
-
+    const float c_StopTransition = 0.001f;
     [Required, Group("cmp")]
     [SerializeField] Transform m_Cam;
 

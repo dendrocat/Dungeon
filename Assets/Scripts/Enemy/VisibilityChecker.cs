@@ -1,0 +1,54 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class VisibilityChecker : MonoBehaviour
+{
+    [SerializeField] AgentValidatorConfig m_AgentConfig;
+
+    Dictionary<Enemy, bool> m_TempVisibility = new();
+
+    void Awake()
+    {
+        Person.Died += OnDied;
+    }
+
+    void OnDied(Person p)
+    {
+        if (p is not Enemy e) return;
+        m_TempVisibility.Remove(e);
+    }
+
+    public bool IsPlayerVisibleFrom(Enemy enemy)
+    {
+        return m_TempVisibility.GetValueOrDefault(enemy, false);
+    }
+
+    bool _IsPlayerVisibleFrom(Enemy enemy)
+    {
+        if (!enemy.gameObject.activeSelf) return false;
+        var rays = enemy.MLAgent.RaySensor?.RayPerceptionOutput?.RayOutputs;
+        if (rays == null) return false;
+        foreach (var hit in rays)
+        {
+            if (hit.HitTaggedObject)
+            {
+                var dist = (hit.HitGameObject.transform.position - hit.StartPositionWorld).magnitude;
+                // DomainDebug.Log($"Check ray out: {hit.HitTaggedObject} {dist / hit.ScaledRayLength}", DomainType.Director);
+                if (Director.Instance.PlayerLighted || dist / hit.ScaledRayLength <= m_AgentConfig.Detection.RayLengthScale)
+                    return true;
+            }
+        }
+        return false;
+    }
+    bool HashingIsPlayerVisibleFrom(Enemy enemy)
+    {
+        return m_TempVisibility[enemy] = _IsPlayerVisibleFrom(enemy);
+    }
+
+    public bool IsPlayerVisible(IReadOnlyCollection<Enemy> enemies)
+    {
+        return enemies.Any(HashingIsPlayerVisibleFrom);
+    }
+
+}

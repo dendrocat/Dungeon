@@ -26,6 +26,8 @@ public class Enemy : Person
 
     public new EnemyHealth Health => (p_Health as EnemyHealth);
 
+    public IWaypointProvider WaypointProvider { get; private set; }
+
     void OnValidate()
     {
         if (m_InAttackSpeed < m_InWalkSpeed) m_InAttackSpeed = m_InWalkSpeed;
@@ -37,5 +39,29 @@ public class Enemy : Person
         NavAgent.speed = m_InWalkSpeed;
 
         m_WeaponHandler.SetTarget(Director.Instance.PlayerTransform);
+    }
+
+    public void SetWaypointProvider(IWaypointProvider provider)
+    {
+        WaypointProvider = provider;
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        NavAgent.enabled = false;
+    }
+
+    void OnDisable()
+    {
+        DomainLogging.DomainDebug.Log($"{name} on disable", DomainLogging.DomainType.Person);
+#if TRAIN || UNITY_EDITOR
+        Die();
+#endif
+    }
+
+    void OnDestroy()
+    {
+        DomainLogging.DomainDebug.Log($"{name} on destroy", DomainLogging.DomainType.Person);
     }
 }

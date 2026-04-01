@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using TriInspector;
 using DomainLogging;
+using System.Linq;
 
 public class TrainingArea : MonoBehaviour
 {
@@ -18,18 +19,22 @@ public class TrainingArea : MonoBehaviour
     Room m_TrainRoom = null;
 
     SimpleMultiAgentGroup m_Group;
-    IReadOnlyCollection<Enemy> m_Enemies;
+    HashSet<Enemy> m_Enemies;
 
-    int m_DiedEnemies = 0;
+    int m_Died, m_Requests;
 
     void Awake()
     {
         Academy.Instance.OnEnvironmentReset += OnEnvironmentReseted;
         m_Spawner.Spawned += RegisterEnemies;
-        Player.Died += OnPlayerDied;
-        Enemy.Died += OnEnemyDied;
 
-        AgentValidator.EpisodeEndingRequested += OnEndEpisodeRequested;
+        // AgentValidator.EpisodeEndingRequested += OnEndEpisodeRequested;
+    }
+
+    void OnDisable()
+    {
+        // DomainDebug.LogWarning($"Disabling training area", DomainType.Training);
+        Person.Died -= OnPersonDied;
     }
 
     void OnDrawGizmosSelected()
@@ -47,7 +52,8 @@ public class TrainingArea : MonoBehaviour
     {
         var prefab = m_TrainRooms[Random.Range(0, m_TrainRooms.Length)];
         m_TrainRoom = Instantiate(prefab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<Room>();
-        DomainDebug.Log($"Setting room");
+        m_TrainRoom.PlayerExited += EndEpisode;
+        DomainDebug.Log($"Setting room", DomainType.Training);
     }
 
     [DisableInEditMode]
@@ -77,22 +83,23 @@ public class TrainingArea : MonoBehaviour
     [Button]
     void ClearArea()
     {
-        if (m_Enemies != null)
+        if (m_TrainRoom != null) Destroy(m_TrainRoom.gameObject);
+        if (m_Player != null) Destroy(m_Player.gameObject);
+        if (m_Group != null)
         {
             m_Group.Dispose();
-            foreach (var enemy in m_Enemies)
-            {
-                Destroy(enemy.gameObject);
-            }
-            m_Enemies = null;
+            // foreach (var enemy in m_Enemies)
+            // {
+            //     enemy.TakeDamage(10000);
+            //     Destroy(enemy.gameObject);
+            // }
+            m_Enemies.Clear();
         }
         foreach (var obj in FindObjectsByType<Ammo>(FindObjectsSortMode.None))
         {
             Destroy(obj.gameObject);
         }
-        if (m_TrainRoom != null) Destroy(m_TrainRoom.gameObject);
-        if (m_Player != null) Destroy(m_Player.gameObject);
-        DomainDebug.Log("Area cleared");
+        DomainDebug.Log("Area cleared", DomainType.Training);
     }
 
 
@@ -100,51 +107,69 @@ public class TrainingArea : MonoBehaviour
     [Button("Reset Environment")]
     void OnEnvironmentReseted()
     {
-        // DomainLogging.DomainDebug.Log($"EnvironmentReseted", DomainType.Training);
+        DomainDebug.LogWarning($"EnvironmentReseting", DomainType.Training);
+        Person.Died -= OnPersonDied;
         ClearArea();
 
         SetRoom();
         SetPlayer();
-        m_DiedEnemies = 0;
+        m_Died = m_Requests = 0;
+        Person.Died += OnPersonDied;
     }
 
-    void RegisterEnemies(IReadOnlyList<Enemy> enemies)
+    void RegisterEnemies(IReadOnlyCollection<Enemy> enemies)
     {
-        m_Enemies = enemies;
+        m_Enemies = enemies.ToHashSet();
         m_Group = new SimpleMultiAgentGroup();
         foreach (var enemy in enemies)
             m_Group.RegisterAgent(enemy.MLAgent);
         DomainDebug.Log($"Registered {enemies.Count}. All agent in group: {m_Group.GetRegisteredAgents().Count}", DomainType.Training);
     }
 
+    void OnPersonDied(Person p)
+    {
+        if (p is Player) OnPlayerDied();
+        if (p is Enemy e) OnEnemyDied(e);
+    }
+
     void OnPlayerDied()
     {
         m_Group.AddGroupReward(m_Config.Rewards.PlayerKill);
+        DomainDebug.Log($"Player killed", DomainType.Training);
         EndEpisode();
     }
 
-    void OnEnemyDied()
+    void OnEnemyDied(Enemy e)
     {
-        ++m_DiedEnemies;
-        DomainDebug.Log($"Died: {m_DiedEnemies}:{m_Enemies.Count}", DomainType.Training);
-        if (m_DiedEnemies != m_Enemies.Count) return;
+        ++m_Died;
+        m_Group.UnregisterAgent(e.MLAgent);
+        m_Enemies.Remove(e);
+        DomainDebug.Log($"Died {e.name}, remaining agents: {m_Group.GetRegisteredAgents().Count}", DomainType.Training);
+        if (m_Group.GetRegisteredAgents().Count > 0) return;
         m_Group.AddGroupReward(m_Config.Rewards.GroupDie);
         EndEpisode();
     }
 
-    void OnEndEpisodeRequested()
-    {
-        DomainDebug.Log($"OnEndEpisodeRequested: {m_Group.GetRegisteredAgents().Count}:{m_Enemies.Count}", DomainType.Training);
-        if (m_Group.GetRegisteredAgents().Count > 0) return;
-        EndEpisode();
-    }
+    // void OnEndEpisodeRequested()
+    // {
+    //     ++m_Requests;
+    //     DomainDebug.Log($"OnEndEpisodeRequested, remaining {m_Group.GetRegisteredAgents().Count}", DomainType.Training);
+    //     if (m_Group.GetRegisteredAgents().Count > 0) return;
+    //     EndEpisode();
+    // }
 
     void EndEpisode()
     {
-        DomainDebug.LogWarning($"Episode ended\nDied: {m_DiedEnemies}\n\nPlayerDied: {m_Player.Health.Value == 0}", DomainType.Training);
+        DomainDebug.LogWarning($"Episode ended\nDied: {m_Died}. End requests: {m_Requests}\nPlayer killed: {m_Player.Health.Value <= 0}", DomainType.Training);
         m_Group.EndGroupEpisode();
-        m_Player.GetComponentInChildren<Agent>()?.EndEpisode();
+        m_Player?.GetComponentInChildren<Agent>()?.EndEpisode();
         OnEnvironmentReseted();
+    }
+
+    void OnApplicationQuit()
+    {
+        Person.Died -= OnPersonDied;
+        // DomainDebug.LogWarning($"Application quiting", DomainType.Training);
     }
 
 }

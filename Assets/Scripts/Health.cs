@@ -1,13 +1,10 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Serialization;
 using TriInspector;
 
 [DeclareBoxGroup("hset", Title = "Heath Settings")]
 public abstract class Health : MonoBehaviour, IDamagable
 {
-    public event UnityAction Died;
-
     protected float p_Health;
 
     [Group("hset")]
@@ -31,6 +28,5 @@ public abstract class Health : MonoBehaviour, IDamagable
     {
         if (p_Health <= 0) return;
         p_Health -= damage;
-        if (p_Health <= 0) Died?.Invoke();
     }
 }

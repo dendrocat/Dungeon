@@ -17,7 +17,7 @@ public class Player : Person
         IInput.Instance.Reloaded += m_WeaponHandler.Reload;
         IInput.Instance.Throwed += m_WeaponHandler.ThrowGrenade;
         IInput.Instance.MeleeAttacked += m_WeaponHandler.MeleeAttack;
-		Enemy.Died += m_WeaponHandler.AddAmmo;
+        Person.Died += OnEnemyDied;
 
         m_WeaponHandler.ChangeWeapon(1);
     }
@@ -35,6 +35,12 @@ public class Player : Person
     {
         m_LightZoneCount += playerInside ? 1 : -1;
         DomainDebug.Log($"Player lighted: {IsLighted}", DomainType.Player);
+    }
+
+    void OnEnemyDied(Person p)
+    {
+        if (p is not Enemy) return;
+        m_WeaponHandler.AddAmmo();
     }
 
     void Update()

@@ -1,23 +1,25 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using DomainLogging;
 
-[RequireComponent(typeof(WaypointsProvider), typeof(EnemySpawner))]
+[RequireComponent(typeof(EnemySpawner), typeof(VisibilityChecker))]
 public class Director : MonoBehaviour
 {
-    //TODO: add reaction to enemy dying or removing
     public event UnityAction<bool> PlayerVisibilityChanged;
 
     public static Director Instance { get; private set; }
-    public WaypointsProvider WaypointsProvider { get; private set; }
 
     [SerializeField] Player m_Player;
     public Transform PlayerTransform => m_Player.transform;
     public bool PlayerLighted => m_Player.IsLighted;
     public Vector3? LastPlayerPos { get; private set; } = null;
-    [SerializeField] AgentValidatorConfig m_AgentConfig;
+
+    VisibilityChecker m_VisibilityChecker;
+    public VisibilityChecker VisibilityChecker => m_VisibilityChecker;
+
+    [SerializeField, Min(3)] float m_ChaseTime = 5;
+    Timer m_ChaseTimer;
 
     bool m_PlayerVisible = false;
     public bool PlayerVisible
@@ -33,7 +35,7 @@ public class Director : MonoBehaviour
     }
 
     EnemySpawner m_Spawner;
-    IReadOnlyList<Enemy> m_Enemies = null;
+    HashSet<Enemy> m_Enemies = null;
 
     void Awake()
     {
@@ -43,11 +45,15 @@ public class Director : MonoBehaviour
             return;
         }
         Instance = this;
-        WaypointsProvider = GetComponent<WaypointsProvider>();
         m_Spawner = GetComponent<EnemySpawner>();
+        m_VisibilityChecker = GetComponent<VisibilityChecker>();
 
-        PlayerVisibilityChanged += OnVisibilityChanged;
+        Person.Died += OnEnemyDied;
+
+        m_Enemies = new();
+        m_ChaseTimer = new Timer(m_ChaseTime, false);
     }
+
     public void SetPlayer(Player player)
     {
         m_Player = player;
@@ -68,40 +74,44 @@ public class Director : MonoBehaviour
         m_Spawner.Spawned -= OnEnemySpawned;
     }
 
-    void OnEnemySpawned(IReadOnlyList<Enemy> enemies)
+    void OnEnemySpawned(IReadOnlyCollection<Enemy> enemies)
     {
-        m_PlayerVisible = false;
-        m_Enemies = enemies;
+        m_Enemies.UnionWith(enemies);
     }
 
-    public bool IsPlayerVisibleFrom(Enemy enemy)
+    void OnEnemyDied(Person p)
     {
-        if (!enemy.gameObject.activeSelf) return false;
-        var rays = enemy.MLAgent.RaySensor?.RayPerceptionOutput?.RayOutputs;
-        if (rays == null) return false;
-        foreach (var hit in rays)
+        if (p is not Enemy e) return;
+        DomainDebug.Log($"Enemy {e.name} removed", DomainType.Director);
+        m_Enemies.Remove(e);
+    }
+
+
+    void CheckVisibility()
+    {
+        // DomainDebug.Log($"PlayerVisibilityChanged to {m_PlayerVisible}", DomainType.Director);
+        bool visibility = m_VisibilityChecker.IsPlayerVisible(m_Enemies);
+        if (visibility)
         {
-            if (hit.HitTaggedObject)
-            {
-                var dist = (hit.HitGameObject.transform.position - hit.StartPositionWorld).magnitude;
-                // DomainDebug.Log($"Check ray out: {hit.HitTaggedObject} {dist / hit.ScaledRayLength}", DomainType.Director);
-                if (PlayerLighted || dist / hit.ScaledRayLength <= m_AgentConfig.Detection.RayLengthScale)
-                    return true;
-            }
+            PlayerVisible = true;
+            LastPlayerPos = null;
+            m_ChaseTimer.Deactivate();
+            m_ChaseTimer.Reset();
         }
-        return false;
+        else m_ChaseTimer.Activate();
     }
 
-    void OnVisibilityChanged(bool playerVisibility)
+    void OnChased()
     {
-        DomainDebug.Log($"PlayerVisibilityChanged to {m_PlayerVisible}", DomainType.Director);
-        if (playerVisibility) LastPlayerPos = null;
-        else LastPlayerPos = m_Player.transform.position;
+        DomainDebug.Log($"Player chased", DomainType.Director);
+        LastPlayerPos = m_Player.transform.position;
+        PlayerVisible = false;
     }
 
     void FixedUpdate()
     {
-        PlayerVisible = m_Enemies?.Any(IsPlayerVisibleFrom) ?? false;
+        CheckVisibility();
+        m_ChaseTimer.Update(Time.fixedDeltaTime);
     }
 
 }

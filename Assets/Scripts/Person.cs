@@ -7,7 +7,7 @@ using DomainLogging;
 [DeclareFoldoutGroup("cmp", Title = "Components")]
 public abstract class Person : MonoBehaviour, IDamagable
 {
-    public static event UnityAction Died;
+    public static event UnityAction<Person> Died;
 
     [LabelText("Health")]
     [Group("cmp")]
@@ -19,7 +19,6 @@ public abstract class Person : MonoBehaviour, IDamagable
     void Awake()
     {
         comps = GetComponentsInChildren<IActivatable>();
-        p_Health.Died += Die;
     }
 
     /// <inheritdoc/>
@@ -32,12 +31,13 @@ public abstract class Person : MonoBehaviour, IDamagable
         }
         p_Health.TakeDamage(damage);
         DomainDebug.Log($"{name} recieved {damage}. Remaining health: {p_Health.Value}", DomainType.Person);
+        if (p_Health.Value <= 0) Die();
     }
 
     protected virtual void Die()
     {
         foreach (var c in comps) c.Deactivate();
         DomainDebug.Log($"{name} died", DomainType.Person);
-        Died?.Invoke();
+        Died?.Invoke(this);
     }
 }

@@ -27,19 +27,17 @@ public class PlayerAgent : Agent, IInput
         base.Initialize();
         IInput.Instance = this;
         m_Player = GetComponentInParent<Player>();
-        Enemy.Died += OnEnemyDied;
-        Player.Died += OnDied;
+        Person.Died += OnPersonDied;
     }
 
-    void OnEnemyDied()
+    void OnPersonDied(Person p)
     {
-        AddReward(50f);
-    }
-
-    void OnDied()
-    {
-        AddReward(-100);
-		EndEpisode();
+        if (p is Enemy) AddReward(50f);
+        else
+        {
+            AddReward(-100);
+            EndEpisode();
+        }
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)

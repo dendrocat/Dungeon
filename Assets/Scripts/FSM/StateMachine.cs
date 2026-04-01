@@ -41,15 +41,6 @@ public class StateMachine : MonoBehaviour
         UpdateExitStates();
         m_ActiveState.MachineState.StateEnded += OnStateEnded;
         m_ActiveState.MachineState.Enter(m_Enemy);
-        // if (m_ActiveState.State == States.Alert)
-        // {
-        //     StringBuilder s = new();
-        //     for (int i = 0; i < m_ExitStates.Length; ++i)
-        //     {
-        //         s.AppendLine($"{(States)i} can {m_ExitStates[i]}");
-        //     }
-        //     DomainDebug.Log($"Exit config from {m_ActiveState.State}: {s.ToString()}", DomainType.StateMachine);
-        // }
     }
 
     void Start()
@@ -67,6 +58,15 @@ public class StateMachine : MonoBehaviour
     {
         if (m_ExitStates[GetActiveState()])
             m_ExitStates[GetActiveState()] = m_CanActiveState;
+        // if (m_ActiveState.State == States.Die)
+        // {
+        //     StringBuilder s = new();
+        //     for (int i = 0; i < m_ExitStates.Length; ++i)
+        //     {
+        //         s.AppendLine($"{(States)i} can {m_ExitStates[i]}");
+        //     }
+        //     DomainDebug.Log($"{m_Enemy.name} exit config from {m_ActiveState.State}: {s.ToString()}", DomainType.StateMachine);
+        // }
         return m_ExitStates;
     }
 
@@ -108,6 +108,8 @@ public class StateMachine : MonoBehaviour
 
     void FixedUpdate()
     {
+        // if (m_ActiveState.State == States.Die || m_ActiveState.State == States.Attack)
+        //     DomainDebug.Log($"State: {m_ActiveState.State}, Machine: {m_ActiveState.MachineState.GetType()}", DomainType.StateMachine);
         m_ActiveState.MachineState.Update(Time.fixedDeltaTime);
     }
 }

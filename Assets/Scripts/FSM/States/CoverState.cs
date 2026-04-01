@@ -57,7 +57,7 @@ public class CoverState : BaseState
 
     protected override void OnUpdate(float dt)
     {
-        if (p_Enemy.NavAgent.remainingDistance < p_Enemy.NavAgent.stoppingDistance) Heal();
+        if (p_Enemy.NavAgent.remainingDistance <= p_Enemy.NavAgent.stoppingDistance + 1f) Heal();
     }
 
     void Heal()

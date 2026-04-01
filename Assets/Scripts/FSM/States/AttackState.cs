@@ -20,8 +20,8 @@ public class AttackState : BaseState
         m_Agent = p_Enemy.NavAgent;
         m_Player = Director.Instance.PlayerTransform;
 
-        baseStoppingDistance = m_Agent.stoppingDistance;
-        m_Agent.stoppingDistance = m_AttackDistance * 0.8f;
+        // baseStoppingDistance = m_Agent.stoppingDistance;
+        // m_Agent.stoppingDistance = m_AttackDistance * 0.8f;
         m_Agent.speed = p_Enemy.InAttackSpeed;
 
         distanceOffset = m_AttackDistance / 3;
@@ -30,19 +30,25 @@ public class AttackState : BaseState
 
     void SetDestination()
     {
-        Vector3 offset = (p_Enemy.transform.position - m_Player.position).normalized * m_Agent.stoppingDistance;
-        NavMesh.SamplePosition(m_Player.position + offset,
-                out var hit, 10f, NavMesh.AllAreas);
-
-        m_Agent.SetDestination(hit.position);
+        // Vector3 offset = (m_Player.position - p_Enemy.transform.position).normalized * m_Agent.stoppingDistance;
+        Vector3 offset = Random.onUnitSphere * p_Enemy.WeaponHandler.AttackDistance / 2;
+        offset.y = 0;
+        if (NavMesh.SamplePosition(m_Player.position + offset,
+                out var hit, 10f, NavMesh.AllAreas))
+            m_Agent.SetDestination(hit.position);
+        else m_Agent.SetDestination(m_Player.position);
     }
 
     protected override void OnUpdate(float dt)
     {
         if (!Director.Instance.PlayerVisible) { StateEnd(); return; }
 
+        // if (m_Player == null || p_Enemy?.transform == null)
+        // {
+        //     DomainLogging.DomainDebug.LogWarning($"m_Player: {m_Player == null}, p_Enemy: {p_Enemy?.transform == null}");
+        // }
         var dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
-        if (dist <= m_AttackDistance)
+        if (dist <= m_AttackDistance && Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(p_Enemy))
         {
             p_Enemy.transform.LookAt(m_Player);
             p_Enemy.WeaponHandler.Attack();

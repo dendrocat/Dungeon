@@ -4,31 +4,26 @@ using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public event UnityAction<IReadOnlyList<Enemy>> Spawned;
+    public event UnityAction<IReadOnlyCollection<Enemy>> Spawned;
 
     [SerializeField] SpawnerConfig m_SpawnerConfig;
 
     void OnEnable()
     {
-        Room.SpawnActivated += Spawn;
-    }
-    void OnDisable()
-    {
-        Room.SpawnActivated -= Spawn;
+        Room.Activated += Spawn;
     }
 
-    void Spawn(IProvider<Transform> spawnProvider)
+    void Spawn(Room room)
     {
-
-        var lst = new List<Enemy>(spawnProvider.Items.Count);
-        foreach (var point in spawnProvider.Items)
+        var lst = new List<Enemy>(room.SpawnPoints.Count);
+        foreach (var point in room.SpawnPoints)
         {
             float chance = Random.value;
             foreach (var entry in m_SpawnerConfig.SpawnChances)
             {
                 if (chance < entry.SpawnChance)
                 {
-                    lst.Add(Instantiate(entry.Prefab, point.transform.position, Quaternion.identity).GetComponent<Enemy>());
+                    lst.Add(Instantiate(entry.Prefab, point.transform.position, Quaternion.identity, room.transform).GetComponent<Enemy>());
                     break;
                 }
                 chance -= entry.SpawnChance;
@@ -36,7 +31,10 @@ public class EnemySpawner : MonoBehaviour
         }
 
         for (int i = 0; i < lst.Count; ++i)
+        {
             lst[i].name = $"{lst[i].name.Replace("(Clone)", "")}_{i + 1}";
+            lst[i].SetWaypointProvider(room);
+        }
 
         Spawned?.Invoke(lst);
     }

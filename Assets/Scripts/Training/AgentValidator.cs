@@ -1,13 +1,10 @@
 using UnityEngine;
 using Unity.MLAgents.Actuators;
-using UnityEngine.Events;
 using DomainLogging;
 
 [RequireComponent(typeof(EnemyAgent))]
 public class AgentValidator : MonoBehaviour, IActionReceiver
 {
-    public static event UnityAction EpisodeEndingRequested;
-
     [SerializeField] AgentValidatorConfig m_Config;
 
     EnemyAgent m_Agent;
@@ -30,7 +27,7 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
     float EstimateAlert()
     {
         if (m_Agent.AudioSensor.AudioOutput.AudioLevel > m_Config.Detection.AudioLevel) return m_Config.Rewards.Correct;
-        bool correct = Director.Instance.IsPlayerVisibleFrom(m_Enemy) || Director.Instance.PlayerVisible;
+        bool correct = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(m_Enemy) || Director.Instance.PlayerVisible;
         return correct ? m_Config.Rewards.Correct : m_Config.Rewards.Incorrect;
     }
 
@@ -83,9 +80,8 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
         DomainDebug.Log($"Agent: {m_Enemy.name} getted {rate} for next state : {next}. All reward: {m_Agent.GetCumulativeReward()}", DomainType.Agent);
         if (m_Agent.GetCumulativeReward() <= m_Config.Rewards.Incorrect * 4)
         {
-			m_Agent.EndEpisode();
+            m_Agent.EndEpisode();
             m_Enemy.gameObject.SetActive(false);
-            EpisodeEndingRequested?.Invoke();
         }
     }
 

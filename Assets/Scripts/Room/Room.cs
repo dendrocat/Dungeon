@@ -5,18 +5,16 @@ using UnityEngine.Events;
 using DomainLogging;
 
 [RequireComponent(typeof(SphereCollider))]
-public class Room : MonoBehaviour, IActivatable, IProvider<IWaypoint>, IProvider<Transform>
+public class Room : MonoBehaviour, IActivatable, IWaypointProvider
 {
-    public static event UnityAction<IProvider<IWaypoint>> WapointsActivated;
-    public static event UnityAction<IProvider<Transform>> SpawnActivated;
+    public static event UnityAction<Room> Activated;
+    public event UnityAction PlayerExited;
 
     [SerializeField] Transform WaypointParent;
     IReadOnlyList<IWaypoint> m_Waypoints;
-    IReadOnlyList<IWaypoint> IProvider<IWaypoint>.Items => m_Waypoints;
 
     [SerializeField] Transform SpawnParent;
-    IReadOnlyList<Transform> m_SpawnPoints;
-    IReadOnlyList<Transform> IProvider<Transform>.Items => m_SpawnPoints;
+    public IReadOnlyList<Transform> SpawnPoints { get; private set; }
 
     public bool IsActive { get; private set; }
 
@@ -24,30 +22,42 @@ public class Room : MonoBehaviour, IActivatable, IProvider<IWaypoint>, IProvider
     {
         m_Waypoints = WaypointParent.GetComponentsInChildren<IWaypoint>();
         DomainDebug.Log($"{name}: found {m_Waypoints.Count} waypoints", DomainType.Room);
-        m_SpawnPoints = SpawnParent.GetComponentsInChildren<Transform>().Skip(1).ToArray();
-        DomainDebug.Log($"{name}: found {m_SpawnPoints.Count} spawn points", DomainType.Room);
+        SpawnPoints = SpawnParent.GetComponentsInChildren<Transform>().Skip(1).ToArray();
+        DomainDebug.Log($"{name}: found {SpawnPoints.Count} spawn points", DomainType.Room);
     }
 
     void OnTriggerEnter(Collider other)
     {
+        if (IsActive) return;
         DomainDebug.Log($"{other.name} entered in room", DomainType.Room);
-        if (!IsActive)
-            Activate();
+        Activate();
     }
 
     void OnTriggerExit(Collider other)
     {
-        Deactivate();
+        PlayerExited?.Invoke();
     }
 
     public void Activate()
     {
         IsActive = true;
-        WapointsActivated?.Invoke(this);
-        SpawnActivated?.Invoke(this);
+        Activated?.Invoke(this);
     }
     public void Deactivate()
     {
         IsActive = false;
+    }
+
+    public IWaypoint GetFreeWaypoint()
+    {
+        if (m_Waypoints == null || m_Waypoints.Count == 0) throw new System.OperationCanceledException("Items not found");
+        int index = 0;
+        for (int attemp = 0; attemp < 10; ++attemp)
+        {
+            index = Random.Range(0, m_Waypoints.Count);
+            if (m_Waypoints[index].IsBusy) continue;
+            return m_Waypoints[index];
+        }
+        return m_Waypoints[0];
     }
 }

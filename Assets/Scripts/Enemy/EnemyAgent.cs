@@ -22,17 +22,25 @@ public class EnemyAgent : Agent
     StateMachine fsm;
     Enemy m_Enemy;
 
-
     public override void Initialize()
     {
         fsm = GetComponent<StateMachine>();
-        fsm.ChangeStateRequested += OnChangeStateRequested;
+        fsm.ChangeStateRequested += RequestDecision;
 
         m_Enemy = GetComponentInParent<Enemy>();
 
         m_UpdateTimer = new Timer(m_UpdateSensorTime);
         m_UpdateTimer.TimerEnded += UpdateSensors;
         UpdateSensors();
+
+        Person.Died += OnDied;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        fsm.ChangeStateRequested -= RequestDecision;
+        Person.Died -= OnDied;
     }
 
     // void Start()
@@ -55,14 +63,11 @@ public class EnemyAgent : Agent
         // d[0] = state;
     }
 
-    void OnChangeStateRequested()
+    void OnDied(Person p)
     {
-        if (m_Enemy.Health.Value <= 0)
-        {
-            fsm.ChangeState((int)States.Die);
-            return;
-        }
-        RequestDecision();
+        if (!m_Enemy.Equals(p)) return;
+        fsm.ChangeState((int)States.Die);
+        enabled = false;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -72,7 +77,7 @@ public class EnemyAgent : Agent
         // sensor.AddObservation(Vector3.Angle(Director.Instance.PlayerTransform.forward, m_Enemy.transform.forward));
 
         // Player visibility
-        sensor.AddObservation(Director.Instance.IsPlayerVisibleFrom(m_Enemy));
+        sensor.AddObservation(Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(m_Enemy));
         sensor.AddObservation(Director.Instance.PlayerVisible);
         sensor.AddObservation(Director.Instance.PlayerLighted);
 
@@ -92,8 +97,9 @@ public class EnemyAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        ActionReceived?.Invoke(actions);
+        // DomainDebug.Log($"{m_Enemy.name} (enabled : {enabled}) getted next state: {(States)actions.DiscreteActions[0]}", DomainType.Agent);
         fsm.ChangeState(actions.DiscreteActions[0]);
+        ActionReceived?.Invoke(actions);
     }
 
     void UpdateSensors()
