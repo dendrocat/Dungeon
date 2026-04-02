@@ -28,20 +28,21 @@ public class PlayerHealth : Health
     }
 
     /// <inheritdoc/>
-    public override void TakeDamage(float damage)
+    public override bool TakeDamage(float damage)
     {
-        base.TakeDamage(damage);
+        if (!base.TakeDamage(damage)) return false;
         HealthChanged?.Invoke(p_Health);
         if (!m_UntilRegen.IsActive && !m_Regen.IsActive)
             m_UntilRegen.Activate();
+        return true;
     }
 
     void Heal()
     {
-        p_Health += m_RegenSpeed;
+        p_Health = Mathf.Min(p_Health + m_RegenSpeed, p_MaxHealth);
+        HealthChanged?.Invoke(p_Health);
         if (p_Health >= p_MaxHealth)
         {
-            p_Health = p_MaxHealth;
             m_UntilRegen.Reset();
             return;
         }

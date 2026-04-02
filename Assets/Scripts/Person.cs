@@ -22,16 +22,16 @@ public abstract class Person : MonoBehaviour, IDamagable
     }
 
     /// <inheritdoc/>
-    public void TakeDamage(float damage)
+    public bool TakeDamage(float damage)
     {
-        if (damage < 0)
-        {
-            // DomainDebug.LogError($"{name} recieved negative damage: {damage}", DomainType.Person);
-            return;
-        }
-        p_Health.TakeDamage(damage);
+        // if (damage <= 0)
+        // {
+        // DomainDebug.LogError($"{name} recieved non-positive damage: {damage}", DomainType.Person);
+        // }
+        if (!p_Health.TakeDamage(damage)) return false;
         DomainDebug.Log($"{name} recieved {damage}. Remaining health: {p_Health.Value}", DomainType.Person);
         if (p_Health.Value <= 0) Die();
+        return true;
     }
 
     protected virtual void Die()

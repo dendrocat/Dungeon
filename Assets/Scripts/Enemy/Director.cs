@@ -77,6 +77,7 @@ public class Director : MonoBehaviour
     void OnEnemySpawned(IReadOnlyCollection<Enemy> enemies)
     {
         m_Enemies.UnionWith(enemies);
+        m_PlayerVisible = m_VisibilityChecker.IsPlayerVisible(m_Enemies);
     }
 
     void OnEnemyDied(Person p)
@@ -89,8 +90,8 @@ public class Director : MonoBehaviour
 
     void CheckVisibility()
     {
-        // DomainDebug.Log($"PlayerVisibilityChanged to {m_PlayerVisible}", DomainType.Director);
         bool visibility = m_VisibilityChecker.IsPlayerVisible(m_Enemies);
+        DomainDebug.Log($"PlayerVisibilityChanged from {m_PlayerVisible} to {visibility}", DomainType.Director);
         if (visibility)
         {
             PlayerVisible = true;

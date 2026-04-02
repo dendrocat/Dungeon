@@ -20,7 +20,11 @@ public class PlayerAgent : Agent, IInput
     public event UnityAction Throwed;
     public event UnityAction MeleeAttacked;
 
+    [SerializeField] PlayerWeaponHandler m_WeaponHandler;
+    [SerializeField] GrenadeStats m_GrenadeStats;
+
     Player m_Player;
+    Timer m_GrenadeWindow;
 
     public override void Initialize()
     {
@@ -28,6 +32,8 @@ public class PlayerAgent : Agent, IInput
         IInput.Instance = this;
         m_Player = GetComponentInParent<Player>();
         Person.Died += OnPersonDied;
+
+        m_GrenadeWindow = new Timer(m_GrenadeStats.ExplosionTime * 1.1f, false);
     }
 
     void OnPersonDied(Person p)
@@ -35,7 +41,12 @@ public class PlayerAgent : Agent, IInput
         if (p is Enemy) AddReward(50f);
         else
         {
-            AddReward(-100);
+            if (m_GrenadeWindow.IsActive)
+                AddReward(-300);
+            else
+                AddReward(-100);
+            DomainLogging.DomainDebug.Log($"Player died with reward: {GetCumulativeReward()}", DomainLogging.DomainType.Player);
+            Person.Died -= OnPersonDied;
             EndEpisode();
         }
     }
@@ -61,8 +72,22 @@ public class PlayerAgent : Agent, IInput
         Attack = inp[5] > 0;
 
         if (inp[6] > 0) Reloaded?.Invoke();
-        if (inp[7] > 0) Throwed?.Invoke();
+        if (inp[7] > 0)
+        {
+            Throwed?.Invoke();
+            if (!m_WeaponHandler.Grenade.IsReloading)
+            {
+                m_GrenadeWindow.Reset();
+                m_GrenadeWindow.Activate();
+            }
+        }
+
         if (inp[8] > 0) MeleeAttacked?.Invoke();
         WeaponNumed?.Invoke(Mathf.FloorToInt(3 * (inp[9] + 1) * 0.5f) + 1);
+    }
+
+    void FixedUpdate()
+    {
+        m_GrenadeWindow.Update(Time.fixedDeltaTime);
     }
 }

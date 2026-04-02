@@ -131,6 +131,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  m_WeaponHandler: {fileID: 6888994772373431378}
+  m_GrenadeStats: {fileID: 11400000, guid: 4c7b95f581278e64ea0f2cfe82707f08, type: 2}
 --- !u!114 &38128719756224821
 MonoBehaviour:
   m_ObjectHideFlags: 0

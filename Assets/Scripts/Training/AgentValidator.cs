@@ -15,14 +15,15 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
         m_Enemy = GetComponentInParent<Enemy>();
         m_Agent = m_Enemy.MLAgent;
         m_Agent.ActionReceived += OnActionReceived;
+
+        Person.Died += OnDied;
     }
 
-    // float EstimateDie(States next)
-    // {
-    //     if (m_Enemy.Health.Value <= 0 && next == States.Die)
-    //         return m_Config.Rewards.Correct + m_Config.Rewards.Die;
-    //     return m_Config.Rewards.Incorrect;
-    // }
+    void OnDied(Person p)
+    {
+        if (!m_Enemy.Equals(p)) return;
+        m_Agent.AddReward(m_Config.Rewards.Die);
+    }
 
     float EstimateAlert()
     {
@@ -62,8 +63,6 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
 
     public float EstimateAgentAction(States next)
     {
-        // if (next == States.Die || m_Enemy.Health.Value <= 0)
-        //     return EstimateDie(next);
         if (next == States.Alert) return EstimateAlert();
         if (next == States.Attack) return EstimateAttack();
         if (next == States.Cover) return EstimateCover();

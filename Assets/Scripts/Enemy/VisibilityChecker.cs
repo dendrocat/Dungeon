@@ -19,11 +19,6 @@ public class VisibilityChecker : MonoBehaviour
         m_TempVisibility.Remove(e);
     }
 
-    public bool IsPlayerVisibleFrom(Enemy enemy)
-    {
-        return m_TempVisibility.GetValueOrDefault(enemy, false);
-    }
-
     bool _IsPlayerVisibleFrom(Enemy enemy)
     {
         if (!enemy.gameObject.activeSelf) return false;
@@ -41,14 +36,16 @@ public class VisibilityChecker : MonoBehaviour
         }
         return false;
     }
-    bool HashingIsPlayerVisibleFrom(Enemy enemy)
+
+    public bool IsPlayerVisibleFrom(Enemy enemy, bool useCache = true)
     {
-        return m_TempVisibility[enemy] = _IsPlayerVisibleFrom(enemy);
+        if (useCache) return m_TempVisibility.GetValueOrDefault(enemy, false);
+        else return m_TempVisibility[enemy] = _IsPlayerVisibleFrom(enemy);
     }
 
     public bool IsPlayerVisible(IReadOnlyCollection<Enemy> enemies)
     {
-        return enemies.Any(HashingIsPlayerVisibleFrom);
+        return enemies.Any(e => IsPlayerVisibleFrom(e, false));
     }
 
 }

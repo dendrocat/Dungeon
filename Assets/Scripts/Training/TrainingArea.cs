@@ -29,6 +29,9 @@ public class TrainingArea : MonoBehaviour
         m_Spawner.Spawned += RegisterEnemies;
 
         // AgentValidator.EpisodeEndingRequested += OnEndEpisodeRequested;
+#if UNITY_EDITOR || TRAIN
+        DomainDebug.Log($"I'm training", DomainType.Training);
+#endif
     }
 
     void OnDisable()

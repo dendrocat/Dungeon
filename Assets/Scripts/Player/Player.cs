@@ -1,5 +1,5 @@
-using DomainLogging;
 using UnityEngine;
+// using DomainLogging;
 
 [RequireComponent(typeof(MouseLook), typeof(PlayerMover))]
 public class Player : Person
@@ -34,7 +34,7 @@ public class Player : Person
     void OnLightZonePlayerInsideChanged(bool playerInside)
     {
         m_LightZoneCount += playerInside ? 1 : -1;
-        DomainDebug.Log($"Player lighted: {IsLighted}", DomainType.Player);
+        // DomainDebug.Log($"Player lighted: {IsLighted}", DomainType.Player);
     }
 
     void OnEnemyDied(Person p)

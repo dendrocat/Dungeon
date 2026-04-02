@@ -79,7 +79,7 @@ public class StateMachine : MonoBehaviour
             m_ActiveState.MachineState.Continue();
             return true;
         }
-        DomainDebug.Log($"{m_Enemy.name}: Changing state to {(States)state}", DomainType.StateMachine);
+        DomainDebug.Log($"{transform.parent.name}: Changing state to {(States)state}", DomainType.StateMachine);
 
         m_ActiveState.MachineState.Exit();
 
@@ -91,9 +91,9 @@ public class StateMachine : MonoBehaviour
 
     void OnStateEnded(bool canActive)
     {
-        DomainDebug.Log($"{m_Enemy.name}: {m_ActiveState.State} ended. This state can be active {canActive}. Request next state", DomainType.StateMachine);
+        DomainDebug.Log($"{transform.parent.name}: {m_ActiveState.State} ended. This state can be active {canActive}. Request next state", DomainType.StateMachine);
         m_CanActiveState = canActive;
-        ChangeStateRequested.Invoke();
+        ChangeStateRequested?.Invoke();
     }
 
 #if UNITY_EDITOR
@@ -111,5 +111,10 @@ public class StateMachine : MonoBehaviour
         // if (m_ActiveState.State == States.Die || m_ActiveState.State == States.Attack)
         //     DomainDebug.Log($"State: {m_ActiveState.State}, Machine: {m_ActiveState.MachineState.GetType()}", DomainType.StateMachine);
         m_ActiveState.MachineState.Update(Time.fixedDeltaTime);
+    }
+
+    void OnDestroy()
+    {
+        m_ActiveState.MachineState.Exit();
     }
 }

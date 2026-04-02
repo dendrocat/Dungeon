@@ -58,7 +58,7 @@ MonoBehaviour:
       data:
         m_HasTime: 1
         m_IsExitTime: 1
-        m_Time: 15
+        m_Time: 5
     - rid: 5901800330069540968
       type: {class: PatrolState, ns: , asm: Assembly-CSharp}
       data:

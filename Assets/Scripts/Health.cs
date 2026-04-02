@@ -24,9 +24,10 @@ public abstract class Health : MonoBehaviour, IDamagable
     }
 
     /// <inheritdoc/>
-    public virtual void TakeDamage(float damage)
+    public virtual bool TakeDamage(float damage)
     {
-        if (p_Health <= 0) return;
+        if (damage <= 0 || p_Health <= 0) return false;
         p_Health -= damage;
+        return true;
     }
 }

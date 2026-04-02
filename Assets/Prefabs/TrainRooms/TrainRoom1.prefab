@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 8176651337014254102}
   - component: {fileID: 8214503703743378583}
   - component: {fileID: 1759768613832390794}
+  - component: {fileID: 2706137073491398694}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -196,7 +197,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 20, z: -48}
-  m_LocalScale: {x: 100, y: 1, z: 44}
+  m_LocalScale: {x: 100, y: 3, z: 44}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7944394114709862824}
@@ -280,6 +281,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!208 &2706137073491398694
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330448154442247734}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &334915212618827821
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +340,7 @@ GameObject:
   - component: {fileID: 97176576402405796}
   - component: {fileID: 2982287639602546627}
   - component: {fileID: 8678851940794058344}
+  - component: {fileID: 2273352655466159852}
   m_Layer: 0
   m_Name: Wall (1)
   m_TagString: Untagged
@@ -340,7 +358,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 20, z: 48}
-  m_LocalScale: {x: 100, y: 1, z: 44}
+  m_LocalScale: {x: 100, y: 3, z: 44}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7944394114709862824}
@@ -424,6 +442,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!208 &2273352655466159852
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401028581202810103}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &463072944689072376
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +559,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
@@ -1189,6 +1223,7 @@ GameObject:
   - component: {fileID: 8074629490493960}
   - component: {fileID: 1432023112485986519}
   - component: {fileID: 7234757068776422071}
+  - component: {fileID: 5913327404369664245}
   m_Layer: 0
   m_Name: Wall (2)
   m_TagString: Untagged
@@ -1206,7 +1241,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 48, y: 20, z: 0}
-  m_LocalScale: {x: 44, y: 1, z: 100}
+  m_LocalScale: {x: 44, y: 3, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7944394114709862824}
@@ -1290,6 +1325,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!208 &5913327404369664245
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4420498847499300464}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4566280561547307802
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,8 +2368,8 @@ Transform:
   m_GameObject: {fileID: 6791819280152471517}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 100, y: 3, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3240573676773857220}
@@ -2719,6 +2770,7 @@ GameObject:
   - component: {fileID: 216808369687723349}
   - component: {fileID: 5416392767741999464}
   - component: {fileID: 8377369388016321818}
+  - component: {fileID: 5327566512878047595}
   m_Layer: 0
   m_Name: Wall (3)
   m_TagString: Untagged
@@ -2736,7 +2788,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -48, y: 20, z: 0}
-  m_LocalScale: {x: 44, y: 1, z: 100}
+  m_LocalScale: {x: 44, y: 3, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7944394114709862824}
@@ -2820,6 +2872,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!208 &5327566512878047595
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8003326605494953161}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8053822625437107380
 GameObject:
   m_ObjectHideFlags: 0
@@ -3140,12 +3208,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7944394114709862824}
   - {fileID: 1166426404225984800}
   - {fileID: 9016891915812022730}
   - {fileID: 3240573676773857220}
   - {fileID: 2956397294020905189}
   - {fileID: 7416542447958425630}
-  - {fileID: 7944394114709862824}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &4821913226599046670

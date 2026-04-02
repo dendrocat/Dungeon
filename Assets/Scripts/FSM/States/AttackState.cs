@@ -28,12 +28,16 @@ public class AttackState : BaseState
 
     }
 
-    void SetDestination()
+    void SetDestination(bool random = false)
     {
-        // Vector3 offset = (m_Player.position - p_Enemy.transform.position).normalized * m_Agent.stoppingDistance;
-        Vector3 offset = Random.onUnitSphere * p_Enemy.WeaponHandler.AttackDistance / 2;
+        // DomainLogging.DomainDebug.Log($"{p_Enemy.name} set dest {m_Agent.remainingDistance} {m_Agent.velocity}");
+        Vector3 offset;
+        if (random)
+            offset = Random.onUnitSphere * m_AttackDistance / 3;
+        else
+            offset = (m_Player.position - p_Enemy.transform.position).normalized * m_AttackDistance * 0.2f;
         offset.y = 0;
-        if (NavMesh.SamplePosition(m_Player.position + offset,
+        if (NavMesh.SamplePosition(m_Player.position - offset,
                 out var hit, 10f, NavMesh.AllAreas))
             m_Agent.SetDestination(hit.position);
         else m_Agent.SetDestination(m_Player.position);
@@ -47,19 +51,34 @@ public class AttackState : BaseState
         // {
         //     DomainLogging.DomainDebug.LogWarning($"m_Player: {m_Player == null}, p_Enemy: {p_Enemy?.transform == null}");
         // }
-        var dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
-        if (dist <= m_AttackDistance && Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(p_Enemy))
+        float dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
+        bool localVisible = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(p_Enemy);
+        if (dist > m_AttackDistance)
+            SetDestination();
+        else
         {
-            p_Enemy.transform.LookAt(m_Player);
-            p_Enemy.WeaponHandler.Attack();
+            if (!localVisible)
+            {
+                p_Enemy.transform.LookAt(m_Player);
+                localVisible = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(p_Enemy, false);
+            }
+            if (localVisible)
+            {
+                m_Agent.ResetPath();
+                p_Enemy.transform.LookAt(m_Player);
+                p_Enemy.WeaponHandler.Attack();
+            }
+            else if (!m_Agent.hasPath || m_Agent.velocity.magnitude < 0.1f)
+                SetDestination(true);
         }
-        else SetDestination();
+        // if (m_Agent != null && m_Agent.hasPath)
+        //     DomainLogging.DomainDebug.Log($"{p_Enemy.name} check {m_Agent.remainingDistance} {m_Agent.velocity}");
     }
 
     protected override void OnExit()
     {
         m_Agent.speed = p_Enemy.InWalkSpeed;
-        m_Agent.stoppingDistance = baseStoppingDistance;
+        // m_Agent.stoppingDistance = baseStoppingDistance;
 
         m_Agent = null;
         m_Player = null;
