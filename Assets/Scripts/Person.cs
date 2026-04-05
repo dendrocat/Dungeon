@@ -4,21 +4,48 @@ using UnityEngine.Events;
 using TriInspector;
 using DomainLogging;
 
-[DeclareFoldoutGroup("cmp", Title = "Components")]
-public abstract class Person : MonoBehaviour, IDamagable
+public abstract class Person : MonoBehaviour
 {
     public static event UnityAction<Person> Died;
 
-    [LabelText("Health")]
-    [Group("cmp")]
-    [SerializeField] protected Health p_Health;
-    public Health Health => p_Health;
-
     IEnumerable<IActivatable> comps;
 
-    void Awake()
+    protected void Awake()
     {
-        comps = GetComponentsInChildren<IActivatable>();
+        comps = GetComponents<IActivatable>();
+        OnAwake();
+    }
+    protected virtual void OnAwake() { }
+
+    protected virtual void Die()
+    {
+        if (comps == null)
+        {
+            Debug.LogError($"comps is NULL");
+        }
+        foreach (var c in comps) c.Deactivate();
+        DomainDebug.Log($"{name} died", DomainType.Person);
+        Died?.Invoke(this);
+    }
+}
+
+[DeclareFoldoutGroup("cmp", Title = "Components")]
+public abstract class Person<TConfig, THealth, THealthConfig> : Person, IDamagable
+    where TConfig : PersonConfig<THealthConfig>
+    where THealth : Health<THealthConfig>
+    where THealthConfig : HealthConfig
+{
+    [SerializeField] TConfig m_Config;
+    public TConfig Config => m_Config;
+
+    [LabelText("Health")]
+    [Group("cmp")]
+    [SerializeField] protected THealth p_Health;
+    public THealth Health => p_Health;
+
+    protected override void OnAwake()
+    {
+        p_Health.Init(m_Config.Health);
     }
 
     /// <inheritdoc/>
@@ -34,10 +61,4 @@ public abstract class Person : MonoBehaviour, IDamagable
         return true;
     }
 
-    protected virtual void Die()
-    {
-        foreach (var c in comps) c.Deactivate();
-        DomainDebug.Log($"{name} died", DomainType.Person);
-        Died?.Invoke(this);
-    }
 }

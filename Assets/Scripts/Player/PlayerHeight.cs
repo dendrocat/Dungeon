@@ -3,6 +3,7 @@ using TriInspector;
 
 [DeclareFoldoutGroup("set", Title = "Settings", Expanded = true)]
 [DeclareFoldoutGroup("cmp", Title = "Components")]
+[RequireComponent(typeof(Player))]
 public class PlayerHeight : MonoBehaviour
 {
     [Group("set")]
@@ -20,11 +21,14 @@ public class PlayerHeight : MonoBehaviour
     [Group("set")]
     [SerializeField, Slider(0.5f, 10f)] float m_TransitionSpeed = 4f;
     const float c_StopTransition = 0.001f;
+
     [Required, Group("cmp")]
     [SerializeField] Transform m_Cam;
 
     [Required, Group("cmp")]
     [SerializeField] CapsuleCollider m_Col;
+
+    IInput m_Input;
 
     void Awake()
     {
@@ -33,9 +37,14 @@ public class PlayerHeight : MonoBehaviour
         m_ColliderStayCenter = m_Col.center.y;
     }
 
+    void Start()
+    {
+        m_Input = GetComponent<Player>().Input;
+    }
+
     void FixedUpdate()
     {
-        float camY = IInput.Instance.IsCrouching ? m_CameraCrouchHeight : m_CameraStayHeight;
+        float camY = m_Input.IsCrouching ? m_CameraCrouchHeight : m_CameraStayHeight;
 
         if (Mathf.Abs(camY - m_Cam.localPosition.y) > c_StopTransition)
         {
@@ -51,9 +60,9 @@ public class PlayerHeight : MonoBehaviour
                 m_Cam.localPosition = camPos;
 
             Vector3 colCen = m_Col.center;
-            colCen.y = IInput.Instance.IsCrouching ? m_ColliderCrouchCenter : m_ColliderStayCenter;
+            colCen.y = m_Input.IsCrouching ? m_ColliderCrouchCenter : m_ColliderStayCenter;
             m_Col.center = colCen;
-            m_Col.height = IInput.Instance.IsCrouching ? m_ColliderCrouchHeight : m_ColliderStayHeight;
+            m_Col.height = m_Input.IsCrouching ? m_ColliderCrouchHeight : m_ColliderStayHeight;
         }
 
 

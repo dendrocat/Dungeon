@@ -7,7 +7,7 @@ using System.Linq;
 
 public class TrainingArea : MonoBehaviour
 {
-    [SerializeField] AgentValidatorConfig m_Config;
+    [SerializeField] AgentRewards m_Rewards;
     [SerializeField] EnemySpawner m_Spawner;
     [SerializeField] Player m_PlayerPrefab = null;
     Player m_Player = null;
@@ -137,7 +137,7 @@ public class TrainingArea : MonoBehaviour
 
     void OnPlayerDied()
     {
-        m_Group.AddGroupReward(m_Config.Rewards.PlayerKill);
+        m_Group.AddGroupReward(m_Rewards.PlayerKill);
         DomainDebug.Log($"Player killed", DomainType.Training);
         EndEpisode();
     }
@@ -149,7 +149,7 @@ public class TrainingArea : MonoBehaviour
         m_Enemies.Remove(e);
         DomainDebug.Log($"Died {e.name}, remaining agents: {m_Group.GetRegisteredAgents().Count}", DomainType.Training);
         if (m_Group.GetRegisteredAgents().Count > 0) return;
-        m_Group.AddGroupReward(m_Config.Rewards.GroupDie);
+        m_Group.AddGroupReward(m_Rewards.GroupDie);
         EndEpisode();
     }
 

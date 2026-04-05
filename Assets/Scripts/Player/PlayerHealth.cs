@@ -2,29 +2,36 @@ using UnityEngine;
 using UnityEngine.Events;
 using TriInspector;
 
-[DeclareBoxGroup("rset", Title = "Regen Settings")]
-public class PlayerHealth : Health
+[System.Serializable]
+public class PlayerHealthConfig : HealthConfig
+{
+    [Unit(UnitAttribute.Second)]
+    [SerializeField, Slider(2f, 10f)] float m_UntilRegenTime = 5f;
+    public float UntilRegenTime => m_UntilRegenTime;
+
+    [Unit("HP/s")]
+    [SerializeField, Slider(1, 10f)] float m_RegenSpeed = 2f;
+    public float RegenSpeed => m_RegenSpeed;
+}
+
+public class PlayerHealth : Health<PlayerHealthConfig>
 {
     public event UnityAction<float> HealthChanged;
 
-    [Group("rset")]
-    [Unit(UnitAttribute.Second)]
-    [SerializeField, Slider(2f, 10f)] float m_RegenTime = 5f;
-
-    [Group("rset")]
-    [Unit("HP/s")]
-    [SerializeField, Slider(1, 10f)] float m_RegenSpeed = 2f;
-
     Timer m_UntilRegen, m_Regen;
 
-    protected override void Awake()
+    float m_RegenSpeed;
+
+    public override void Init(PlayerHealthConfig config)
     {
-        base.Awake();
-        m_UntilRegen = new Timer(m_RegenTime, false);
+        base.Init(config);
+        m_UntilRegen = new Timer(config.UntilRegenTime, false);
         m_UntilRegen.TimerEnded += Heal;
 
         m_Regen = new Timer(1, false);
         m_Regen.TimerEnded += Heal;
+
+        m_RegenSpeed = config.RegenSpeed;
     }
 
     /// <inheritdoc/>
@@ -41,7 +48,7 @@ public class PlayerHealth : Health
     {
         p_Health = Mathf.Min(p_Health + m_RegenSpeed, p_MaxHealth);
         HealthChanged?.Invoke(p_Health);
-        if (p_Health >= p_MaxHealth)
+        if (p_Health == p_MaxHealth)
         {
             m_UntilRegen.Reset();
             return;

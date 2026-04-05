@@ -1,26 +1,28 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using TriInspector;
 
+public abstract class HealthConfig
+{
+    [Unit("HP")]
+    [SerializeField, Min(10)] float m_MaxHealth = 10;
+    public float MaxHealth => m_MaxHealth;
+}
+
 [DeclareBoxGroup("hset", Title = "Heath Settings")]
-public abstract class Health : MonoBehaviour, IDamagable
+public abstract class Health<THealthConfig> : MonoBehaviour
+    where THealthConfig : HealthConfig
 {
     protected float p_Health;
 
-    [Group("hset")]
-    [LabelText("Health"), PropertyOrder(0)]
     [ShowInInspector, ReadOnly]
     public float Value => p_Health;
 
-    [Group("hset")]
-    [LabelText("Max health"), FormerlySerializedAs("MaxHealth")]
-    [SerializeField, Min(10)]
-    protected float p_MaxHealth = 100;
+    protected float p_MaxHealth;
     public float Max => p_MaxHealth;
 
-    protected virtual void Awake()
+    public virtual void Init(THealthConfig config)
     {
-        p_Health = p_MaxHealth;
+        p_Health = p_MaxHealth = config.MaxHealth;
     }
 
     /// <inheritdoc/>

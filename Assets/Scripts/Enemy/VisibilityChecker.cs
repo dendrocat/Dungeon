@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class VisibilityChecker : MonoBehaviour
 {
-    [SerializeField] AgentValidatorConfig m_AgentConfig;
-
     Dictionary<Enemy, bool> m_TempVisibility = new();
 
     void Awake()
@@ -30,7 +28,7 @@ public class VisibilityChecker : MonoBehaviour
             {
                 var dist = (hit.HitGameObject.transform.position - hit.StartPositionWorld).magnitude;
                 // DomainDebug.Log($"Check ray out: {hit.HitTaggedObject} {dist / hit.ScaledRayLength}", DomainType.Director);
-                if (Director.Instance.PlayerLighted || dist / hit.ScaledRayLength <= m_AgentConfig.Detection.RayLengthScale)
+                if (Director.Instance.PlayerLighted || dist / hit.ScaledRayLength <= enemy.Config.Detection.NightVisionLevel)
                     return true;
             }
         }

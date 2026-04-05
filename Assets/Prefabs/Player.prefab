@@ -68,7 +68,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6505941648290608775
 Transform:
   m_ObjectHideFlags: 0
@@ -106,9 +106,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 43070d70a0b3bd44da26082ba8be8413, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: PlayerAgent
   TeamId: 1
   m_UseChildSensors: 1
@@ -617,7 +617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1210183697272659370
 Transform:
   m_ObjectHideFlags: 0
@@ -941,9 +941,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74b64b341022254baa5923b7026b73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMover
-  m_BaseSpeed: 8
-  m_SpeedMultiplier: 2
-  m_JumpHeight: 2
   m_GroundChecker: {fileID: 9158216735366668330}
 --- !u!114 &5736453867547746692
 MonoBehaviour:
@@ -990,6 +987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b11bd8bb97f6349a26d6f61d416adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  m_Config: {fileID: 11400000, guid: 162d44ea34a4be24597987b46e04b717, type: 2}
   p_Health: {fileID: 9111397247087297666}
   m_WeaponHandler: {fileID: 6888994772373431378}
 --- !u!1 &8346134516660743878
@@ -1037,7 +1035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAudioEmitter
   CrouchVolume: 0.1
-  WalkVolume: 20
+  WalkVolume: 35
   RunVolume: 70
   m_Mover: {fileID: 6936228090893454987}
 --- !u!1 &8797141153130753165
@@ -1084,6 +1082,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a1d770216ea2f46a66316e33e8539c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  p_MaxHealth: 100
-  m_RegenTime: 5
-  m_RegenSpeed: 2

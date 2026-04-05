@@ -2,27 +2,23 @@ using UnityEngine;
 using TriInspector;
 
 [DeclareBoxGroup("heset", Title = "Heal Settings")]
-public class EnemyHealth : Health
+public class EnemyHealth : Health<EnemyConfig.EnemyHealthConfig>
 {
-    [Group("heset")]
-    [Unit("HP")]
-    [SerializeField, Min(1f)] float m_Heal;
-
-    [Group("heset")]
-    [SerializeField, Min(1)] int m_HealCount;
+    float m_HealValue;
 
     public int RemainingHealCount { get; private set; }
 
-    protected override void Awake()
+    public override void Init(EnemyConfig.EnemyHealthConfig config)
     {
-        base.Awake();
-        RemainingHealCount = m_HealCount;
+        base.Init(config);
+        m_HealValue = config.HealValue;
+        RemainingHealCount = config.HealCount;
     }
 
     public void Heal()
     {
         if (RemainingHealCount <= 0) return;
-        p_Health = Mathf.Min(p_Health + m_Heal, p_MaxHealth);
+        p_Health = Mathf.Min(p_Health + m_HealValue, p_MaxHealth);
         RemainingHealCount--;
     }
 }

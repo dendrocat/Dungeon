@@ -4,16 +4,8 @@ using TriInspector;
 
 [DeclareBoxGroup("set", Title = "Settings")]
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : Person
+public class Enemy : Person<EnemyConfig, EnemyHealth, EnemyConfig.EnemyHealthConfig>
 {
-    [Group("set")]
-    [SerializeField, Slider(5, 20)] float m_InWalkSpeed = 10;
-    public float InWalkSpeed => m_InWalkSpeed;
-
-    [Group("set")]
-    [SerializeField, Slider(5, 20)] float m_InAttackSpeed = 20;
-    public float InAttackSpeed => m_InAttackSpeed;
-
     public NavMeshAgent NavAgent { get; private set; }
 
     [Group("cmp")]
@@ -24,19 +16,12 @@ public class Enemy : Person
     [SerializeField] EnemyWeaponHandler m_WeaponHandler;
     public EnemyWeaponHandler WeaponHandler => m_WeaponHandler;
 
-    public new EnemyHealth Health => (p_Health as EnemyHealth);
-
     public IWaypointProvider WaypointProvider { get; private set; }
 
-    void OnValidate()
-    {
-        if (m_InAttackSpeed < m_InWalkSpeed) m_InAttackSpeed = m_InWalkSpeed;
-    }
-
-    void Start()
+    protected override void OnAwake()
     {
         NavAgent = GetComponent<NavMeshAgent>();
-        NavAgent.speed = m_InWalkSpeed;
+        NavAgent.speed = Config.Speed.BaseSpeed;
 
         m_WeaponHandler.SetTarget(Director.Instance.PlayerTransform);
     }

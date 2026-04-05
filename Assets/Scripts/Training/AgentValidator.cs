@@ -5,7 +5,7 @@ using DomainLogging;
 [RequireComponent(typeof(EnemyAgent))]
 public class AgentValidator : MonoBehaviour, IActionReceiver
 {
-    [SerializeField] AgentValidatorConfig m_Config;
+    [SerializeField] AgentRewards m_Rewards;
 
     EnemyAgent m_Agent;
     Enemy m_Enemy;
@@ -22,43 +22,43 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
     void OnDied(Person p)
     {
         if (!m_Enemy.Equals(p)) return;
-        m_Agent.AddReward(m_Config.Rewards.Die);
+        m_Agent.AddReward(m_Rewards.Die);
     }
 
     float EstimateAlert()
     {
-        if (m_Agent.AudioSensor.AudioOutput.AudioLevel > m_Config.Detection.AudioLevel) return m_Config.Rewards.Correct;
+        if (m_Agent.AudioSensor.AudioOutput.AudioLevel > m_Enemy.Config.Detection.AudioLevel) return m_Rewards.Correct;
         bool correct = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(m_Enemy) || Director.Instance.PlayerVisible;
-        return correct ? m_Config.Rewards.Correct : m_Config.Rewards.Incorrect;
+        return correct ? m_Rewards.Correct : m_Rewards.Incorrect;
     }
 
     float EstimateAttack()
     {
-        return Director.Instance.PlayerVisible ? m_Config.Rewards.Correct : m_Config.Rewards.Incorrect;
+        return Director.Instance.PlayerVisible ? m_Rewards.Correct : m_Rewards.Incorrect;
     }
 
     float EstimateCover()
     {
         if (m_Enemy.Health.Value / m_Enemy.Health.Max > 0.5f)
-            return m_Config.Rewards.Incorrect;
-        return m_Config.Rewards.Correct;
+            return m_Rewards.Incorrect;
+        return m_Rewards.Correct;
     }
 
     float EstimateSearch()
     {
         if (Director.Instance.PlayerVisible)
-            return m_Config.Rewards.Incorrect;
+            return m_Rewards.Incorrect;
         if (!Director.Instance.LastPlayerPos.HasValue)
-            return m_Config.Rewards.Incorrect;
-        return m_Config.Rewards.Correct;
+            return m_Rewards.Incorrect;
+        return m_Rewards.Correct;
     }
 
     float EstimateIdlePatrol()
     {
         // DomainDebug.Log($"EstimateIdlePatrol: PlayerVisible : {Director.Instance.PlayerVisible}", DomainType.Agent);
         if (Director.Instance.PlayerVisible)
-            return m_Config.Rewards.Incorrect;
-        return m_Config.Rewards.Correct;
+            return m_Rewards.Incorrect;
+        return m_Rewards.Correct;
     }
 
     public float EstimateAgentAction(States next)
@@ -68,7 +68,7 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
         if (next == States.Cover) return EstimateCover();
         if (next == States.Search) return EstimateSearch();
         if (next == States.Idle || next == States.Patrol) return EstimateIdlePatrol();
-        return m_Config.Rewards.Correct;
+        return m_Rewards.Correct;
     }
 
     public void OnActionReceived(ActionBuffers actionBuffers)
@@ -77,7 +77,7 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
         var rate = EstimateAgentAction(next);
         m_Agent.AddReward(rate);
         DomainDebug.Log($"Agent: {m_Enemy.name} getted {rate} for next state : {next}. All reward: {m_Agent.GetCumulativeReward()}", DomainType.Agent);
-        if (m_Agent.GetCumulativeReward() <= m_Config.Rewards.Incorrect * 4)
+        if (m_Agent.GetCumulativeReward() <= m_Rewards.Incorrect * 4)
         {
             m_Agent.EndEpisode();
             m_Enemy.gameObject.SetActive(false);

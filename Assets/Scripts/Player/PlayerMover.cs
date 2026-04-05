@@ -1,22 +1,16 @@
 using UnityEngine;
 using TriInspector;
 
-[DeclareFoldoutGroup("set", Title = "Settings", Expanded = true)]
 [DeclareFoldoutGroup("cmp", Title = "Components")]
-[RequireComponent(typeof(Rigidbody))]
-public class PlayerMover : MonoBehaviour, IActivatable
+[RequireComponent(typeof(Rigidbody), typeof(Player))]
+public class PlayerMover : MonoBehaviour
 {
-    public bool IsActive => enabled;
-
-    [Group("set")]
-    [SerializeField, Slider(1, 10)] float m_BaseSpeed = 5;
+    float m_BaseSpeed = 5;
     public float BaseSpeed => m_BaseSpeed;
 
-    [Group("set")]
-    [SerializeField, Slider(1.5f, 3f)] float m_SpeedMultiplier = 1.5f;
+    float m_Multiplier;
+    int m_JumpHeight;
 
-    [Group("set")]
-    [SerializeField, Slider(1, 10)] int m_JumpHeight = 1;
     Vector3 m_JumpForce;
 
     [Required, Group("cmp")]
@@ -31,14 +25,15 @@ public class PlayerMover : MonoBehaviour, IActivatable
     void Awake()
     {
         m_Rig = GetComponent<Rigidbody>();
-        Speed = m_BaseSpeed;
-        CalcJumpForce();
+        m_Input = GetComponent<Player>().Input;
+        m_Input.Jumped += Jump;
     }
 
-    void Start()
+    public void Init(PlayerConfig config)
     {
-        m_Input = IInput.Instance;
-        m_Input.Jumped += Jump;
+        m_BaseSpeed = config.Speed.BaseSpeed;
+        m_Multiplier = config.Speed.Multiplier;
+        m_JumpHeight = config.JumpHeight;
     }
 
     void CalcJumpForce()
@@ -56,8 +51,8 @@ public class PlayerMover : MonoBehaviour, IActivatable
 
     float CalcSpeed()
     {
-        if (m_Input.IsRunning) return m_BaseSpeed * m_SpeedMultiplier;
-        if (m_Input.IsCrouching) return m_BaseSpeed / m_SpeedMultiplier;
+        if (m_Input.IsRunning) return m_BaseSpeed * m_Multiplier;
+        if (m_Input.IsCrouching) return m_BaseSpeed / m_Multiplier;
         return m_BaseSpeed;
     }
 
@@ -73,7 +68,4 @@ public class PlayerMover : MonoBehaviour, IActivatable
     {
         Move();
     }
-
-    public void Activate() => enabled = true;
-    public void Deactivate() => enabled = false;
 }

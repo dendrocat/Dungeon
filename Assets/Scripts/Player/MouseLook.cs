@@ -3,10 +3,8 @@ using UnityEngine;
 
 [DeclareFoldoutGroup("set", Title = "Settings", Expanded = true)]
 [DeclareFoldoutGroup("cmp", Title = "Components")]
-public class MouseLook : MonoBehaviour, IActivatable
+public class MouseLook : MonoBehaviour
 {
-    public bool IsActive => enabled;
-
     [Slider(10, 100), Group("set")]
     [SerializeField] float m_Sensivity = 50;
 
@@ -22,7 +20,7 @@ public class MouseLook : MonoBehaviour, IActivatable
 
     void Start()
     {
-        m_Input = IInput.Instance;
+        m_Input = GetComponent<Player>().Input;
     }
 
     void FixedUpdate()
@@ -35,7 +33,4 @@ public class MouseLook : MonoBehaviour, IActivatable
 
         transform.Rotate(Vector3.up * dt.x);
     }
-
-    public void Activate() => enabled = true;
-    public void Deactivate() => enabled = false;
 }

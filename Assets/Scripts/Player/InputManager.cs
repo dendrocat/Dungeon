@@ -3,8 +3,10 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
-public class InputManager : MonoBehaviour, IInput
+public class InputManager : MonoBehaviour, IInput, IActivatable
 {
+    public bool IsActive => enabled;
+
     public Vector2 Move { get; private set; }
     public bool IsCrouching { get; private set; }
     public bool IsRunning { get; private set; }
@@ -18,17 +20,6 @@ public class InputManager : MonoBehaviour, IInput
     public event UnityAction Reloaded;
     public event UnityAction Throwed;
     public event UnityAction MeleeAttacked;
-
-    void Awake()
-    {
-        if (IInput.Instance != null) { Destroy(gameObject); return; }
-        IInput.Instance = this;
-    }
-
-    void OnDestroy()
-    {
-        if (IInput.Instance == (this as IInput)) IInput.Instance = null;
-    }
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
@@ -75,4 +66,7 @@ public class InputManager : MonoBehaviour, IInput
 
     public void OnCrouch(InputAction.CallbackContext ctx) => IsCrouching = ctx.performed;
     public void OnRun(InputAction.CallbackContext ctx) => IsRunning = ctx.performed;
+
+    public void Activate() => enabled = true;
+    public void Deactivate() => enabled = false;
 }

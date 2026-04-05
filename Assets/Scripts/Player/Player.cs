@@ -2,22 +2,32 @@ using UnityEngine;
 // using DomainLogging;
 
 [RequireComponent(typeof(MouseLook), typeof(PlayerMover))]
-public class Player : Person
+public class Player : Person<PlayerConfig, PlayerHealth, PlayerHealthConfig>
 {
     [TriInspector.Group("cmp")]
     [SerializeField] PlayerWeaponHandler m_WeaponHandler;
 
+	IInput m_Input;
+	public IInput Input => m_Input;
+
     int m_LightZoneCount = 0;
     public bool IsLighted => m_LightZoneCount > 0;
 
+    protected override void OnAwake()
+    {
+		m_Input = GetComponentInChildren<IInput>();	
+		GetComponent<PlayerMover>().Init(Config);
+	}
+
     void Start()
     {
-        if (!m_WeaponHandler.IsActive) return;
-        IInput.Instance.WeaponNumed += m_WeaponHandler.ChangeWeapon;
-        IInput.Instance.Reloaded += m_WeaponHandler.Reload;
-        IInput.Instance.Throwed += m_WeaponHandler.ThrowGrenade;
-        IInput.Instance.MeleeAttacked += m_WeaponHandler.MeleeAttack;
         Person.Died += OnEnemyDied;
+
+        if (!m_WeaponHandler.IsActive) return;
+        Input.WeaponNumed += m_WeaponHandler.ChangeWeapon;
+        Input.Reloaded += m_WeaponHandler.Reload;
+        Input.Throwed += m_WeaponHandler.ThrowGrenade;
+        Input.MeleeAttacked += m_WeaponHandler.MeleeAttack;
 
         m_WeaponHandler.ChangeWeapon(1);
     }
@@ -46,7 +56,7 @@ public class Player : Person
     void Update()
     {
         if (!m_WeaponHandler.IsActive) return;
-        if (IInput.Instance.Attack) m_WeaponHandler.Attack();
+        if (Input.Attack) m_WeaponHandler.Attack();
     }
 }
 

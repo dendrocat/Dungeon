@@ -54,7 +54,7 @@ MonoBehaviour:
   m_RayLength: 20
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 2147484667
+    m_Bits: 2147484539
   m_ObservationStacks: 1
   m_AlternatingRayOrder: 0
   m_UseBatchedRaycasts: 0
@@ -139,9 +139,9 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 4d26e8c679007e24faf1d21b4b9e9be4, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: Enemy
   TeamId: 0
   m_UseChildSensors: 1
@@ -479,7 +479,7 @@ NavMeshAgent:
   m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 720
-  m_StoppingDistance: 1
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -501,6 +501,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   p_Health: {fileID: 8420381032546882376}
   m_InWalkSpeed: 10
-  m_InAttackSpeed: 20
+  m_InAttackSpeed: 16
   m_MLAgent: {fileID: 5027850626566552563}
   m_WeaponHandler: {fileID: 3511707028197208452}

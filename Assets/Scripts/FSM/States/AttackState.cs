@@ -22,7 +22,7 @@ public class AttackState : BaseState
 
         // baseStoppingDistance = m_Agent.stoppingDistance;
         // m_Agent.stoppingDistance = m_AttackDistance * 0.8f;
-        m_Agent.speed = p_Enemy.InAttackSpeed;
+        m_Agent.speed = p_Enemy.Config.Speed.BaseSpeed * p_Enemy.Config.Speed.Multiplier;
 
         distanceOffset = m_AttackDistance / 3;
 
@@ -53,7 +53,7 @@ public class AttackState : BaseState
         // }
         float dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
         bool localVisible = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(p_Enemy);
-        if (dist > m_AttackDistance)
+        if (dist > m_AttackDistance || dist < m_AttackDistance / 10)
             SetDestination();
         else
         {
@@ -77,7 +77,7 @@ public class AttackState : BaseState
 
     protected override void OnExit()
     {
-        m_Agent.speed = p_Enemy.InWalkSpeed;
+        m_Agent.speed = p_Enemy.Config.Speed.BaseSpeed;
         // m_Agent.stoppingDistance = baseStoppingDistance;
 
         m_Agent = null;

@@ -4,8 +4,10 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
-public class PlayerAgent : Agent, IInput
+public class PlayerAgent : Agent, IInput, IActivatable
 {
+    public bool IsActive => enabled;
+
     public Vector2 Move { get; private set; }
     public bool IsCrouching { get; private set; }
     public bool IsRunning { get; private set; }
@@ -29,7 +31,6 @@ public class PlayerAgent : Agent, IInput
     public override void Initialize()
     {
         base.Initialize();
-        IInput.Instance = this;
         m_Player = GetComponentInParent<Player>();
         Person.Died += OnPersonDied;
 
@@ -90,4 +91,7 @@ public class PlayerAgent : Agent, IInput
     {
         m_GrenadeWindow.Update(Time.fixedDeltaTime);
     }
+
+    public void Activate() => enabled = true;
+    public void Deactivate() => enabled = false;
 }
