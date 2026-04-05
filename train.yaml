@@ -65,5 +65,9 @@ env_settings:
   restarts_rate_limit_n: 1
   restarts_rate_limit_period_s: 60
 
+engine_settings:
+  time_scale: 20
+  no_graphics: true
+
 torch_settings:
   device: cuda
