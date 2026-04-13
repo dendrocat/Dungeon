@@ -41,15 +41,13 @@ MonoBehaviour:
   - State: 1
     ExitStates: 000000000100000002000000
   - State: 2
-    ExitStates: 0300000005000000
+    ExitStates: 010000000300000005000000
   - State: 3
     ExitStates: 040000000300000005000000
   - State: 4
     ExitStates: 0300000005000000
   - State: 5
     ExitStates: 0100000003000000
-  - State: 6
-    ExitStates: 
   references:
     version: 2
     RefIds:
@@ -71,7 +69,7 @@ MonoBehaviour:
       data:
         m_HasTime: 1
         m_IsExitTime: 1
-        m_Time: 30
+        m_Time: 5
     - rid: 5901800443548270706
       type: {class: AttackState, ns: , asm: Assembly-CSharp}
       data:
@@ -96,7 +94,7 @@ MonoBehaviour:
         m_Time: 60
         m_StopTime: 4
         m_SearchRange: {x: 5, y: 30}
-        m_GrowTime: 10
+        m_GrowTime: 20
     - rid: 5901800443548270709
       type: {class: DieState, ns: , asm: Assembly-CSharp}
       data:

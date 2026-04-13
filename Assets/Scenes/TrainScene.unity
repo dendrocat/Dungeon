@@ -555,7 +555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &973074016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -979,7 +979,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6e8d53a6362164fbc1b1f9b85bca15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VisibilityChecker
-  m_AgentConfig: {fileID: 11400000, guid: dd67901390f80b646bce5d6df5a389eb, type: 2}
 --- !u!1 &1439930416
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,7 +1024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e868e0a35b1544daa0f72abf85d890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrainingArea
-  m_Config: {fileID: 11400000, guid: dd67901390f80b646bce5d6df5a389eb, type: 2}
+  m_Rewards: {fileID: 0}
   m_Spawner: {fileID: 1426416999}
   m_PlayerPrefab: {fileID: 1875641263216937551, guid: 8acfefa29987c7b479ce7f90f6995bac, type: 3}
   m_PlayerSpawnZone: {x: 80, y: 80}

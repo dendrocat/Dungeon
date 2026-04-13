@@ -34,6 +34,7 @@ public class EnemyAgent : Agent
         UpdateSensors();
 
         Person.Died += OnDied;
+        Director.Instance.PlayerVisibilityChanged += OnVisibilityChanged;
     }
 
     protected override void OnDisable()
@@ -62,6 +63,8 @@ public class EnemyAgent : Agent
         // var d = actionsOut.DiscreteActions;
         // d[0] = state;
     }
+
+    void OnVisibilityChanged(bool _) { RequestDecision(); }
 
     void OnDied(Person p)
     {

@@ -22,15 +22,15 @@ public class SearchState : PatrolState
     protected override void OnEnter()
     {
         base.OnEnter();
-        Director.Instance.PlayerVisibilityChanged += OnVisibilityChanged;
+        // Director.Instance.PlayerVisibilityChanged += OnVisibilityChanged;
 
         m_GrowTimer = new(m_GrowTime);
     }
 
-    private void OnVisibilityChanged(bool playerVisibility)
-    {
-        if (playerVisibility) StateEnd();
-    }
+    // private void OnVisibilityChanged(bool playerVisibility)
+    // {
+    //     if (playerVisibility) StateEnd();
+    // }
 
     protected override void SetDestination()
     {
@@ -39,6 +39,7 @@ public class SearchState : PatrolState
             dest = Director.Instance.LastPlayerPos.Value + Random.onUnitSphere * m_SearchRadius;
         else
             dest = p_Enemy.MLAgent.AudioSensor.AudioOutput.AudioPosition;
+		dest.y = 0;
 
         if (NavMesh.SamplePosition(dest, out var hit, 10f, NavMesh.AllAreas))
             dest = hit.position;
@@ -58,7 +59,6 @@ public class SearchState : PatrolState
     {
         base.OnExit();
         m_GrowTimer = null;
-
-        Director.Instance.PlayerVisibilityChanged -= OnVisibilityChanged;
+        // Director.Instance.PlayerVisibilityChanged -= OnVisibilityChanged;
     }
 }

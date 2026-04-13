@@ -23,11 +23,11 @@ public class AlertState : BaseState
 
     protected override void OnEnter()
     {
-        if (Director.Instance.PlayerVisible)
-        {
-            StateEnd();
-            return;
-        }
+        // if (Director.Instance.PlayerVisible)
+        // {
+        //     StateEnd();
+        //     return;
+        // }
         var pos = GetPlayerPosFromRayPerception();
         if (pos.Equals(Vector3.positiveInfinity)) pos = GetAudioPos();
 
@@ -36,8 +36,8 @@ public class AlertState : BaseState
         p_Enemy.NavAgent.SetDestination(pos);
     }
 
-    protected override void OnUpdate(float dt)
-    {
-        if (p_Enemy.NavAgent.remainingDistance <= p_Enemy.NavAgent.stoppingDistance) StateEnd();
-    }
+    // protected override void OnUpdate(float dt)
+    // {
+    //     if (p_Enemy.NavAgent.remainingDistance <= p_Enemy.NavAgent.stoppingDistance) StateEnd();
+    // }
 }
