@@ -15,4 +15,6 @@ public interface IInput
     public event UnityAction Reloaded;
     public event UnityAction Throwed;
     public event UnityAction MeleeAttacked;
+
+	public event UnityAction Interacted;
 }

@@ -22,6 +22,8 @@ public class PlayerAgent : Agent, IInput, IActivatable
     public event UnityAction Throwed;
     public event UnityAction MeleeAttacked;
 
+    public event UnityAction Interacted;
+
     [SerializeField] PlayerWeaponHandler m_WeaponHandler;
     [SerializeField] GrenadeStats m_GrenadeStats;
 

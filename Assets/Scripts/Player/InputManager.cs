@@ -21,6 +21,8 @@ public class InputManager : MonoBehaviour, IInput, IActivatable
     public event UnityAction Throwed;
     public event UnityAction MeleeAttacked;
 
+	public event UnityAction Interacted;
+
     public void OnMove(InputAction.CallbackContext ctx)
     {
         Move = ctx.ReadValue<Vector2>();
