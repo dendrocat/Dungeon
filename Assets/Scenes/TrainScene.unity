@@ -1024,7 +1024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e868e0a35b1544daa0f72abf85d890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrainingArea
-  m_Rewards: {fileID: 0}
+  m_Rewards: {fileID: 11400000, guid: dd67901390f80b646bce5d6df5a389eb, type: 2}
   m_Spawner: {fileID: 1426416999}
   m_PlayerPrefab: {fileID: 1875641263216937551, guid: 8acfefa29987c7b479ce7f90f6995bac, type: 3}
   m_PlayerSpawnZone: {x: 80, y: 80}

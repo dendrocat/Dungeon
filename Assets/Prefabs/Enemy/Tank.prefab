@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b08cf983e52d5468833deb75f5dafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentValidator
-  m_Config: {fileID: 11400000, guid: dd67901390f80b646bce5d6df5a389eb, type: 2}
+  m_Rewards: {fileID: 11400000, guid: dd67901390f80b646bce5d6df5a389eb, type: 2}
 --- !u!114 &8259541082178049179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,9 +373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1939bd6e4a4ca64da4edd7f4db09e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  p_MaxHealth: 100
-  m_Heal: 30
-  m_HealCount: 3
 --- !u!1 &6186730146867442464
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,8 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed4acdaf55ccdd4ba06f87b5ebfed4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  m_Config: {fileID: 11400000, guid: 06f5595d4df0065469d5167106e25b66, type: 2}
   p_Health: {fileID: 6889229190786145794}
-  m_InWalkSpeed: 10
-  m_InAttackSpeed: 12
   m_MLAgent: {fileID: 8259541082178049179}
   m_WeaponHandler: {fileID: 3511707028197208452}

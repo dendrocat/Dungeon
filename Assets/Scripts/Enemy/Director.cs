@@ -29,6 +29,7 @@ public class Director : MonoBehaviour
         {
             if (m_PlayerVisible == value)
                 return;
+            DomainDebug.Log($"PlayerVisibilityChanged from {m_PlayerVisible} to {value}", DomainType.Director);
             m_PlayerVisible = value;
             PlayerVisibilityChanged?.Invoke(value);
         }
@@ -91,7 +92,6 @@ public class Director : MonoBehaviour
     void CheckVisibility()
     {
         bool visibility = m_VisibilityChecker.IsPlayerVisible(m_Enemies);
-        DomainDebug.Log($"PlayerVisibilityChanged from {m_PlayerVisible} to {visibility}", DomainType.Director);
         if (visibility)
         {
             PlayerVisible = true;

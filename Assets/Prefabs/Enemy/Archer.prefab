@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b08cf983e52d5468833deb75f5dafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentValidator
-  m_Rewards: {fileID: 0}
+  m_Rewards: {fileID: 11400000, guid: dd67901390f80b646bce5d6df5a389eb, type: 2}
 --- !u!114 &8595829265320426716
 MonoBehaviour:
   m_ObjectHideFlags: 0

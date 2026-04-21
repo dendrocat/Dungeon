@@ -22,18 +22,15 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody m_Rig;
     public float Speed { get; private set; } = 0;
 
-    void Awake()
-    {
-        m_Rig = GetComponent<Rigidbody>();
-        m_Input = GetComponent<Player>().Input;
-        m_Input.Jumped += Jump;
-    }
-
     public void Init(PlayerConfig config)
     {
         m_BaseSpeed = config.Speed.BaseSpeed;
         m_Multiplier = config.Speed.Multiplier;
         m_JumpHeight = config.JumpHeight;
+
+        m_Rig = GetComponent<Rigidbody>();
+        m_Input = GetComponent<Player>().Input;
+        m_Input.Jumped += Jump;
     }
 
     void CalcJumpForce()

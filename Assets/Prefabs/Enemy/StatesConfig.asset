@@ -69,7 +69,7 @@ MonoBehaviour:
       data:
         m_HasTime: 1
         m_IsExitTime: 1
-        m_Time: 5
+        m_Time: 2
     - rid: 5901800443548270706
       type: {class: AttackState, ns: , asm: Assembly-CSharp}
       data:

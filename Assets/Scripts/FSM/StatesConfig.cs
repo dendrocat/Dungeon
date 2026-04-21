@@ -59,6 +59,6 @@ public class StatesConfig : ScriptableObject
 
     public List<States> GetExitStates(States state)
     {
-        return m_Transitions.Find(e => e.State == state).ExitStates;
+        return m_Transitions.Find(e => e.State == state)?.ExitStates ?? new List<States>();
     }
 }

@@ -15,6 +15,7 @@ public class Player : Person<PlayerConfig, PlayerHealth, PlayerHealthConfig>
 
     protected override void OnAwake()
     {
+		base.OnAwake();
 		m_Input = GetComponentInChildren<IInput>();	
 		GetComponent<PlayerMover>().Init(Config);
 	}

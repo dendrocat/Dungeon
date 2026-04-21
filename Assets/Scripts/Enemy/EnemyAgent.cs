@@ -69,6 +69,9 @@ public class EnemyAgent : Agent
     void OnDied(Person p)
     {
         if (!m_Enemy.Equals(p)) return;
+
+        Director.Instance.PlayerVisibilityChanged -= OnVisibilityChanged;
+
         fsm.ChangeStateRequested -= RequestDecision;
         fsm.ChangeState((int)States.Die);
         enabled = false;
