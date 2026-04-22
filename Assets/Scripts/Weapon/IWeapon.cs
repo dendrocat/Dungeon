@@ -1,5 +1,7 @@
 public interface IWeapon
 {
+    public WeaponType Type { get; }
+
     public float ReloadProgress { get; }
     public bool IsReloading { get; }
     public bool Equiped { get; }
@@ -10,5 +12,5 @@ public interface IWeapon
     void Update(float dt);
 
     void Equip();
-    void Unequip(bool destroy);
+    void Unequip(bool destroy = false);
 }

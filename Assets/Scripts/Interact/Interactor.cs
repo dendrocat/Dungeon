@@ -1,28 +1,26 @@
 using UnityEngine;
+using DomainLogging;
 
+[RequireComponent(typeof(Player))]
 public class Interactor : MonoBehaviour
 {
+    [SerializeField] LayerMask m_Mask;
+    const float c_Radius = 5;
     Player m_Player;
+
     void Start()
     {
         m_Player = GetComponent<Player>();
-    }
-
-    void OnEnable()
-    {
         m_Player.Input.Interacted += OnInteracted;
     }
 
     void OnInteracted()
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
-        if (!Physics.Raycast(ray, out var hit)) return;
-        if (!hit.transform.TryGetComponent<IInteractable>(out var obj)) return;
-        obj.Interact(m_Player);
-    }
+        Collider[] c = Physics.OverlapSphere(transform.position, c_Radius, m_Mask);
+		if (c.Length != 1) return;
 
-    void OnDisable()
-    {
-        m_Player.Input.Interacted -= OnInteracted;
+        if (!c[0].TryGetComponent<IInteractable>(out var obj)) return;
+        obj.Interact(m_Player);
+        DomainDebug.Log($"Interacted with {obj}", DomainType.Player);
     }
 }

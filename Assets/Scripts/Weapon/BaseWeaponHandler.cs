@@ -4,7 +4,7 @@ using TriInspector;
 
 public abstract class BaseWeaponHandler : MonoBehaviour, IActivatable
 {
-    public event UnityAction<WeaponStats> Attacked;
+    public event UnityAction<IWeapon> Attacked;
 
     protected virtual string StatsLabel => "Weapon Stats";
     [LabelText("$" + nameof(StatsLabel))]
@@ -18,10 +18,10 @@ public abstract class BaseWeaponHandler : MonoBehaviour, IActivatable
 
     public virtual void Attack()
     {
-        if (p_Weapon.Attack()) RaiseAttacked(p_WeaponStats);
+        if (p_Weapon.Attack()) RaiseAttacked(p_Weapon);
     }
     public virtual void Reload() { p_Weapon.Reload(); }
     protected virtual void FixedUpdate() { p_Weapon.Update(Time.fixedDeltaTime); }
 
-    protected void RaiseAttacked(WeaponStats stats) => Attacked?.Invoke(stats);
+    protected void RaiseAttacked(IWeapon weapon) => Attacked?.Invoke(weapon);
 }

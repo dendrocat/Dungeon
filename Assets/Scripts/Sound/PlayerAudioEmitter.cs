@@ -17,12 +17,23 @@ public class PlayerAudioEmitter : MonoBehaviour, IAudioEmitter
     [Group("cmp")]
     [SerializeField] PlayerMover m_Mover;
 
-    public float GetAudioLevel()
+    float m_Multiplier = 1;
+    public void SetVolumeMultiplier(float multiplier)
+    {
+        m_Multiplier = multiplier;
+    }
+
+    float GetAudio()
     {
         var speed = m_Mover.Speed;
         if (speed < m_Mover.BaseSpeed) return CrouchVolume;
         if (speed == m_Mover.BaseSpeed) return WalkVolume;
         return RunVolume;
+    }
+
+    public float GetAudioLevel()
+    {
+        return GetAudio() * m_Multiplier;
     }
 
     void OnValidate()

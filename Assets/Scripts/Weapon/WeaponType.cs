@@ -1,5 +1,7 @@
 public enum WeaponType
 {
     None,
-    Melee, Fire, Grenade
+    Melee,
+    Pistol, Automat, Shotgun,
+    Grenade
 }

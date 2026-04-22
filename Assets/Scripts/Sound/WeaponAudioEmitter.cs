@@ -27,19 +27,19 @@ public class WeaponAudioEmitter : MonoBehaviour, IAudioEmitter
         m_AudioTimer.TimerEnded += () => m_Type = WeaponType.None;
     }
 
-    void OnAttacked(WeaponStats stats)
+    void OnAttacked(IWeapon weapon)
     {
-        m_Type = stats.Type;
+        m_Type = weapon.Type;
         m_AudioTimer.Activate();
         m_AudioTimer.Reset();
     }
 
     public float GetAudioLevel() => m_Type switch
     {
+        WeaponType.None => 0,
         WeaponType.Melee => m_MeleeVolume,
-        WeaponType.Fire => m_FireVolume,
         WeaponType.Grenade => m_GrenadeVolume,
-        _ => 0
+        _ => m_FireVolume
     };
 
     void OnValidate()

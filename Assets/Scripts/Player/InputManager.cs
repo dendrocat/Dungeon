@@ -21,7 +21,7 @@ public class InputManager : MonoBehaviour, IInput, IActivatable
     public event UnityAction Throwed;
     public event UnityAction MeleeAttacked;
 
-	public event UnityAction Interacted;
+    public event UnityAction Interacted;
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
@@ -68,6 +68,11 @@ public class InputManager : MonoBehaviour, IInput, IActivatable
 
     public void OnCrouch(InputAction.CallbackContext ctx) => IsCrouching = ctx.performed;
     public void OnRun(InputAction.CallbackContext ctx) => IsRunning = ctx.performed;
+
+    public void OnInteracted(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed) Interacted?.Invoke();
+    }
 
     public void Activate() => enabled = true;
     public void Deactivate() => enabled = false;

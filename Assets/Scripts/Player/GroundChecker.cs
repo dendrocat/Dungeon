@@ -1,5 +1,5 @@
-using TriInspector;
 using UnityEngine;
+using TriInspector;
 
 public class GroundChecker : MonoBehaviour
 {

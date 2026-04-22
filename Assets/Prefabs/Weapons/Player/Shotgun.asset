@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
   m_WeaponPrefab: {fileID: 7895784510436758991, guid: b19f1c35bf9ec1d4fa08b5d424d3e243, type: 3}
-  p_Type: 2
+  p_Type: 4
   m_Damage: 7
   m_Distance: 20
   m_ReloadTime: 5

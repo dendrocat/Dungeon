@@ -31,6 +31,8 @@ public class PlayerMover : MonoBehaviour
         m_Rig = GetComponent<Rigidbody>();
         m_Input = GetComponent<Player>().Input;
         m_Input.Jumped += Jump;
+
+        CalcJumpForce();
     }
 
     void CalcJumpForce()
@@ -42,6 +44,7 @@ public class PlayerMover : MonoBehaviour
 
     void Jump()
     {
+        // DomainLogging.DomainDebug.Log($"Jump, IsGrounded : {m_GroundChecker.IsGrounded}", DomainLogging.DomainType.Player);
         if (!m_GroundChecker.IsGrounded) return;
         m_Rig.AddForce(m_JumpForce, ForceMode.Impulse);
     }
@@ -57,7 +60,9 @@ public class PlayerMover : MonoBehaviour
     {
         Speed = CalcSpeed();
         var dir = new Vector3(m_Input.Move.x, 0, m_Input.Move.y).normalized;
-        dir = transform.TransformDirection(dir).normalized;
+        dir = transform.TransformDirection(dir);
+        dir.y = 0;
+        dir.Normalize();
         m_Rig.linearVelocity = new Vector3(dir.x * Speed, m_Rig.linearVelocity.y, dir.z * Speed);
     }
 

@@ -4,6 +4,8 @@ using DomainLogging;
 public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
 {
     protected TStats p_Stats;
+    public WeaponType Type => p_Stats.Type;
+
     protected GameObject p_GObj;
 
     Timer m_ReloadTimer;
@@ -67,7 +69,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
         // DomainDebug.Log($"{p_GObj.name} equiped", DomainType.Weapon);
     }
 
-    public void Unequip(bool destroy = true)
+    public void Unequip(bool destroy = false)
     {
         if (destroy) Object.Destroy(p_GObj);
         else p_GObj.SetActive(false);

@@ -6,40 +6,55 @@ public class Player : Person<PlayerConfig, PlayerHealth, PlayerHealthConfig>
 {
     [TriInspector.Group("cmp")]
     [SerializeField] PlayerWeaponHandler m_WeaponHandler;
+	public PlayerWeaponHandler WeaponHandler => m_WeaponHandler;
 
-	IInput m_Input;
-	public IInput Input => m_Input;
+    IInput m_Input;
+    public IInput Input => m_Input;
 
     int m_LightZoneCount = 0;
     public bool IsLighted => m_LightZoneCount > 0;
 
     protected override void OnAwake()
     {
-		base.OnAwake();
-		m_Input = GetComponentInChildren<IInput>();	
-		GetComponent<PlayerMover>().Init(Config);
-	}
+        base.OnAwake();
+        m_Input = GetComponentInChildren<IInput>();
+        GetComponent<PlayerMover>().Init(Config);
+    }
 
     void Start()
     {
+        if (!m_WeaponHandler.IsActive) return;
+        m_WeaponHandler.ChangeWeapon(WeaponType.Pistol);
+    }
+
+    void OnEnable()
+    {
         Person.Died += OnEnemyDied;
 
-        if (!m_WeaponHandler.IsActive) return;
-        Input.WeaponNumed += m_WeaponHandler.ChangeWeapon;
+        Input.WeaponNumed += OnWeaponNumed;
         Input.Reloaded += m_WeaponHandler.Reload;
         Input.Throwed += m_WeaponHandler.ThrowGrenade;
         Input.MeleeAttacked += m_WeaponHandler.MeleeAttack;
 
-        m_WeaponHandler.ChangeWeapon(1);
-    }
-    void OnEnable()
-    {
         LightZone.PlayerInsideChanged += OnLightZonePlayerInsideChanged;
     }
 
-    void OnDisable()
+    void OnEnemyDied(Person p)
     {
-        LightZone.PlayerInsideChanged -= OnLightZonePlayerInsideChanged;
+        if (p is not Enemy) return;
+        m_WeaponHandler.AddAmmo();
+    }
+
+    void OnWeaponNumed(int weaponNum)
+    {
+        WeaponType type = weaponNum switch
+        {
+            1 => WeaponType.Pistol,
+            2 => WeaponType.Automat,
+            3 => WeaponType.Shotgun,
+            _ => WeaponType.Pistol
+        };
+		m_WeaponHandler.ChangeWeapon(type);
     }
 
     void OnLightZonePlayerInsideChanged(bool playerInside)
@@ -48,10 +63,16 @@ public class Player : Person<PlayerConfig, PlayerHealth, PlayerHealthConfig>
         // DomainDebug.Log($"Player lighted: {IsLighted}", DomainType.Player);
     }
 
-    void OnEnemyDied(Person p)
+    void OnDisable()
     {
-        if (p is not Enemy) return;
-        m_WeaponHandler.AddAmmo();
+        Person.Died -= OnEnemyDied;
+
+        Input.WeaponNumed -= OnWeaponNumed;
+        Input.Reloaded -= m_WeaponHandler.Reload;
+        Input.Throwed -= m_WeaponHandler.ThrowGrenade;
+        Input.MeleeAttacked -= m_WeaponHandler.MeleeAttack;
+
+        LightZone.PlayerInsideChanged -= OnLightZonePlayerInsideChanged;
     }
 
     void Update()

@@ -19,4 +19,4 @@ MonoBehaviour:
     m_Bits: 192
   m_ExplosionDamage: 80
   m_ExplosionRadius: 10
-  m_ExplosionTime: 3
+  m_ExplosionTime: 1
