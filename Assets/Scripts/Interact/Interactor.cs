@@ -17,6 +17,7 @@ public class Interactor : MonoBehaviour
     void OnInteracted()
     {
         Collider[] c = Physics.OverlapSphere(transform.position, c_Radius, m_Mask);
+        DomainDebug.Log($"Interacted with {c.Length}", DomainType.Player);
 		if (c.Length != 1) return;
 
         if (!c[0].TryGetComponent<IInteractable>(out var obj)) return;
