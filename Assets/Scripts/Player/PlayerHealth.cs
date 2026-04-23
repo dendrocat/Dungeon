@@ -9,9 +9,13 @@ public class PlayerHealthConfig : HealthConfig
     [SerializeField, Slider(2f, 10f)] float m_UntilRegenTime = 5f;
     public float UntilRegenTime => m_UntilRegenTime;
 
-    [Unit("HP/s")]
-    [SerializeField, Slider(1, 10f)] float m_RegenSpeed = 2f;
-    public float RegenSpeed => m_RegenSpeed;
+    [Unit("HP/tk")]
+    [SerializeField, Slider(1, 10f)] float m_RegenPerTick = 2f;
+    public float RegenPerTick => m_RegenPerTick;
+
+	[Unit(UnitAttribute.Second)]
+	[SerializeField, Slider(0.1f, 2f)] float m_RegenInterval = 1f;
+	public float RegenInterval => m_RegenInterval;
 }
 
 public class PlayerHealth : Health<PlayerHealthConfig>
@@ -20,7 +24,7 @@ public class PlayerHealth : Health<PlayerHealthConfig>
 
     Timer m_UntilRegen, m_Regen;
 
-    float m_RegenSpeed;
+    float m_RegenPerTick;
 
     public override void Init(PlayerHealthConfig config)
     {
@@ -28,10 +32,10 @@ public class PlayerHealth : Health<PlayerHealthConfig>
         m_UntilRegen = new Timer(config.UntilRegenTime, false);
         m_UntilRegen.TimerEnded += Heal;
 
-        m_Regen = new Timer(1, false);
+        m_Regen = new Timer(config.RegenInterval, false);
         m_Regen.TimerEnded += Heal;
 
-        m_RegenSpeed = config.RegenSpeed;
+        m_RegenPerTick = config.RegenPerTick;
     }
 
     /// <inheritdoc/>
@@ -46,15 +50,15 @@ public class PlayerHealth : Health<PlayerHealthConfig>
 
     void Heal()
     {
-        p_Health = Mathf.Min(p_Health + m_RegenSpeed, p_MaxHealth);
+        p_Health = Mathf.Min(p_Health + m_RegenPerTick, p_MaxHealth);
         HealthChanged?.Invoke(p_Health);
         if (p_Health == p_MaxHealth)
         {
             m_UntilRegen.Reset();
             return;
         }
-        m_Regen.Activate();
         m_Regen.Reset();
+        m_Regen.Activate();
     }
 
     void FixedUpdate()

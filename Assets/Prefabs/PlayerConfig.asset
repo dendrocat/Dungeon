@@ -18,5 +18,6 @@ MonoBehaviour:
   m_Health:
     m_MaxHealth: 100
     m_UntilRegenTime: 5
-    m_RegenSpeed: 5
+    m_RegenPerTick: 4
+    m_RegenInterval: 0.3
   m_JumpHeight: 2

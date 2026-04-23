@@ -3,7 +3,7 @@ using TriInspector;
 
 [DeclareBoxGroup("sp", Title = "Speed Settings")]
 [DeclareBoxGroup("hp", Title = "Health Settings")]
-public abstract class PersonConfig<THealth> : ScriptableObject 
+public abstract class PersonConfig<THealth> : ScriptableObject
     where THealth : HealthConfig
 {
     [System.Serializable]

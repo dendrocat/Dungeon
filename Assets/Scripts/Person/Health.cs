@@ -4,8 +4,8 @@ using TriInspector;
 public abstract class HealthConfig
 {
     [Unit("HP")]
-    [SerializeField, Min(10)] float m_MaxHealth = 10;
-    public float MaxHealth => m_MaxHealth;
+    [SerializeField, Min(10)] int m_MaxHealth = 10;
+    public int MaxHealth => m_MaxHealth;
 }
 
 [DeclareBoxGroup("hset", Title = "Heath Settings")]
@@ -17,8 +17,8 @@ public abstract class Health<THealthConfig> : MonoBehaviour
     [ShowInInspector, ReadOnly]
     public float Value => p_Health;
 
-    protected float p_MaxHealth;
-    public float Max => p_MaxHealth;
+    protected int p_MaxHealth;
+    public int Max => p_MaxHealth;
 
     public virtual void Init(THealthConfig config)
     {
