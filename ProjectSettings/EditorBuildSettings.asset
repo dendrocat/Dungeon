@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TrainScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Temp/TestLoad.unity
+    guid: f78bf3f37bf135c4995b36e3fdd3976b
+  - enabled: 1
+    path: Assets/Scenes/TestLevelScene.unity
+    guid: 3ff0e97dbd5b43f42955d437243797c9
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2e7df49debf412c4680d8824993953b5, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

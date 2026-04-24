@@ -6,13 +6,6 @@ public class GameManager : MonoBehaviour
 {
     void Start()
     {
-        var finish = FindFirstObjectByType<LevelFinish>();
-        if (finish == null)
-        {
-            DomainDebug.LogError($"Finish not found", DomainType.Room);
-            return;
-        }
-        finish.LevelFinished += OnLevelFinished;
     }
 
 
