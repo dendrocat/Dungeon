@@ -29,7 +29,7 @@ public class WeaponAudioEmitter : MonoBehaviour, IAudioEmitter
 
     void OnAttacked(IWeapon weapon)
     {
-        m_Type = weapon.Type;
+        m_Type = weapon.Stats.Type;
         m_AudioTimer.Activate();
         m_AudioTimer.Reset();
     }

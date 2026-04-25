@@ -1,6 +1,6 @@
 public interface IWeapon
 {
-    public WeaponType Type { get; }
+    public WeaponStats Stats { get; }
 
     public float ReloadProgress { get; }
     public bool IsReloading { get; }

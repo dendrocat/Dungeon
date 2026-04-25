@@ -20,7 +20,7 @@ MonoBehaviour:
     rid: 5901800850940231755
   m_OverrideGlobalSceneList: 1
   m_Scenes:
-  - m_enabled: 1
+  - m_enabled: 0
     m_path: Assets/Scenes/TrainScene.unity
   - m_enabled: 1
     m_path: Assets/Scenes/Temp/TestLoad.unity

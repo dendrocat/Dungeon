@@ -66,7 +66,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         {
             int add = GetAdding(weapon.MaxAmmo);
             weapon.AddAmmo(add);
-            DomainDebug.Log($"{weapon.Type} added {add} bullets", DomainType.Weapon);
+            DomainDebug.Log($"{weapon.Stats.Type} added {add} bullets", DomainType.Weapon);
         }
         Grenade.AddAmmo(GetAdding(m_GrenadeStats.MaxAmmo));
     }

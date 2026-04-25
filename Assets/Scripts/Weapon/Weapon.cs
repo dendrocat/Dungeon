@@ -4,7 +4,7 @@ using DomainLogging;
 public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
 {
     protected TStats p_Stats;
-    public WeaponType Type => p_Stats.Type;
+    public WeaponStats Stats => p_Stats;
 
     protected GameObject p_GObj;
 

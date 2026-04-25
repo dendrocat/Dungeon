@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32eafb2d128ff1e4aabfbde6aa8737f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
+  m_LevelScene: Assets/Scenes/TestLevelScene.unity
 --- !u!1 &1061634125
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,8 +288,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   m_Levels:
-  - {fileID: 6804486480928363861, guid: 3fa1d1cc5c8c4b1458d96b1ee135c69c, type: 3}
-  - {fileID: 6804486480928363861, guid: 3fa1d1cc5c8c4b1458d96b1ee135c69c, type: 3}
+  - m_AssetGUID: 3fa1d1cc5c8c4b1458d96b1ee135c69c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 3fa1d1cc5c8c4b1458d96b1ee135c69c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

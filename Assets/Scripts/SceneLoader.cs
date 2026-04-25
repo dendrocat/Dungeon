@@ -1,34 +1,28 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using TriInspector;
 
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance { get; private set; } = null;
-    const float c_MinTime = 0.5f;
+    const float c_MinTime = 2f;
 
+    [SerializeField] LoadUI m_LoadUI;
     [Scene]
     [SerializeField] string m_LevelScene;
-    string m_LevelSceneName;
 
-    AsyncOperation m_LevelOp = null, m_SceneOp = null;
     float m_Elapsed = 0;
+    float progress => Mathf.Clamp01(m_Elapsed / c_MinTime);
 
     void Awake()
     {
-        if (Instance != null) { Destroy(gameObject); return; }
+        if (Instance != null) { Destroy(gameObject); Destroy(m_LoadUI?.gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        LevelManager.LoadLevelStarted += OnLevelLoadStarted;
-
-        m_LevelSceneName = System.IO.Path.GetFileNameWithoutExtension(m_LevelScene);
-    }
-
-    void Start()
-    {
-        LoadScene("TestLevelScene");
+        DontDestroyOnLoad(m_LoadUI.gameObject);
     }
 
     void OnDestroy()
@@ -36,16 +30,23 @@ public class SceneLoader : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
-    public void LoadScene(string sceneName)
+    void Start()
     {
-        StartCoroutine(LoadSceneAsync(sceneName));
+        // Debug.Log(m_LevelSceneName);
+        LoadScene("TestLevelScene");
     }
 
-    void OnLevelLoadStarted(AsyncOperation op)
+    public void LoadScene(string sceneName)
     {
-        Debug.Log("Level op recieved");
-        StartCoroutine(LoadLevelAsync(op));
-        // Task.WaitAll(m_LevelTask, Task.Delay(2000));
+        var op = Addressables.LoadSceneAsync(sceneName, activateOnLoad: false);
+        StartCoroutine(LoadAsync(op, (res) => op.Result.ActivateAsync(), !m_LevelScene.Contains(sceneName)));
+    }
+
+    public void LoadLevel(AssetReferenceGameObject assetRef, UnityAction<GameObject> onLoaded)
+    {
+        // Debug.Log($"Level recieved");
+        var op = assetRef.LoadAssetAsync();
+        StartCoroutine(LoadAsync(op, onLoaded));
     }
 
     YieldInstruction Next()
@@ -54,63 +55,32 @@ public class SceneLoader : MonoBehaviour
         return null;
     }
 
-    IEnumerator LoadSceneAsync(string sceneName)
+    IEnumerator LoadAsync<T>(AsyncOperationHandle<T> op, UnityAction<T> onLoaded, bool waitMinTime = true)
     {
-        m_SceneOp = SceneManager.LoadSceneAsync(sceneName);
-        m_SceneOp.allowSceneActivation = false;
+        m_LoadUI.Activate();
+        // Debug.Log("Operation started");
 
-        const float limit = 0.9f;
-        while (m_SceneOp.progress < limit)
+        while (!op.IsDone)
         {
-            float progress = Mathf.Clamp01(m_SceneOp.progress / limit);
-            Debug.Log(progress);
+            m_LoadUI.ShowProgress(Mathf.Min(progress, op.PercentComplete));
             yield return Next();
         }
-        Debug.Log(m_SceneOp.progress);
-        Debug.Log("Scene loaded");
+        if (waitMinTime)
+            yield return StartCoroutine(WaitMinTime());
 
-        if (m_LevelScene.Contains(sceneName))
-        {
-            m_SceneOp.allowSceneActivation = true;
-            m_SceneOp = null;
-            Debug.Log("Scene activated from async");
-        }
-        else yield return StartCoroutine(WaitMinTime());
+        onLoaded?.Invoke(op.Result);
+        op.Release();
+        // Debug.Log("Operation ended");
 
-    }
-
-    IEnumerator LoadLevelAsync(AsyncOperation op)
-    {
-        m_LevelOp = op;
-        m_LevelOp.allowSceneActivation = false;
-
-        const float limit = 0.9f;
-        while (m_LevelOp.progress < limit)
-        {
-            Debug.Log(m_LevelOp.progress);
-            yield return Next();
-        }
-        StartCoroutine(WaitMinTime());
+        m_LoadUI.Deactivate();
     }
 
     IEnumerator WaitMinTime()
     {
         while (m_Elapsed < c_MinTime)
         {
-            Debug.Log(m_Elapsed / c_MinTime);
+            m_LoadUI.ShowProgress(progress);
             yield return Next();
-        }
-        if (m_SceneOp != null)
-        {
-            m_SceneOp.allowSceneActivation = true;
-            m_SceneOp = null;
-            Debug.Log("Scene activated");
-        }
-        if (m_LevelOp != null)
-        {
-            m_LevelOp.allowSceneActivation = true;
-            m_LevelOp = null;
-            Debug.Log("Level activated");
         }
         m_Elapsed = 0;
     }

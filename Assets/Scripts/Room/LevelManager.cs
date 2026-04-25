@@ -1,22 +1,21 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using TriInspector;
+using UnityEngine.AddressableAssets;
 using DomainLogging;
 
 public class LevelManager : MonoBehaviour
 {
-	public static event UnityAction<AsyncOperation> LoadLevelStarted;
     public event UnityAction EndedLevels;
 
-    [AssetsOnly]
-    [SerializeField] GameObject[] m_Levels;
+    [SerializeField] List<AssetReferenceGameObject> m_Levels;
 
     int m_CurrentLevel = 0;
     GameObject m_LevelInstance;
 
     void Start()
     {
-        if (m_Levels.Length == 0)
+        if (m_Levels.Count == 0)
         {
             DomainDebug.LogError($"Levels not setted", DomainType.Level);
             return;
@@ -24,16 +23,14 @@ public class LevelManager : MonoBehaviour
         LoadNextLevel();
     }
 
-    async void LoadNextLevel()
+    void LoadNextLevel()
     {
-        var op = InstantiateAsync(m_Levels[m_CurrentLevel], Vector3.zero, Quaternion.identity);
-		LoadLevelStarted?.Invoke(op);
-		m_LevelInstance = (await op)[0];
-		OnLevelLoaded();
+        SceneLoader.Instance.LoadLevel(m_Levels[m_CurrentLevel], OnLevelLoaded);
     }
 
-    void OnLevelLoaded()
+    void OnLevelLoaded(GameObject level)
     {
+        m_LevelInstance = Instantiate(level, Vector3.zero, Quaternion.identity);
         DomainDebug.Log($"Level {m_CurrentLevel + 1} instanced {m_LevelInstance.name}", DomainType.Level);
         var finish = FindFirstObjectByType<LevelFinish>();
         if (finish == null)
@@ -46,9 +43,9 @@ public class LevelManager : MonoBehaviour
 
     void OnLevelFinished()
     {
-        Destroy(m_LevelInstance);
+		Destroy(m_LevelInstance);
         m_CurrentLevel++;
-        if (m_CurrentLevel >= m_Levels.Length) EndedLevels?.Invoke();
+        if (m_CurrentLevel >= m_Levels.Count) EndedLevels?.Invoke();
         else LoadNextLevel();
     }
 
