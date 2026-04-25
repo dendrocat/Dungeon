@@ -19,7 +19,7 @@ public class CoverState : BaseState
     {
         float dCoverEnemy, dCoverPlayer;
         dCoverEnemy = (hit.position - p_Enemy.transform.position).sqrMagnitude;
-        dCoverPlayer = (hit.position - Director.Instance.PlayerTransform.position).sqrMagnitude;
+        dCoverPlayer = (hit.position - Director.Instance.Player.transform.position).sqrMagnitude;
         return dCoverEnemy - dCoverPlayer;
     }
 
@@ -46,7 +46,7 @@ public class CoverState : BaseState
     protected override void OnEnter()
     {
         var cover = FindCover();
-        Vector3 directFromPlayer = (cover - Director.Instance.PlayerTransform.position).normalized;
+        Vector3 directFromPlayer = (cover - Director.Instance.Player.transform.position).normalized;
         Vector3 agentPos = cover + directFromPlayer * 5;
 
         if (NavMesh.SamplePosition(agentPos, out NavMeshHit hit, 10, NavMesh.AllAreas))

@@ -62,7 +62,7 @@ public class PlayerAgent : Agent, IInput, IActivatable
         sensor.AddObservation(m_Player.Health.Value / m_Player.Health.Max);
         sensor.AddObservation(m_Player.transform.position);
         sensor.AddObservation(m_Player.transform.forward);
-        sensor.AddObservation(Director.Instance.PlayerLighted);
+        sensor.AddObservation(Director.Instance.Player.IsLighted);
     }
 
     public override void OnActionReceived(ActionBuffers actions)

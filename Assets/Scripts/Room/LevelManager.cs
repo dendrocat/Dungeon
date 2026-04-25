@@ -6,12 +6,26 @@ using DomainLogging;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance { get; private set; } = null;
+
+    public event UnityAction LevelPreLoad;
+    public event UnityAction LevelPostLoad;
     public event UnityAction EndedLevels;
 
     [SerializeField] List<AssetReferenceGameObject> m_Levels;
 
     int m_CurrentLevel = 0;
+
     GameObject m_LevelInstance;
+
+    void Awake()
+    {
+        if (Instance != null) { Destroy(gameObject); return; }
+    }
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
 
     void Start()
     {
@@ -28,10 +42,8 @@ public class LevelManager : MonoBehaviour
         SceneLoader.Instance.LoadLevel(m_Levels[m_CurrentLevel], OnLevelLoaded);
     }
 
-    void OnLevelLoaded(GameObject level)
+    void FindFinish()
     {
-        m_LevelInstance = Instantiate(level, Vector3.zero, Quaternion.identity);
-        DomainDebug.Log($"Level {m_CurrentLevel + 1} instanced {m_LevelInstance.name}", DomainType.Level);
         var finish = FindFirstObjectByType<LevelFinish>();
         if (finish == null)
         {
@@ -41,12 +53,21 @@ public class LevelManager : MonoBehaviour
         finish.LevelFinished += OnLevelFinished;
     }
 
+    void OnLevelLoaded(GameObject level)
+    {
+        m_LevelInstance = Instantiate(level, Vector3.zero, Quaternion.identity);
+        DomainDebug.Log($"Level {m_CurrentLevel + 1} instanced {m_LevelInstance.name}", DomainType.Level);
+        FindFinish();
+
+        LevelPostLoad?.Invoke();
+    }
+
     void OnLevelFinished()
     {
-		Destroy(m_LevelInstance);
+        LevelPreLoad?.Invoke();
+        Destroy(m_LevelInstance);
         m_CurrentLevel++;
         if (m_CurrentLevel >= m_Levels.Count) EndedLevels?.Invoke();
         else LoadNextLevel();
     }
-
 }

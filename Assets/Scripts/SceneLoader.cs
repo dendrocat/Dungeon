@@ -7,6 +7,8 @@ using TriInspector;
 
 public class SceneLoader : MonoBehaviour
 {
+    public UnityAction SceneLoaded;
+
     public static SceneLoader Instance { get; private set; } = null;
     const float c_MinTime = 2f;
 
@@ -39,7 +41,14 @@ public class SceneLoader : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         var op = Addressables.LoadSceneAsync(sceneName, activateOnLoad: false);
-        StartCoroutine(LoadAsync(op, (res) => op.Result.ActivateAsync(), !m_LevelScene.Contains(sceneName)));
+        StartCoroutine(LoadAsync(op,
+                    async (res) =>
+                        {
+                            await op.Result.ActivateAsync();
+                            SceneLoaded?.Invoke();
+                        },
+                    !m_LevelScene.Contains(sceneName))
+        );
     }
 
     public void LoadLevel(AssetReferenceGameObject assetRef, UnityAction<GameObject> onLoaded)

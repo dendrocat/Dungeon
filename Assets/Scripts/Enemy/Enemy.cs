@@ -25,7 +25,7 @@ public class Enemy : Person<EnemyConfig, EnemyHealth, EnemyConfig.EnemyHealthCon
         NavAgent = GetComponent<NavMeshAgent>();
         NavAgent.speed = Config.Speed.BaseSpeed;
 
-        m_WeaponHandler.SetTarget(Director.Instance.PlayerTransform);
+        m_WeaponHandler.SetTarget(Director.Instance.Player.transform);
     }
 
     public void SetWaypointProvider(IWaypointProvider provider)

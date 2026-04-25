@@ -86,7 +86,7 @@ public class EnemyAgent : Agent
         // Player visibility
         sensor.AddObservation(Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(m_Enemy));
         sensor.AddObservation(Director.Instance.PlayerVisible);
-        sensor.AddObservation(Director.Instance.PlayerLighted);
+        sensor.AddObservation(Director.Instance.Player.IsLighted);
 
         // Health
         sensor.AddObservation(m_Enemy.Health.Value / m_Enemy.Health.Max);

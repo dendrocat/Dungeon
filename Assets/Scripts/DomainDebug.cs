@@ -29,7 +29,7 @@ namespace DomainLogging
         { DomainType.StateMachine, false },
         { DomainType.State, false },
         { DomainType.Player, true },
-        { DomainType.Room, true },
+        { DomainType.Room, false },
         { DomainType.Level, true },
         { DomainType.Sound, false },
         { DomainType.UI, false },

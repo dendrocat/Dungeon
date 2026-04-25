@@ -10,9 +10,8 @@ public class Director : MonoBehaviour
 
     public static Director Instance { get; private set; }
 
-    [SerializeField] Player m_Player;
-    public Transform PlayerTransform => m_Player.transform;
-    public bool PlayerLighted => m_Player.IsLighted;
+    Player m_Player;
+	public Player Player => m_Player;
     public Vector3? LastPlayerPos { get; private set; } = null;
 
     VisibilityChecker m_VisibilityChecker;
@@ -40,24 +39,15 @@ public class Director : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
         m_Spawner = GetComponent<EnemySpawner>();
         m_VisibilityChecker = GetComponent<VisibilityChecker>();
 
-        Person.Died += OnEnemyDied;
 
         m_Enemies = new();
         m_ChaseTimer = new Timer(m_ChaseTime, false);
-    }
 
-    public void SetPlayer(Player player)
-    {
-        m_Player = player;
     }
 
     void OnDestroy()
@@ -65,14 +55,30 @@ public class Director : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
+	public void SetPlayer(Player p) => m_Player = p;
+    void FindPlayer()
+    {
+        var player = FindFirstObjectByType<Player>();
+        if (player == null)
+        {
+            DomainDebug.LogError($"Player not found in the current level", DomainType.Director);
+            return;
+        }
+        m_Player = player;
+    }
+
     void OnEnable()
     {
         m_Spawner.Spawned += OnEnemySpawned;
+        Person.Died += OnEnemyDied;
+        LevelManager.Instance.LevelPostLoad += FindPlayer;
     }
 
     void OnDisable()
     {
         m_Spawner.Spawned -= OnEnemySpawned;
+        Person.Died -= OnEnemyDied;
+        LevelManager.Instance.LevelPostLoad -= FindPlayer;
     }
 
     void OnEnemySpawned(IReadOnlyCollection<Enemy> enemies)

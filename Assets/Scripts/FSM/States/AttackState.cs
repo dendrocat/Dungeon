@@ -18,7 +18,7 @@ public class AttackState : BaseState
     {
         m_AttackDistance = p_Enemy.WeaponHandler.AttackDistance;
         m_Agent = p_Enemy.NavAgent;
-        m_Player = Director.Instance.PlayerTransform;
+        m_Player = Director.Instance.Player.transform;
 
         // baseStoppingDistance = m_Agent.stoppingDistance;
         // m_Agent.stoppingDistance = m_AttackDistance * 0.8f;

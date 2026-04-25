@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using DomainLogging;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,10 +6,19 @@ public class GameManager : MonoBehaviour
     {
     }
 
-
-    void OnLevelFinished()
+    public void ToMenu()
     {
-		DomainDebug.Log($"Level finished", DomainType.Room);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneLoader.Instance.LoadScene("MainMenu");
     }
+
+    public void ToLevels()
+    {
+        SceneLoader.Instance.LoadScene("Levels");
+    }
+
+    public void ToTitles()
+    {
+        SceneLoader.Instance.LoadScene("Titles");
+    }
+
 }
