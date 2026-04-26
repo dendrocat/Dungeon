@@ -6,6 +6,8 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     protected TStats p_Stats;
     public WeaponStats Stats => p_Stats;
 
+	public TStats GetStats() => Stats as TStats ?? throw new System.InvalidCastException();
+
     protected GameObject p_GObj;
 
     Timer m_ReloadTimer;

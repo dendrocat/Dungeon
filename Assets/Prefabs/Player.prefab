@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 1683122872132957992}
   - component: {fileID: 1717862094121061570}
   - component: {fileID: 6888994772373431378}
+  - component: {fileID: 4022882956964871290}
   m_Layer: 0
   m_Name: WeaponHandler
   m_TagString: Untagged
@@ -244,6 +245,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6039ea5dbf7e0744dbadcbff9129ba33, type: 2}
   - {fileID: 11400000, guid: a80e20aef65b47143b39ef0b39281718, type: 2}
   m_GrenadeStats: {fileID: 11400000, guid: 703964db9067aef4c85dd87308e2cbd1, type: 2}
+--- !u!114 &4022882956964871290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4026582281126146169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef4b4a492bd0f143ba9f11eec6b1e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSaveLoader
+  m_WeaponLabel:
+    m_LabelString: weapons
 --- !u!1 &5288289684356276504
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,7 +920,7 @@ Rigidbody:
   m_GameObject: {fileID: 6784767981218522749}
   serializedVersion: 5
   m_Mass: 75
-  m_LinearDamping: 0
+  m_LinearDamping: 2
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}

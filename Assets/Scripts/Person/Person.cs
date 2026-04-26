@@ -12,7 +12,7 @@ public abstract class Person : MonoBehaviour
 
     protected void Awake()
     {
-        comps = GetComponents<IActivatable>();
+        comps = GetComponentsInChildren<IActivatable>();
         OnAwake();
     }
     protected virtual void OnAwake() { }

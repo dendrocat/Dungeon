@@ -11,6 +11,6 @@ public class SoundBonus : Bonus
     protected override void OnInteract(Player player)
     {
         var emitter = player.GetComponentInChildren<PlayerAudioEmitter>();
-		emitter.SetVolumeMultiplier(m_VolumeMultiplier);
+		emitter.VolumeMultiplier = m_VolumeMultiplier;
     }
 }

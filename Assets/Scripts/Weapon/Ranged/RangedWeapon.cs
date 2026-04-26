@@ -4,7 +4,6 @@ using DomainLogging;
 public class RangedWeapon : Weapon<RangedWeaponStats>
 {
     public int Ammo { get; private set; }
-    public int MaxAmmo => p_Stats.MaxAmmo;
     public int AmmoInTube { get; private set; }
 
     Timer m_FireTimer;
@@ -85,7 +84,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
     public void AddAmmo(int ammo)
     {
-        Ammo = Mathf.Min(Ammo + ammo, MaxAmmo);
+        Ammo = Mathf.Min(Ammo + ammo, p_Stats.MaxAmmo);
     }
 
     protected override void OnUpdate(float dt)

@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Weapons
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Weapons
+  m_GUID: 16ee95ba7df7b1742bce434e8aefa386
+  m_SerializeEntries:
+  - m_GUID: 32bf1367953f7734d9b7bb5f0a3258f3
+    m_Address: Assets/Prefabs/Weapons/Player/Knife.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - weapons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6039ea5dbf7e0744dbadcbff9129ba33
+    m_Address: Assets/Prefabs/Weapons/Player/AK.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - weapons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 703964db9067aef4c85dd87308e2cbd1
+    m_Address: Assets/Prefabs/Weapons/Player/GrenadeThrower.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - weapons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a00b96a813d2461439b3c3327c344ff9
+    m_Address: Assets/Prefabs/Weapons/Player/Pistol.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - weapons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a80e20aef65b47143b39ef0b39281718
+    m_Address: Assets/Prefabs/Weapons/Player/Shotgun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - weapons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eefdf80a2e023b24a8d2ccb956c8c5f0
+    m_Address: Assets/Prefabs/Weapons/Player/GrenadedShotgun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - weapons
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 8c7259a8518f4e844a5799eb98f4d4e3, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d537e84e130f249439afbbf8a5c940e7, type: 2}
+    - {fileID: 11400000, guid: 75e83d60daf9ba14181be4765d011e8c, type: 2}

@@ -8,6 +8,7 @@ public class PlayerAgent : Agent, IInput, IActivatable
 {
     public bool IsActive => enabled;
 
+#pragma warning disable CS0067
     public Vector2 Move { get; private set; }
     public bool IsCrouching { get; private set; }
     public bool IsRunning { get; private set; }
@@ -23,6 +24,7 @@ public class PlayerAgent : Agent, IInput, IActivatable
     public event UnityAction MeleeAttacked;
 
     public event UnityAction Interacted;
+#pragma warning restore CS0067
 
     [SerializeField] PlayerWeaponHandler m_WeaponHandler;
     [SerializeField] GrenadeStats m_GrenadeStats;

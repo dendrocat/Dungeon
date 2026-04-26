@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour, IInput, IActivatable
 {
-    public bool IsActive => enabled;
+    public bool IsActive => gameObject.activeInHierarchy;
 
     public Vector2 Move { get; private set; }
     public bool IsCrouching { get; private set; }
@@ -74,6 +74,6 @@ public class InputManager : MonoBehaviour, IInput, IActivatable
         if (ctx.performed) Interacted?.Invoke();
     }
 
-    public void Activate() => enabled = true;
-    public void Deactivate() => enabled = false;
+    public void Activate() => gameObject.SetActive(true);
+    public void Deactivate() => gameObject.SetActive(false);
 }

@@ -16,6 +16,7 @@ namespace DomainLogging
         Sound,
         UI,
         Weapon,
+		Save,
     };
 
     public static class DomainDebug
@@ -34,6 +35,7 @@ namespace DomainLogging
         { DomainType.Sound, false },
         { DomainType.UI, false },
         { DomainType.Weapon, false },
+        { DomainType.Save, true },
     };
 
 

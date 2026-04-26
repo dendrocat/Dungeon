@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 5cb38fbc3e81e7b41ae4b282467f8814
   m_currentHash:
     serializedVersion: 2
-    Hash: 32fc7dce67a7f488c5ad49f48523876e
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -60,6 +60,7 @@ MonoBehaviour:
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
+  - {fileID: 11400000, guid: 4edd17e35d4cff444947818964afc26f, type: 2}
   - {fileID: 11400000, guid: bc9fdbb6df20ed34dbe040d977192e14, type: 2}
   - {fileID: 11400000, guid: c7cdafb1452541b4588ee41610620a01, type: 2}
   m_BuildSettings:
@@ -101,6 +102,7 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - weapons
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: cb158f91e5a7b2b47b9de337b8867f5b, type: 2}

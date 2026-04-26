@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class MeleeWeapon : Weapon<MeleeWeaponStats>
 {
-
     public MeleeWeapon(in MeleeWeaponStats stats, in Transform parent) : base(stats, parent)
     { }
 

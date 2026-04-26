@@ -6,40 +6,37 @@ using DomainLogging;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager Instance { get; private set; } = null;
+    static LevelManager Instance = null;
 
-    public event UnityAction LevelPreLoad;
-    public event UnityAction LevelPostLoad;
-    public event UnityAction EndedLevels;
+    public static event UnityAction LevelPreLoad;
+    public static event UnityAction LevelPostLoad;
+    public static event UnityAction EndedLevels;
 
     [SerializeField] List<AssetReferenceGameObject> m_Levels;
 
-    int m_CurrentLevel = 0;
+    public int CurrentLevel { get; private set; } = 0;
 
     GameObject m_LevelInstance;
 
     void Awake()
     {
         if (Instance != null) { Destroy(gameObject); return; }
-    }
-    void OnDestroy()
-    {
-        if (Instance == this) Instance = null;
-    }
-
-    void Start()
-    {
         if (m_Levels.Count == 0)
         {
             DomainDebug.LogError($"Levels not setted", DomainType.Level);
             return;
         }
-        LoadNextLevel();
+        Instance = this;
     }
 
-    void LoadNextLevel()
+    void OnDestroy()
     {
-        SceneLoader.Instance.LoadLevel(m_Levels[m_CurrentLevel], OnLevelLoaded);
+        if (Instance == this) Instance = null;
+    }
+
+    void LoadLevel()
+    {
+        SceneLoader.Instance.LoadLevel(m_Levels[CurrentLevel], OnLevelLoaded);
     }
 
     void FindFinish()
@@ -47,7 +44,7 @@ public class LevelManager : MonoBehaviour
         var finish = FindFirstObjectByType<LevelFinish>();
         if (finish == null)
         {
-            DomainDebug.LogError($"Finish not found in level {m_CurrentLevel + 1}: {m_LevelInstance.name}", DomainType.Level);
+            DomainDebug.LogError($"Finish not found in level {CurrentLevel + 1}: {m_LevelInstance.name}", DomainType.Level);
             return;
         }
         finish.LevelFinished += OnLevelFinished;
@@ -56,7 +53,7 @@ public class LevelManager : MonoBehaviour
     void OnLevelLoaded(GameObject level)
     {
         m_LevelInstance = Instantiate(level, Vector3.zero, Quaternion.identity);
-        DomainDebug.Log($"Level {m_CurrentLevel + 1} instanced {m_LevelInstance.name}", DomainType.Level);
+        DomainDebug.Log($"Level {CurrentLevel + 1} instanced {m_LevelInstance.name}", DomainType.Level);
         FindFinish();
 
         LevelPostLoad?.Invoke();
@@ -65,9 +62,17 @@ public class LevelManager : MonoBehaviour
     void OnLevelFinished()
     {
         LevelPreLoad?.Invoke();
+
         Destroy(m_LevelInstance);
-        m_CurrentLevel++;
-        if (m_CurrentLevel >= m_Levels.Count) EndedLevels?.Invoke();
-        else LoadNextLevel();
+        CurrentLevel++;
+        if (CurrentLevel >= m_Levels.Count) EndedLevels?.Invoke();
+        else LoadLevel();
+    }
+
+    public void LoadLevelByIndex(int index)
+    {
+        if (index != -1)
+            CurrentLevel = Mathf.Min(index, m_Levels.Count - 1);
+        LoadLevel();
     }
 }

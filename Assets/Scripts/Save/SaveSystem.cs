@@ -1,34 +1,31 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using DomainLogging;
 
 public class SaveSystem : MonoBehaviour
 {
-	List<ISaveLoader> m_SaveLoaders;
+    public static event UnityAction Saving;
+    public static event UnityAction Loaded;
 
-    void Start() { LoadData(); }
-
-    void OnEnable()
+    void Start()
     {
-        Debug.Log("OnEnable");
-    }
-    void OnDisable()
-    {
-        Debug.Log("OnDisable");
+        LevelManager.LevelPreLoad += SaveData;
+        LoadData();
     }
 
     void SaveData()
     {
-        Debug.Log("SaveData: collecting data");
-		// LevelManager.Instance.Save();
-		// .... save weapons
-		Repository.Save();
+        DomainDebug.Log("Collecting data", DomainType.Save);
+        Saving?.Invoke();
+        DomainDebug.Log("Data collected", DomainType.Save);
+        Repository.Save();
     }
 
     void LoadData()
     {
-        Debug.Log("LoadData");
-		Repository.Load();
-		// LevelManager.Instance.Load();
+        DomainDebug.Log("Loading data", DomainType.Save);
+        Repository.Load();
+        DomainDebug.Log("Data loaded", DomainType.Save);
+        Loaded?.Invoke();
     }
 }

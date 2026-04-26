@@ -71,14 +71,14 @@ public class Director : MonoBehaviour
     {
         m_Spawner.Spawned += OnEnemySpawned;
         Person.Died += OnEnemyDied;
-        LevelManager.Instance.LevelPostLoad += FindPlayer;
+        LevelManager.LevelPostLoad += FindPlayer;
     }
 
     void OnDisable()
     {
         m_Spawner.Spawned -= OnEnemySpawned;
         Person.Died -= OnEnemyDied;
-        LevelManager.Instance.LevelPostLoad -= FindPlayer;
+        LevelManager.LevelPostLoad -= FindPlayer;
     }
 
     void OnEnemySpawned(IReadOnlyCollection<Enemy> enemies)
