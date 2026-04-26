@@ -44,11 +44,6 @@ public class EnemyAgent : Agent
         Person.Died -= OnDied;
     }
 
-    // void Start()
-    // {
-    //     IInput.Instance.WeaponNumed += OnNum;
-    // }
-    //
     // void OnNum(int state)
     // {
     //     this.state = state - 1;
