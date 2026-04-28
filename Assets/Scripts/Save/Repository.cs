@@ -54,11 +54,16 @@ public static class Repository
         else if (valueObject is JObject jObj) m_CurrentState[key.ToString()] = value = jObj.ToObject<T>();
         else
         {
-			DomainDebug.LogWarning($"Expected type: {valueObject.GetType()}, recieved type: {typeof(T)}. Value: {valueObject}", DomainType.Save);
+            DomainDebug.LogWarning($"Expected type: {valueObject.GetType()}, recieved type: {typeof(T)}. Value: {valueObject}", DomainType.Save);
             return false;
         }
 
         DomainDebug.Log($"Value for {key}: {value}", DomainType.Save);
         return true;
+    }
+
+    public static void ClearCache()
+    {
+        m_CurrentState.Clear();
     }
 }

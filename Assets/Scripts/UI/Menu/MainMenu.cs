@@ -10,9 +10,9 @@ public class MainMenu : MonoBehaviour
         if (!Repository.HasSave()) m_ContinueButton.gameObject.SetActive(false);
     }
 
-    public void Continue() => GameManager.Instance.ToLevels();
+    public void ContinueGame() => GameManager.Instance.ToLevels();
 
-    public void Start()
+    public void StartGame()
     {
         Repository.Remove();
         GameManager.Instance.ToLevels();

@@ -28,4 +28,9 @@ public class SaveSystem : MonoBehaviour
         DomainDebug.Log("Data loaded", DomainType.Save);
         Loaded?.Invoke();
     }
+
+    void OnDestroy()
+    {
+        Repository.ClearCache();
+    }
 }
