@@ -44,7 +44,7 @@ public static class SettingsRepository
     public static void Save()
     {
         foreach (var kv in m_TmpSettings) m_Settings[kv.Key] = kv.Value;
-		m_TmpSettings.Clear();
+        m_TmpSettings.Clear();
 
         foreach (var kv in m_Settings)
         {
@@ -75,7 +75,9 @@ public static class SettingsRepository
             DomainDebug.LogError($"Type {typeof(T)} is unsupported", DomainType.Save);
             return defaultValue;
         }
-        return (T)m_Settings.GetValueOrDefault(key, defaultValue);
+        if (m_Settings.TryGetValue(key, out object value)) return (T)value;
+        m_Settings[prefix + key] = defaultValue;
+        return defaultValue;
     }
 
     public static void Clear()
