@@ -5,7 +5,7 @@ using UnityEditor;
 namespace UnityEngine.InputSystem.Rebinding
 {
 
-	[CustomEditor(typeof(RebindAction))]
+    [CustomEditor(typeof(RebindAction))]
     public class RebindActionEditor : UnityEditor.Editor
     {
         static class Styles
@@ -14,8 +14,8 @@ namespace UnityEngine.InputSystem.Rebinding
         }
 
         SerializedProperty m_ActionProperty;
-        SerializedProperty m_BindingIdProperty;
-		SerializedProperty m_DisplayStringOptionsProperty;
+        SerializedProperty m_BindingIndexProperty;
+        SerializedProperty m_DisplayStringOptionsProperty;
         SerializedProperty m_BindingTextProperty;
 
         GUIContent m_BindingLabel = new GUIContent("Binding");
@@ -23,41 +23,44 @@ namespace UnityEngine.InputSystem.Rebinding
         GUIContent m_UILabel = new GUIContent("UI");
 
         GUIContent[] m_BindingOptions;
-        string[] m_BindingOptionValues;
+        int[] m_BindingOptionValues;
         int m_SelectedBindingOption;
 
         void OnEnable()
         {
             m_ActionProperty = serializedObject.FindProperty("m_Action");
-            m_BindingIdProperty = serializedObject.FindProperty("m_BindingId");
+            m_BindingIndexProperty = serializedObject.FindProperty("m_BindingIndex");
             m_DisplayStringOptionsProperty = serializedObject.FindProperty("m_DisplayStringOptions");
-			m_BindingTextProperty = serializedObject.FindProperty("m_BindingText");
+            m_BindingTextProperty = serializedObject.FindProperty("m_BindingText");
 
             RefreshBindingOptions();
         }
 
         void RefreshBindingOptions()
         {
-            var actionProperty = (InputActionProperty)m_ActionProperty.boxedValue;
-            if (actionProperty == null)
+            var actionProperty = (InputActionReference)m_ActionProperty.boxedValue;
+            var action = actionProperty?.action;
+            if (action == null)
             {
                 m_BindingOptions = new GUIContent[0];
-                m_BindingOptionValues = new string[0];
+                m_BindingOptionValues = new int[0];
                 m_SelectedBindingOption = -1;
                 return;
             }
-            var action = actionProperty.action;
             var bindings = action.bindings;
+            int cntNotComposite = action.bindings.Count(b => !b.isComposite);
 
-            m_BindingOptions = new GUIContent[bindings.Count];
-            m_BindingOptionValues = new string[bindings.Count];
+            m_BindingOptions = new GUIContent[cntNotComposite];
+            m_BindingOptionValues = new int[cntNotComposite];
             m_SelectedBindingOption = -1;
 
-            var currentBindingId = m_BindingIdProperty.stringValue;
-            for (var i = 0; i < bindings.Count; ++i)
+            var currentBindingId = m_BindingIndexProperty.intValue;
+            for (int i = 0, k = 0; i < bindings.Count; ++i)
             {
+                if (bindings[i].isComposite) continue;
+
                 var binding = bindings[i];
-                var bindingId = binding.id.ToString();
+                var bindingId = i;
                 var haveBindingGroups = !string.IsNullOrEmpty(binding.groups);
 
                 var displayOptions =
@@ -87,11 +90,12 @@ namespace UnityEngine.InputSystem.Rebinding
                     }
                 }
 
-                m_BindingOptions[i] = new GUIContent(displayString);
-                m_BindingOptionValues[i] = bindingId;
+                m_BindingOptions[k] = new GUIContent(displayString);
+                m_BindingOptionValues[k] = bindingId;
 
                 if (currentBindingId == bindingId)
-                    m_SelectedBindingOption = i;
+                    m_SelectedBindingOption = k;
+                ++k;
             }
         }
 
@@ -103,15 +107,21 @@ namespace UnityEngine.InputSystem.Rebinding
             EditorGUILayout.LabelField(m_BindingLabel, Styles.boldLabel);
             using (new EditorGUI.IndentLevelScope())
             {
+                EditorGUI.BeginChangeCheck();
                 EditorGUILayout.PropertyField(m_ActionProperty);
+                if (EditorGUI.EndChangeCheck()) RefreshBindingOptions();
 
                 var newSelectedBinding = EditorGUILayout.Popup(m_BindingLabel, m_SelectedBindingOption, m_BindingOptions);
+                if (newSelectedBinding == -1 && m_BindingOptions.Length > 0) newSelectedBinding = 0;
+
+                // Debug.Log($"{m_SelectedBindingOption} {newSelectedBinding}");
                 if (newSelectedBinding != m_SelectedBindingOption)
                 {
                     var bindingId = m_BindingOptionValues[newSelectedBinding];
-                    m_BindingIdProperty.stringValue = bindingId;
+                    m_BindingIndexProperty.intValue = bindingId;
                     m_SelectedBindingOption = newSelectedBinding;
                 }
+                // Debug.Log(m_BindingIndexProperty.intValue);
 
                 var optionsOld = (InputBinding.DisplayStringOptions)m_DisplayStringOptionsProperty.intValue;
                 var optionsNew = (InputBinding.DisplayStringOptions)EditorGUILayout.EnumFlagsField(m_DisplayOptionsLabel, optionsOld);
@@ -128,10 +138,7 @@ namespace UnityEngine.InputSystem.Rebinding
             }
 
             if (EditorGUI.EndChangeCheck())
-            {
                 serializedObject.ApplyModifiedProperties();
-                RefreshBindingOptions();
-            }
         }
     }
 }

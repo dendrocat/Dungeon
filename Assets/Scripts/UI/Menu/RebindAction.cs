@@ -4,10 +4,11 @@ namespace UnityEngine.InputSystem.Rebinding
 
     public class RebindAction : MonoBehaviour
     {
-        [SerializeField] InputActionProperty m_Action;
+		const string c_BindingText = "Нажмите кнопку...";
+        [SerializeField] InputActionReference m_Action;
         [SerializeField] InputBinding m_BindingMask;
 
-        [SerializeField] string m_BindingId;
+        [SerializeField] int m_BindingIndex;
 
         [SerializeField] InputBinding.DisplayStringOptions m_DisplayStringOptions;
 
@@ -19,24 +20,22 @@ namespace UnityEngine.InputSystem.Rebinding
 
             action.Disable();
             Debug.Log("Start Rebinding");
-            action.PerformInteractiveRebinding()
-				.WithCancelingThrough("<Keyboard>/escape")
-				.OnComplete(op =>
-					{
-						Debug.Log("Complete");
-						Debug.Log(m_Action.reference.asset.SaveBindingOverridesAsJson());
-						action.Enable();
-						op.Dispose();
+			m_BindingText.text = c_BindingText;
+            action.PerformInteractiveRebinding(m_BindingIndex)
+                .WithCancelingThrough("<Keyboard>/escape")
+                .OnComplete(op =>
+                    {
+                        action.Enable();
+                        op.Dispose();
+                        UpdateBindingDisplay();
+                    })
+                .OnCancel(op =>
+                    {
+                        action.Enable();
+                        op.Dispose();
 						UpdateBindingDisplay();
-					})
-				.OnCancel(op =>
-					{
-						Debug.Log("Error");
-						action.Enable();
-						op.Dispose();
-					})
-				.Start();
-
+                    })
+                .Start();
         }
 
         void OnValidate()
@@ -46,8 +45,19 @@ namespace UnityEngine.InputSystem.Rebinding
 
         void UpdateBindingDisplay()
         {
-            var action = m_Action.action;
-            m_BindingText.text = action?.GetBindingDisplayString(m_DisplayStringOptions) ?? string.Empty;
+            var action = m_Action?.action;
+            if (m_BindingText == null)
+            {
+                Debug.LogError($"Binding Text not setted\n{GetType()}");
+                return;
+            }
+            if (action == null)
+            {
+                Debug.LogError($"Action not setted\n{GetType()}");
+                m_BindingText.text = "None";
+                return;
+            }
+            m_BindingText.text = action?.GetBindingDisplayString(m_BindingIndex, m_DisplayStringOptions) ?? string.Empty;
         }
     }
 }
