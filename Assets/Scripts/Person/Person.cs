@@ -13,8 +13,10 @@ public abstract class Person : MonoBehaviour
     protected void Awake()
     {
         comps = GetComponentsInChildren<IActivatable>();
+		InitHealth();
         OnAwake();
     }
+	protected abstract void InitHealth();
     protected virtual void OnAwake() { }
 
     protected virtual void Die()
@@ -43,10 +45,7 @@ public abstract class Person<TConfig, THealth, THealthConfig> : Person, IDamagab
     [SerializeField] protected THealth p_Health;
     public THealth Health => p_Health;
 
-    protected override void OnAwake()
-    {
-        p_Health.Init(m_Config.Health);
-    }
+	protected sealed override void InitHealth() => p_Health.Init(m_Config.Health);
 
     /// <inheritdoc/>
     public bool TakeDamage(float damage)

@@ -20,8 +20,6 @@ public class Enemy : Person<EnemyConfig, EnemyHealth, EnemyConfig.EnemyHealthCon
 
     protected override void OnAwake()
     {
-		base.OnAwake();
-
         NavAgent = GetComponent<NavMeshAgent>();
         NavAgent.speed = Config.Speed.BaseSpeed;
 
