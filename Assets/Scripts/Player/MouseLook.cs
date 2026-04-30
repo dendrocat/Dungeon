@@ -1,5 +1,5 @@
-using TriInspector;
 using UnityEngine;
+using TriInspector;
 
 [DeclareFoldoutGroup("set", Title = "Settings", Expanded = true)]
 [DeclareFoldoutGroup("cmp", Title = "Components")]
@@ -17,15 +17,26 @@ public class MouseLook : MonoBehaviour
     IInput m_Input;
 
     float xRot = 0;
+    float m_SensivityMultiplier = 1;
+
+    void LoadSettings()
+    {
+        var json = SettingsRepository.GetSetting(ControlsSaveLoader.c_Key, "");
+        if (string.IsNullOrEmpty(json)) return;
+        var settings = Newtonsoft.Json.JsonConvert.DeserializeObject<SettingsSO.ControlsSettings>(json);
+        m_SensivityMultiplier = settings.Sensivity;
+    }
 
     void Start()
     {
         m_Input = GetComponent<Player>().Input;
+        LoadSettings();
+		Debug.Log(QualitySettings.GetQualityLevel());
     }
 
     void FixedUpdate()
     {
-        var dt = m_Input.MouseDelta * m_Sensivity * Time.fixedDeltaTime;
+        var dt = m_Input.MouseDelta * m_Sensivity * m_SensivityMultiplier * Time.fixedDeltaTime;
 
         xRot -= dt.y;
         xRot = Mathf.Clamp(xRot, -m_MaxAngle, m_MaxAngle);

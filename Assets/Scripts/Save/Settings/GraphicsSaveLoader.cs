@@ -91,7 +91,10 @@ public class QualitySaveLoader : SettingsSaveLoader
     void ApplyQuality()
     {
         m_Quility.value = m_Settings.QualityLevel;
-        UnityEngine.QualitySettings.SetQualityLevel(m_Settings.QualityLevel);
+        QualitySettings.SetQualityLevel(m_Settings.QualityLevel);
+		System.Text.StringBuilder b = new();
+		foreach (var qa in QualitySettings.names) b.AppendLine(qa);
+		Debug.Log(b);
     }
 
     void ApplyScreen()

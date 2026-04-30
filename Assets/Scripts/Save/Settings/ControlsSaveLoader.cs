@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class ControlsSaveLoader : SettingsSaveLoader
 {
-    const string c_Key = "controls";
+    public const string c_Key = "controls";
     [SerializeField] SettingSlider m_Sensitivity;
     [SerializeField] InputActionAsset m_Asset;
 
