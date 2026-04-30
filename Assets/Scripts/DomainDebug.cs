@@ -33,7 +33,7 @@ namespace DomainLogging
         { DomainType.Room, false },
         { DomainType.Level, true },
         { DomainType.Sound, false },
-        { DomainType.UI, false },
+        { DomainType.UI, true },
         { DomainType.Weapon, false },
         { DomainType.Save, true },
     };

@@ -33,12 +33,12 @@ public class SceneLoader : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
-    // void Start()
-    // {
-    //     // Debug.Log(m_LevelSceneName);
-    //     LoadScene("TestLevelScene");
-    // }
-    //
+    void Start()
+    {
+        // Debug.Log(m_LevelSceneName);
+        // LoadScene("TestLevelScene");
+    }
+
     public void LoadScene(string sceneName)
     {
         var op = Addressables.LoadSceneAsync(sceneName, activateOnLoad: false);

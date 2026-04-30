@@ -2,14 +2,18 @@ using UnityEngine;
 
 public abstract class SettingsSaveLoader : MonoBehaviour
 {
-    void Awake()
-    {
-        SettingsSaveSystem.Saving += Save;
-        SettingsSaveSystem.Loaded += Load;
-        OnAwake();
-    }
-    protected virtual void OnAwake() { }
+    protected SettingsSO p_Defaults;
+    public void SetDefaults(SettingsSO defaults)
+        => p_Defaults = defaults;
 
-    protected abstract void Save();
-    protected abstract void Load();
+    public virtual void Init() { }
+
+    public abstract void Save();
+    public abstract void Load();
+
+    protected abstract void Apply();
+    public void Restore() { OnRestore(); Apply(); }
+    protected abstract void OnRestore();
+
+    void OnDisable() { Apply(); }
 }

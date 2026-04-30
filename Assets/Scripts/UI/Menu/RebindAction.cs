@@ -4,7 +4,7 @@ namespace UnityEngine.InputSystem.Rebinding
 
     public class RebindAction : MonoBehaviour
     {
-		const string c_BindingText = "Нажмите кнопку...";
+        const string c_BindingText = "Нажмите кнопку...";
         [SerializeField] InputActionReference m_Action;
         [SerializeField] InputBinding m_BindingMask;
 
@@ -14,27 +14,40 @@ namespace UnityEngine.InputSystem.Rebinding
 
         [SerializeField] TextUI m_BindingText;
 
+        void OnEnable()
+        {
+            UpdateBindingDisplay();
+            InputSystem.onActionChange += OnActionChange;
+        }
+
+        void OnDisable()
+        {
+            InputSystem.onActionChange -= OnActionChange;
+        }
+
+        private void OnActionChange(object obj, InputActionChange change)
+        {
+            if (change != InputActionChange.BoundControlsChanged) return;
+            UpdateBindingDisplay();
+        }
+
+        void AfterRebind(InputActionRebindingExtensions.RebindingOperation op)
+        {
+            op.action.Enable();
+            op.Dispose();
+        }
+
         public void StartRebind()
         {
             var action = m_Action.action;
 
             action.Disable();
-            Debug.Log("Start Rebinding");
-			m_BindingText.text = c_BindingText;
+            // Debug.Log("Start Rebinding");
+            m_BindingText.text = c_BindingText;
             action.PerformInteractiveRebinding(m_BindingIndex)
                 .WithCancelingThrough("<Keyboard>/escape")
-                .OnComplete(op =>
-                    {
-                        action.Enable();
-                        op.Dispose();
-                        UpdateBindingDisplay();
-                    })
-                .OnCancel(op =>
-                    {
-                        action.Enable();
-                        op.Dispose();
-						UpdateBindingDisplay();
-                    })
+                .OnComplete(AfterRebind)
+                .OnCancel(AfterRebind)
                 .Start();
         }
 

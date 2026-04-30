@@ -84,10 +84,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 8093946250695085255}
   m_HandleRect: {fileID: 4233941513792186009}
   m_Direction: 0
-  m_MinValue: 10
-  m_MaxValue: 200
-  m_WholeNumbers: 1
-  m_Value: 103
+  m_MinValue: 0
+  m_MaxValue: 2
+  m_WholeNumbers: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 2925824308073694153}
   - component: {fileID: 8455876161078005260}
   m_Layer: 5
-  m_Name: Level
+  m_Name: ValueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -577,6 +577,7 @@ GameObject:
   - component: {fileID: 7057378475843829430}
   - component: {fileID: 3169479099218586777}
   - component: {fileID: 9085442435739755960}
+  - component: {fileID: 582092117725620934}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -651,3 +652,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &582092117725620934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8528784938619368237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f00c4ad24b4e14380d28eb4cd32aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingSlider
+  m_Slider: {fileID: 7195074004278877835}
+  m_Text: {fileID: 2925824308073694153}
+  m_IsPercent: 1
+  m_Range: {x: -2, y: 2}

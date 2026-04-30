@@ -1,64 +1,91 @@
-using System;
 using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
+using DomainLogging;
 
 using Dropdown = TMPro.TMP_Dropdown;
+using VolumeProfile = UnityEngine.Rendering.VolumeProfile;
+using ColorAdjustments = UnityEngine.Rendering.Universal.ColorAdjustments;
 
 public class QualitySaveLoader : SettingsSaveLoader
 {
     const int FPS = 60;
     const string c_Key = "Quality";
 
-    [SerializeField] UnityEngine.UI.Slider m_Brightness;
     [SerializeField] Dropdown m_Quility;
     [SerializeField] Dropdown m_Resolution;
+    Resolution[] m_Resolutions;
     [SerializeField] Dropdown m_ScreenMode;
 
-    public struct QualitySettings
-    {
-        public float Brightness;
-        public int QualityLevel;
-        public int Resolution;
-        public bool ScreenMode;
+    [SerializeField] VolumeProfile m_BrightnessVolumeProfile;
+    ColorAdjustments m_ColorAdj = null;
+    [SerializeField] SettingSlider m_Brightness;
 
-        public QualitySettings(
-            float brightness = 1,
-            int qualityLevel = -1,
-            int resolution = -1,
-            bool screenMode = true)
+    SettingsSO.QualitySettings m_Settings;
+
+    public override void Init()
+    {
+        if (!m_BrightnessVolumeProfile.TryGet<ColorAdjustments>(out m_ColorAdj))
         {
-            Brightness = brightness;
-            QualityLevel = qualityLevel;
-            Resolution = resolution;
-            ScreenMode = screenMode;
+            DomainDebug.LogError($"ColorAdjustments not found in {m_BrightnessVolumeProfile.name}", DomainType.UI);
+            return;
         }
-    }
-    QualitySettings m_Settings;
+        Application.targetFrameRate = FPS;
 
-    protected override void Save()
+        InitResolutions();
+        m_Brightness.OnValueChanged += OnBrightnessChanged;
+    }
+
+    void InitResolutions()
     {
-        SettingsRepository.SetSetting(c_Key, JsonConvert.SerializeObject(m_Settings));
+        m_Resolutions = Screen.resolutions
+            .GroupBy(res => new { res.width, res.height })
+            .Select(g => g.First())
+            .OrderBy(res => res.width * res.height)
+            .ToArray();
+        // System.Text.StringBuilder b = new();
+        // foreach (var res in m_Resolutions) b.AppendLine($"{res.width}x{res.height}@{res.refreshRateRatio}");
+        // DomainDebug.Log(b.ToString(), DomainType.UI);
+        m_Resolution.ClearOptions();
+        m_Resolution.AddOptions(m_Resolutions.Select(res => new Dropdown.OptionData($"{res.width}x{res.height}")).ToList());
+    }
+
+    void OnBrightnessChanged(float value)
+    {
+        m_ColorAdj.postExposure.value = value;
+    }
+
+    public override void Save()
+    {
+        var settings = m_Settings.Clone();
+        settings.Brightness = m_Brightness.Value;
+        settings.Resolution = m_Resolution.value;
+        settings.QualityLevel = m_Quility.value;
+        settings.IsFullscreen = m_ScreenMode.value == 0;
+
+        string json = JsonConvert.SerializeObject(settings);
+        DomainDebug.Log(json, DomainType.UI);
+        SettingsRepository.SetSetting(c_Key, json);
+
+        m_Settings = settings;
         Apply();
     }
 
-    protected override void Load()
+    public override void Load()
     {
-        m_Settings = JsonConvert.DeserializeObject<QualitySettings>(SettingsRepository.GetSetting<string>(c_Key));
+        string json = SettingsRepository.GetSetting(c_Key, "");
+        DomainDebug.Log(json, DomainType.UI);
+        if (string.IsNullOrEmpty(json)) m_Settings = p_Defaults.Quality;
+        else
+            m_Settings = JsonConvert.DeserializeObject<SettingsSO.QualitySettings>(json);
         Apply();
     }
 
-    void Apply()
+    protected override void Apply()
     {
-        ApplyBrightness();
+		m_Brightness.Value = m_Settings.Brightness;
         ApplyQuality();
         ApplyScreen();
-    }
-
-    void ApplyBrightness()
-    {
-        m_Brightness.value = m_Settings.Brightness;
-        Screen.brightness = m_Settings.Brightness;
     }
 
     void ApplyQuality()
@@ -69,33 +96,19 @@ public class QualitySaveLoader : SettingsSaveLoader
 
     void ApplyScreen()
     {
-        m_Resolution.value = m_Settings.Resolution;
-        var res = Screen.resolutions[m_Settings.Resolution];
-        FullScreenMode mode = m_Settings.ScreenMode ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        int index = m_Settings.Resolution;
+        if (index == -1) index = m_Resolutions.Length - 1;
+        m_Resolution.value = index;
+        var res = m_Resolutions[index];
+
+        FullScreenMode mode = m_Settings.IsFullscreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        m_ScreenMode.value = m_Settings.IsFullscreen ? 0 : 1;
+
         Screen.SetResolution(res.width, res.height, mode, Screen.currentResolution.refreshRateRatio);
     }
 
-    protected override void OnAwake()
+    protected override void OnRestore()
     {
-        SetResolutions();
-    }
-
-    void SetResolutions()
-    {
-        var resolutions = Screen.resolutions
-            .Where(res => res.refreshRateRatio.value == FPS)
-            .GroupBy(res => new { res.width, res.height })
-            .Select(g => g.First())
-            .OrderBy(res => res.width * res.height)
-            .ToArray();
-        // System.Text.StringBuilder b = new();
-        // foreach (var res in resolutions) b.AppendLine($"{res.width}x{res.height}@{res.refreshRateRatio}");
-        // Debug.Log(b.ToString());
-        m_Resolution.ClearOptions();
-        m_Resolution.AddOptions(resolutions.Select(res => new Dropdown.OptionData($"{res.width}x{res.height}")).ToList());
-
-        m_Resolution.value = Array.FindIndex(resolutions,
-                res => res.width == Screen.currentResolution.width && res.height == Screen.currentResolution.height
-        );
+        m_Settings = p_Defaults.Quality;
     }
 }

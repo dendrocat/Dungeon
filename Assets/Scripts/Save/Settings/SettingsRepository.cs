@@ -17,7 +17,7 @@ public static class SettingsRepository
         { typeof(string), "string_" },
     };
 
-    [UnityEngine.RuntimeInitializeOnLoadMethod]
+    [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Load()
     {
         string json = PlayerPrefs.GetString(c_KeyKeys, "");
@@ -75,8 +75,10 @@ public static class SettingsRepository
             DomainDebug.LogError($"Type {typeof(T)} is unsupported", DomainType.Save);
             return defaultValue;
         }
-        if (m_Settings.TryGetValue(key, out object value)) return (T)value;
-        m_Settings[prefix + key] = defaultValue;
+		key = prefix + key;
+        if (m_Settings.TryGetValue(key, out object value))
+            return (T)value;
+        m_Settings[key] = defaultValue;
         return defaultValue;
     }
 

@@ -1,30 +1,38 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class SettingsSaveSystem : MonoBehaviour
 {
-	public static event UnityAction Saving;
-	public static event UnityAction Loaded;
+	[SerializeField] Transform m_ParentLoaders;
+    [SerializeField] SettingsSO m_Defaults;
+    IReadOnlyCollection<SettingsSaveLoader> m_SaveLoaders;
 
-	[SerializeField] Transform m_ParentSettings;
-	IReadOnlyCollection<SettingsSaveLoader> m_SaveLoaders;
-
-    void Start()
+    void Awake()
     {
-		m_SaveLoaders = m_ParentSettings.GetComponentsInChildren<SettingsSaveLoader>();
+        m_SaveLoaders = m_ParentLoaders.GetComponentsInChildren<SettingsSaveLoader>(true);
+        foreach (var sl in m_SaveLoaders)
+        {
+            sl.SetDefaults(m_Defaults); 
+			sl.Init();
+        }
         Load();
     }
 
     public void Save()
     {
-		Saving?.Invoke();
+        Debug.Log($"Saving: {m_SaveLoaders.Count}");
+        foreach (var sl in m_SaveLoaders) sl.Save();
         SettingsRepository.Save();
     }
 
-    public void Load()
+    void Load()
     {
-		Loaded?.Invoke();
-        SettingsRepository.Load();
+        foreach (var sl in m_SaveLoaders) sl.Load();
+    }
+
+    public void Restore()
+    {
+        foreach (var sl in m_SaveLoaders) sl.Restore();
+        Save();
     }
 }
