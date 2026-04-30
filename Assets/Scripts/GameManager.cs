@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public void ToMenu()
     {
+        UnPause();
         SceneLoader.Instance.LoadScene("MainMenu");
     }
 
@@ -36,4 +37,13 @@ public class GameManager : MonoBehaviour
         SceneLoader.Instance.LoadScene("Titles");
     }
 
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void UnPause()
+    {
+        Time.timeScale = 1;
+    }
 }

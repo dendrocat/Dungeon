@@ -19,7 +19,7 @@ public class WeaponSaveLoader : SaveLoader
     Dictionary<WeaponType, WeaponData> m_Data;
 
     PlayerWeaponHandler m_Hanlder;
-    protected override void OnAwake()
+    protected override void Awake()
     {
         m_Hanlder = GetComponent<PlayerWeaponHandler>(); Load();
     }

@@ -1,7 +1,7 @@
-using DomainLogging;
-using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Newtonsoft.Json;
+// using DomainLogging;
 
 public class ControlsSaveLoader : SettingsSaveLoader
 {
@@ -14,7 +14,7 @@ public class ControlsSaveLoader : SettingsSaveLoader
     public override void Load()
     {
         string json = SettingsRepository.GetSetting<string>(c_Key, "");
-        DomainDebug.Log(json, DomainType.UI);
+        // DomainDebug.Log(json, DomainType.UI);
         if (string.IsNullOrEmpty(json)) m_Settings = p_Defaults.Controls;
         else
             m_Settings = JsonConvert.DeserializeObject<SettingsSO.ControlsSettings>(json);
@@ -28,7 +28,7 @@ public class ControlsSaveLoader : SettingsSaveLoader
         settings.Rebinds = m_Asset.SaveBindingOverridesAsJson();
 
         string json = JsonConvert.SerializeObject(settings);
-        DomainDebug.Log(json, DomainType.UI);
+        // DomainDebug.Log(json, DomainType.UI);
         SettingsRepository.SetSetting(c_Key, json);
 
         m_Settings = settings;

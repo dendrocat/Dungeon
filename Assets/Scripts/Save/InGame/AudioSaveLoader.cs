@@ -6,7 +6,7 @@ public class AudioSaveLoader : SaveLoader
     const string c_Key = "AudioMultiplier";
     PlayerAudioEmitter m_Emitter;
 
-    protected override void OnAwake()
+    protected override void Awake()
     {
         m_Emitter = GetComponent<PlayerAudioEmitter>();
     }

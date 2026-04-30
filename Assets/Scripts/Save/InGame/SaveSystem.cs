@@ -32,5 +32,6 @@ public class SaveSystem : MonoBehaviour
     void OnDestroy()
     {
         Repository.ClearCache();
+		LevelManager.LevelPreLoad -= SaveData;
     }
 }

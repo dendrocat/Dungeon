@@ -31,7 +31,6 @@ public class MouseLook : MonoBehaviour
     {
         m_Input = GetComponent<Player>().Input;
         LoadSettings();
-		Debug.Log(QualitySettings.GetQualityLevel());
     }
 
     void FixedUpdate()

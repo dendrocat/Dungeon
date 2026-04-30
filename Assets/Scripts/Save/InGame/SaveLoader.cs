@@ -2,13 +2,18 @@ using UnityEngine;
 
 public abstract class SaveLoader : MonoBehaviour
 {
-    void Awake()
+    protected virtual void Awake() { }
+
+    void OnEnable()
     {
         SaveSystem.Saving += Save;
         SaveSystem.Loaded += Load;
-		OnAwake();
     }
-    protected virtual void OnAwake() { }
+    void OnDisable()
+    {
+        SaveSystem.Saving -= Save;
+        SaveSystem.Loaded -= Load;
+    }
 
     protected abstract void Save();
 

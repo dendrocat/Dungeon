@@ -64,7 +64,7 @@ public class QualitySaveLoader : SettingsSaveLoader
         settings.IsFullscreen = m_ScreenMode.value == 0;
 
         string json = JsonConvert.SerializeObject(settings);
-        DomainDebug.Log(json, DomainType.UI);
+        // DomainDebug.Log(json, DomainType.UI);
         SettingsRepository.SetSetting(c_Key, json);
 
         m_Settings = settings;
@@ -74,7 +74,7 @@ public class QualitySaveLoader : SettingsSaveLoader
     public override void Load()
     {
         string json = SettingsRepository.GetSetting(c_Key, "");
-        DomainDebug.Log(json, DomainType.UI);
+        // DomainDebug.Log(json, DomainType.UI);
         if (string.IsNullOrEmpty(json)) m_Settings = p_Defaults.Quality;
         else
             m_Settings = JsonConvert.DeserializeObject<SettingsSO.QualitySettings>(json);
@@ -92,14 +92,11 @@ public class QualitySaveLoader : SettingsSaveLoader
     {
         m_Quility.value = m_Settings.QualityLevel;
         QualitySettings.SetQualityLevel(m_Settings.QualityLevel);
-		System.Text.StringBuilder b = new();
-		foreach (var qa in QualitySettings.names) b.AppendLine(qa);
-		Debug.Log(b);
     }
 
     void ApplyScreen()
     {
-        int index = m_Settings.Resolution;
+        int index = Mathf.Min(m_Settings.Resolution, m_Resolutions.Length - 1);
         if (index == -1) index = m_Resolutions.Length - 1;
         m_Resolution.value = index;
         var res = m_Resolutions[index];

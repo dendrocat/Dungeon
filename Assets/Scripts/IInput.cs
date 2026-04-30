@@ -17,4 +17,6 @@ public interface IInput
     public event UnityAction MeleeAttacked;
 
 	public event UnityAction Interacted;
+
+	public event UnityAction Paused;
 }

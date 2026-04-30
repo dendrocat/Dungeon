@@ -1,6 +1,6 @@
 using UnityEngine;
 using Newtonsoft.Json;
-using DomainLogging;
+// using DomainLogging;
 
 public class SoundSaveLoader : SettingsSaveLoader
 {
@@ -18,13 +18,12 @@ public class SoundSaveLoader : SettingsSaveLoader
     void OnAllVolumeChanged(float value)
     {
         AudioListener.volume = value;
-		Debug.Log(AudioListener.volume);
     }
 
     public override void Load()
     {
         string json = SettingsRepository.GetSetting<string>(c_Key, "");
-        DomainDebug.Log(json, DomainType.UI);
+        // DomainDebug.Log(json, DomainType.UI);
         if (string.IsNullOrEmpty(json)) m_Settings = p_Defaults.Sound;
         else
             m_Settings = JsonConvert.DeserializeObject<SettingsSO.SoundSettings>(json);
@@ -37,7 +36,7 @@ public class SoundSaveLoader : SettingsSaveLoader
         settings.AllVolume = m_AllVolume.Value;
 
         string json = JsonConvert.SerializeObject(settings);
-        DomainDebug.Log(json, DomainType.UI);
+        // DomainDebug.Log(json, DomainType.UI);
         SettingsRepository.SetSetting(c_Key, json);
 
         m_Settings = settings;

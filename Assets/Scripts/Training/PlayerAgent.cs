@@ -24,6 +24,7 @@ public class PlayerAgent : Agent, IInput, IActivatable
     public event UnityAction MeleeAttacked;
 
     public event UnityAction Interacted;
+    public event UnityAction Paused;
 #pragma warning restore CS0067
 
     [SerializeField] PlayerWeaponHandler m_WeaponHandler;
