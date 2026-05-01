@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
-  m_Name: Caves_ContentUpdateGroupSchema
+  m_Name: SharedAssets_ContentUpdateGroupSchema
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.GroupSchemas.ContentUpdateGroupSchema
-  m_Group: {fileID: 11400000, guid: bc9fdbb6df20ed34dbe040d977192e14, type: 2}
-  m_StaticContent: 0
+  m_Group: {fileID: 11400000, guid: 587efc58b9c33f348854aedece4735e5, type: 2}
+  m_StaticContent: 1

@@ -21,8 +21,9 @@ public class WeaponSaveLoader : SaveLoader
     PlayerWeaponHandler m_Hanlder;
     protected override void Awake()
     {
-        m_Hanlder = GetComponent<PlayerWeaponHandler>(); Load();
+        m_Hanlder = GetComponent<PlayerWeaponHandler>();
     }
+    void Start() { Load(); }
 
     void RestoreWeapons(Dictionary<WeaponType, WeaponStats> stats)
     {
@@ -45,7 +46,8 @@ public class WeaponSaveLoader : SaveLoader
             if (m_Data[data.Type].statsID == data.GetInstanceID())
                 stats[data.Type] = data;
         });
-		op.WaitForCompletion();
+        op.WaitForCompletion();
+        op.Release();
 
         RestoreWeapons(stats);
     }

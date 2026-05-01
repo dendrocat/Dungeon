@@ -9,6 +9,7 @@ public class AudioSaveLoader : SaveLoader
     protected override void Awake()
     {
         m_Emitter = GetComponent<PlayerAudioEmitter>();
+		Load();
     }
 
     protected override void Load()

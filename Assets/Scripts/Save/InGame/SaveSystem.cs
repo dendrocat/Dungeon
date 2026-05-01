@@ -2,18 +2,18 @@ using UnityEngine;
 using UnityEngine.Events;
 using DomainLogging;
 
-public class SaveSystem : MonoBehaviour
+public static class SaveSystem
 {
     public static event UnityAction Saving;
     public static event UnityAction Loaded;
 
-    void Start()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void SubscribeSave()
     {
         LevelManager.LevelPreLoad += SaveData;
-        LoadData();
     }
 
-    void SaveData()
+    static void SaveData()
     {
         DomainDebug.Log("Collecting data", DomainType.Save);
         Saving?.Invoke();
@@ -21,17 +21,11 @@ public class SaveSystem : MonoBehaviour
         Repository.Save();
     }
 
-    void LoadData()
+    public static void LoadData()
     {
         DomainDebug.Log("Loading data", DomainType.Save);
         Repository.Load();
         DomainDebug.Log("Data loaded", DomainType.Save);
         Loaded?.Invoke();
-    }
-
-    void OnDestroy()
-    {
-        Repository.ClearCache();
-		LevelManager.LevelPreLoad -= SaveData;
     }
 }

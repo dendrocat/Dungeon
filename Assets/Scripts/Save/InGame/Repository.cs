@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using UnityEngine;
-using Newtonsoft.Json;
 using DomainLogging;
+
 using Path = System.IO.Path;
 using File = System.IO.File;
+using JsonConvert = Newtonsoft.Json.JsonConvert;
 using JObject = Newtonsoft.Json.Linq.JObject;
 
 public static class Repository
@@ -13,7 +13,7 @@ public static class Repository
     const string c_FileName = "save.json";
 
     private static string GetPath() =>
-        Path.Combine(Application.persistentDataPath, c_FileName);
+        Path.Combine(UnityEngine.Application.persistentDataPath, c_FileName);
 
     public static bool HasSave() =>
         File.Exists(GetPath());
@@ -23,7 +23,6 @@ public static class Repository
 
     public static void Load()
     {
-        // load from file to dict
         if (!HasSave()) return;
         DomainDebug.Log($"Loading from file: {GetPath()}", DomainType.Save);
         string data = File.ReadAllText(GetPath());
@@ -33,7 +32,6 @@ public static class Repository
 
     public static void Save()
     {
-        // save from dict to file
         DomainDebug.Log($"Saving to file: {GetPath()}", DomainType.Save);
         string data = JsonConvert.SerializeObject(m_CurrentState);
         DomainDebug.Log(data, DomainType.Save);

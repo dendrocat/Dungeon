@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FirePoint
   - Enemy
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX

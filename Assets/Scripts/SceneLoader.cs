@@ -1,62 +1,56 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using TriInspector;
+using UnityEngine.ResourceManagement.ResourceProviders;
 
+using Scene = UnityEngine.SceneManagement.Scene;
+using UnityAction = UnityEngine.Events.UnityAction;
+
+[RequireComponent(typeof(LevelManager))]
 public class SceneLoader : MonoBehaviour
 {
-    public UnityAction SceneLoaded;
+    public UnityAction LevelLoaded;
 
     public static SceneLoader Instance { get; private set; } = null;
-    const float c_MinTime = 2f;
+    const float c_MinLoadTime = 1f;
+
+    AsyncOperationHandle<SceneInstance> m_SceneHandle;
+    public Scene Scene => m_SceneHandle.IsValid() ? m_SceneHandle.Result.Scene : default;
 
     [SerializeField] LoadUI m_LoadUI;
-    [Scene]
-    [SerializeField] string m_LevelScene;
+    LevelManager m_LevelManager;
 
     float m_Elapsed = 0;
-    float progress => Mathf.Clamp01(m_Elapsed / c_MinTime);
+    float progress => Mathf.Clamp01(m_Elapsed / c_MinLoadTime);
 
     void Awake()
     {
-        if (Instance != null) { Destroy(gameObject); Destroy(m_LoadUI?.gameObject); return; }
+        if (Instance != null)
+        {
+            Destroy(gameObject); Destroy(m_LoadUI?.gameObject); return;
+        }
+
         Instance = this;
-		m_LoadUI.Deactivate();
-        DontDestroyOnLoad(gameObject);
-        DontDestroyOnLoad(m_LoadUI.gameObject);
+        m_LoadUI.Deactivate();
+
+        m_LevelManager = GetComponent<LevelManager>();
     }
 
     void OnDestroy()
     {
-        if (Instance == this) Instance = null;
-    }
-
-    void Start()
-    {
-        // Debug.Log(m_LevelSceneName);
-        // LoadScene("TestLevelScene");
+        if (Instance = this) Instance = null;
     }
 
     public void LoadScene(string sceneName)
     {
-        var op = Addressables.LoadSceneAsync(sceneName, activateOnLoad: false);
-        StartCoroutine(LoadAsync(op,
-                    async (res) =>
-                        {
-                            await op.Result.ActivateAsync();
-                            SceneLoaded?.Invoke();
-                        },
-                    !m_LevelScene.Contains(sceneName))
-        );
+        StartCoroutine(LoadSceneAsync(sceneName, null));
     }
 
-    public void LoadLevel(AssetReferenceGameObject assetRef, UnityAction<GameObject> onLoaded)
+    public void LoadLevel()
     {
-        // Debug.Log($"Level recieved");
-        var op = assetRef.LoadAssetAsync();
-        StartCoroutine(LoadAsync(op, onLoaded));
+        var sceneName = m_LevelManager.GetLevel();
+        StartCoroutine(LoadSceneAsync(sceneName, LevelLoaded));
     }
 
     YieldInstruction Next()
@@ -65,29 +59,40 @@ public class SceneLoader : MonoBehaviour
         return null;
     }
 
-    IEnumerator LoadAsync<T>(AsyncOperationHandle<T> op, UnityAction<T> onLoaded, bool waitMinTime = true)
+    IEnumerator LoadSceneAsync(string sceneName, UnityAction onLoaded)
     {
         m_LoadUI.Activate();
         // Debug.Log("Operation started");
 
+        var op_dep = Addressables.DownloadDependenciesAsync(sceneName);
+        yield return StartCoroutine(WaitOp(op_dep));
+
+        m_SceneHandle = Addressables.LoadSceneAsync(sceneName, activateOnLoad: false);
+        yield return StartCoroutine(WaitOp(m_SceneHandle));
+
+        yield return StartCoroutine(WaitMinTime());
+
+        var op_act = m_SceneHandle.Result.ActivateAsync();
+        while (!op_act.isDone) yield return null;
+        // Debug.Log("Operation ended");
+
+        onLoaded?.Invoke();
+
+        m_LoadUI.Deactivate();
+    }
+
+    IEnumerator WaitOp(AsyncOperationHandle op)
+    {
         while (!op.IsDone)
         {
             m_LoadUI.ShowProgress(Mathf.Min(progress, op.PercentComplete));
             yield return Next();
         }
-        if (waitMinTime)
-            yield return StartCoroutine(WaitMinTime());
-
-        onLoaded?.Invoke(op.Result);
-        op.Release();
-        // Debug.Log("Operation ended");
-
-        m_LoadUI.Deactivate();
     }
 
     IEnumerator WaitMinTime()
     {
-        while (m_Elapsed < c_MinTime)
+        while (m_Elapsed < c_MinLoadTime)
         {
             m_LoadUI.ShowProgress(progress);
             yield return Next();

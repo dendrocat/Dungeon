@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using DomainLogging;
+
 using PlayerPrefs = UnityEngine.PlayerPrefs;
+using JsonConvert = Newtonsoft.Json.JsonConvert;
 
 public static class SettingsRepository
 {

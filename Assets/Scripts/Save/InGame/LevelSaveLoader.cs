@@ -15,12 +15,12 @@ public class LevelSaveLoader : SaveLoader
     {
         if (!Repository.GetData(c_Key, out long level))
             level = -1;
-		DomainLogging.DomainDebug.Log($"Loaded level: {level}", DomainLogging.DomainType.Save);
-        m_LevelManager.LoadLevelByIndex((int)level);
+        DomainLogging.DomainDebug.Log($"Loaded level: {level}", DomainLogging.DomainType.Save);
+        m_LevelManager.LoadLevel((int)level);
     }
 
     protected override void Save()
     {
-        Repository.SetData(c_Key, m_LevelManager.CurrentLevel + 1);
+        Repository.SetData(c_Key, m_LevelManager.NextLevel);
     }
 }

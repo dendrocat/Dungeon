@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+		LevelManager.EndedLevels += ToTitles;
     }
 
     void OnDestroy()
@@ -27,9 +27,16 @@ public class GameManager : MonoBehaviour
         SceneLoader.Instance.LoadScene("MainMenu");
     }
 
-    public void ToLevels()
+    public void ContinueGame()
     {
-        SceneLoader.Instance.LoadScene("TestLevelScene");
+		SaveSystem.LoadData();
+        SceneLoader.Instance.LoadLevel();
+    }
+
+    public void StartGame()
+    {
+        Repository.Remove();
+        ContinueGame();
     }
 
     public void ToTitles()
