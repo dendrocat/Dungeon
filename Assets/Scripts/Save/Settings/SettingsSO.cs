@@ -29,23 +29,30 @@ public class SettingsSO : ScriptableObject
     [System.Serializable]
     public class QualitySettings
     {
-        [Slider(-2, 2)]
-        public float Brightness = 0;
+        public bool IsFullscreen = true;
+
+        [HideInInspector] public int Resolution = -1;
+
+        public bool VSync = true;
+
+        [Slider(0, 2)]
+        public int FPS = 0;
 
         [Slider(0, 2)]
         public int QualityLevel = -1;
 
-        public int Resolution = -1;
-
-        public bool IsFullscreen = true;
+        [Slider(-2, 2)]
+        public float Brightness = 0;
 
         public QualitySettings Clone() =>
              new QualitySettings
              {
-                 Brightness = Brightness,
-                 QualityLevel = QualityLevel,
-                 Resolution = Resolution,
                  IsFullscreen = IsFullscreen,
+                 Resolution = Resolution,
+                 VSync = VSync,
+                 FPS = FPS,
+                 QualityLevel = QualityLevel,
+                 Brightness = Brightness,
              };
     }
     [Group("qa"), InlineProperty, HideLabel]

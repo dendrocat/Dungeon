@@ -830,7 +830,7 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Standalone: APP_UI_EDITOR_ONLY;UNITY_PIPELINE_URP
+    Standalone: APP_UI_EDITOR_ONLY;UNITY_PIPELINE_URP;SENTIS_ANALYTICS_ENABLED
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

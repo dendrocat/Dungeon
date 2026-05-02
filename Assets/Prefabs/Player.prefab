@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 8588972604217727676}
   - component: {fileID: 38128719756224821}
   - component: {fileID: 4202888758436881538}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -878,7 +878,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2078874555634769501}
   - component: {fileID: 3357436760672819737}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -901,10 +901,10 @@ RectTransform:
   - {fileID: 7875766505688777988}
   m_Father: {fileID: 9189557213193264759}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.3, y: 0.2}
-  m_AnchorMax: {x: 0.7, y: 0.8}
+  m_AnchorMin: {x: 0.5, y: 0.2}
+  m_AnchorMax: {x: 0.5, y: 0.8}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3357436760672819737
 MonoBehaviour:
@@ -1479,7 +1479,7 @@ GameObject:
   - component: {fileID: 8545750058952622628}
   - component: {fileID: 8750973947730926345}
   - component: {fileID: 272671416193479870}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: PauseCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2247,7 +2247,7 @@ GameObject:
   - component: {fileID: 885805966377990662}
   - component: {fileID: 8149421446946759173}
   - component: {fileID: 3618572747661536631}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 2439017109145589459}
   - component: {fileID: 3273503353968846540}
   m_Layer: 0
-  m_Name: Area Light
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9076720298388246211
 Transform:
   m_ObjectHideFlags: 0

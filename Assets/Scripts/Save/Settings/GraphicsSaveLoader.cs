@@ -4,18 +4,23 @@ using Newtonsoft.Json;
 using DomainLogging;
 
 using Dropdown = TMPro.TMP_Dropdown;
+using Toggle = UnityEngine.UI.Toggle;
 using VolumeProfile = UnityEngine.Rendering.VolumeProfile;
 using ColorAdjustments = UnityEngine.Rendering.Universal.ColorAdjustments;
 
 public class QualitySaveLoader : SettingsSaveLoader
 {
-    const int FPS = 60;
     const string c_Key = "Quality";
 
-    [SerializeField] Dropdown m_Quility;
+    [SerializeField] Dropdown m_ScreenMode;
+    [SerializeField] Toggle m_VSync;
+    [SerializeField] Dropdown m_FPS;
+    readonly static int[] m_FPSValues = { -1, 30, 60 };
+
     [SerializeField] Dropdown m_Resolution;
     Resolution[] m_Resolutions;
-    [SerializeField] Dropdown m_ScreenMode;
+
+    [SerializeField] Dropdown m_Quility;
 
     [SerializeField] VolumeProfile m_BrightnessVolumeProfile;
     ColorAdjustments m_ColorAdj = null;
@@ -30,10 +35,10 @@ public class QualitySaveLoader : SettingsSaveLoader
             DomainDebug.LogError($"ColorAdjustments not found in {m_BrightnessVolumeProfile.name}", DomainType.UI);
             return;
         }
-        Application.targetFrameRate = FPS;
 
         InitResolutions();
         m_Brightness.OnValueChanged += OnBrightnessChanged;
+		m_VSync.onValueChanged.AddListener(OnVSyncChanged);
     }
 
     void InitResolutions()
@@ -55,13 +60,19 @@ public class QualitySaveLoader : SettingsSaveLoader
         m_ColorAdj.postExposure.value = value;
     }
 
+	void OnVSyncChanged(bool value) {
+		m_FPS.interactable = !value;
+	}
+
     public override void Save()
     {
         var settings = m_Settings.Clone();
-        settings.Brightness = m_Brightness.Value;
-        settings.Resolution = m_Resolution.value;
-        settings.QualityLevel = m_Quility.value;
         settings.IsFullscreen = m_ScreenMode.value == 0;
+        settings.Resolution = m_Resolution.value;
+        settings.VSync = m_VSync.isOn;
+        settings.FPS = m_FPS.value;
+        settings.QualityLevel = m_Quility.value;
+        settings.Brightness = m_Brightness.Value;
 
         string json = JsonConvert.SerializeObject(settings);
         // DomainDebug.Log(json, DomainType.UI);
@@ -83,9 +94,20 @@ public class QualitySaveLoader : SettingsSaveLoader
 
     protected override void Apply()
     {
-		m_Brightness.Value = m_Settings.Brightness;
-        ApplyQuality();
         ApplyScreen();
+        ApplyFPS();
+        ApplyQuality();
+        m_Brightness.Value = m_Settings.Brightness;
+    }
+
+    void ApplyFPS()
+    {
+        m_VSync.isOn = m_Settings.VSync;
+        m_FPS.interactable = !m_Settings.VSync;
+		m_FPS.value = m_Settings.FPS;
+
+        QualitySettings.vSyncCount = m_Settings.VSync ? 1 : 0;
+        Application.targetFrameRate = m_FPSValues[m_Settings.FPS];
     }
 
     void ApplyQuality()

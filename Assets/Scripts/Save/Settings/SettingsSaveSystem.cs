@@ -20,7 +20,6 @@ public class SettingsSaveSystem : MonoBehaviour
 
     public void Save()
     {
-        Debug.Log($"Saving: {m_SaveLoaders.Count}");
         foreach (var sl in m_SaveLoaders) sl.Save();
         SettingsRepository.Save();
     }
