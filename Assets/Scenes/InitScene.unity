@@ -620,8 +620,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   m_Levels:
-  - Assets/Scenes/Temp/TestLevel1.unity
-  - Assets/Scenes/Temp/TestLevel2.unity
+  - Assets/Scenes/Levels/Level1.unity
+  - Assets/Scenes/Levels/Level2.unity
+  - Assets/Scenes/Levels/Level3.unity
+  - Assets/Scenes/Levels/Level4.unity
+  - Assets/Scenes/Levels/Level5.unity
 --- !u!114 &1416739044
 MonoBehaviour:
   m_ObjectHideFlags: 0

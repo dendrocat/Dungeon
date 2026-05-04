@@ -8,7 +8,7 @@ public class Titles : MonoBehaviour
     [SerializeField] RectTransform[] m_Moving;
     [SerializeField] float m_Duration;
 
-    void Awake()
+    void Start()
     {
         m_Hack.StartHack(m_Duration);
         StartCoroutine(MoveToZero(m_Moving));

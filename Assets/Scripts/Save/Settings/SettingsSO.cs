@@ -1,9 +1,10 @@
 using UnityEngine;
 using TriInspector;
 
-[CreateAssetMenu(fileName = "SettingsSO", menuName = "Scriptable Objects/SettingsSO")]
+[CreateAssetMenu(fileName = "SettingsSO", menuName = "Settings/SettingsSO")]
 [DeclareBoxGroup("cont", Title = "Controls")]
-[DeclareBoxGroup("qa", Title = "Quality")]
+[DeclareBoxGroup("quality", Title = "Quality")]
+[DeclareBoxGroup("audio", Title = "Audio")]
 public class SettingsSO : ScriptableObject
 {
     [System.Serializable]
@@ -55,7 +56,7 @@ public class SettingsSO : ScriptableObject
                  Brightness = Brightness,
              };
     }
-    [Group("qa"), InlineProperty, HideLabel]
+    [Group("quality"), InlineProperty, HideLabel]
     [SerializeField] QualitySettings m_Quality;
     public QualitySettings Quality => m_Quality.Clone();
 
@@ -71,7 +72,7 @@ public class SettingsSO : ScriptableObject
                 AllVolume = AllVolume,
             };
     }
-    [Group("cont"), InlineProperty, HideLabel]
+    [Group("audio"), InlineProperty, HideLabel]
     [SerializeField] SoundSettings m_Sound;
     public SoundSettings Sound => m_Sound.Clone();
 }
