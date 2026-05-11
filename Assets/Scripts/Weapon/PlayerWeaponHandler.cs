@@ -39,22 +39,41 @@ public class PlayerWeaponHandler : BaseWeaponHandler
     public void ChangeWeapon(WeaponType type)
     {
         if (type == m_CurrentWeapon) return;
-        if (Weapon != null)
-            Weapon.Unequip();
 
-        m_CurrentWeapon = type;
-        p_Weapon = m_Weapons[m_CurrentWeapon];
-        p_Weapon.Equip();
-        DomainDebug.Log($"Switched to weapon: {type}, weapon cnt: {m_Weapons.Count}", DomainType.Weapon);
+        void Equip()
+        {
+            m_CurrentWeapon = type;
+            p_Weapon = m_Weapons[m_CurrentWeapon];
+            p_Weapon.Equip();
+            DomainDebug.Log($"Switched to weapon: {type}, weapon cnt: {m_Weapons.Count}", DomainType.Weapon);
+        }
+
+        if (p_Weapon != null)
+        {
+            if (p_Weapon.IsUnequiping) return;
+            p_Weapon.Unequiped += Equip;
+            p_Weapon.Unequip();
+        }
+        else Equip();
     }
 
     public override void Attack()
     {
-        if (Grenade.Equiped) Grenade.Unequip();
-        if (Melee.Equiped) Melee.Unequip();
+        IWeapon equiped = null;
+        if (Grenade.Equiped) equiped = Grenade;
+        if (Melee.Equiped) equiped = Melee;
 
-        if (!p_Weapon.Equiped) p_Weapon.Equip();
-        if (p_Weapon.Attack()) RaiseAttacked(p_Weapon);
+        if (equiped != null)
+        {
+            equiped.Unequiped += () =>
+            {
+                p_Weapon.Equip();
+                if (p_Weapon.Attack()) RaiseAttacked(p_Weapon);
+            };
+            equiped.Unequip();
+        }
+        else
+            if (p_Weapon.Attack()) RaiseAttacked(p_Weapon);
     }
 
     int GetAdding(int maxAmmo)
@@ -72,25 +91,24 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         }
     }
 
-    public void ThrowGrenade()
+    void AttackSpecial(IWeapon weapon)
     {
-        if (Grenade.IsReloading) return;
+        if (weapon.IsReloading || p_Weapon.IsUnequiping || !p_Weapon.Equiped) return;
 
-        DomainDebug.Log($"Throw Grenade: {Grenade.ReloadProgress}", DomainType.Weapon);
+        p_Weapon.Unequiped += () =>
+        {
+            weapon.Equip();
+            if (weapon.Attack()) RaiseAttacked(weapon);
+            DomainDebug.Log($"Attack special: {weapon.Stats.Type}", DomainType.Weapon);
+        };
         p_Weapon.Unequip();
-        Grenade.Equip();
-        if (Grenade.Attack()) RaiseAttacked(Grenade);
     }
+
+    public void ThrowGrenade()
+        => AttackSpecial(Grenade);
 
     public void MeleeAttack()
-    {
-        if (Melee.IsReloading) return;
-
-        DomainDebug.Log($"Melee Attack", DomainType.Weapon);
-        p_Weapon.Unequip();
-        Melee.Equip();
-        if (Melee.Attack()) RaiseAttacked(Melee);
-    }
+        => AttackSpecial(Melee);
 
     public void SwitchWeapon(WeaponStats stats)
     {
@@ -103,7 +121,6 @@ public class PlayerWeaponHandler : BaseWeaponHandler
             _ => m_Weapons.GetValueOrDefault(type, null),
         };
         if (stats.GetInstanceID() == weapon.Stats.GetInstanceID()) return;
-		weapon.Unequip(true);
 
         IWeapon newWeapon = type switch
         {
@@ -119,44 +136,28 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         if (type == WeaponType.Melee) Melee = newWeapon as MeleeWeapon;
         else m_Weapons[type] = newWeapon as RangedWeapon;
 
-        if (type == m_CurrentWeapon) {
-			p_Weapon = newWeapon;
-			newWeapon.Equip();
-		}
+        if (type == m_CurrentWeapon)
+            weapon.Unequiped += () =>
+            {
+                p_Weapon = weapon;
+                newWeapon.Equip();
+            };
+        weapon.Unequip(true);
     }
 
-    // public void SwitchWeapon(WeaponStats stats, bool _ = false)
-    // {
-    //     if (stats.Type == WeaponType.None) return;
-    //     if (stats.Type == WeaponType.Melee)
-    //     {
-    //         if (Melee.Stats.GetInstanceID() == stats.GetInstanceID())
-    //             return;
-    //         Melee.Unequip(true);
-    //         Melee = new MeleeWeapon(p_WeaponStats as MeleeWeaponStats, transform);
-    //         return;
-    //     }
-    //     if (stats.Type == WeaponType.Grenade)
-    //     {
-    //         if (Grenade.Stats.GetInstanceID() == stats.GetInstanceID())
-    //             return;
-    //         var new_grenade = new RangedWeapon(stats as RangedWeaponStats, transform);
-    //         new_grenade.SetAmmo(Grenade.AmmoInTube, Grenade.Ammo);
-    //         Grenade.Unequip(true);
-    //         Grenade = new_grenade;
-    //         return;
-    //     }
-    //     if (m_Weapons[stats.Type].Stats.GetInstanceID() == stats.GetInstanceID())
-    //         return;
-    //     var new_weapon = new RangedWeapon(stats as RangedWeaponStats, transform);
-    //     new_weapon.SetAmmo(0, m_Weapons[stats.Type].Ammo);
-    //
-    //     m_Weapons[stats.Type].Unequip(true);
-    //     m_Weapons[stats.Type] = new_weapon;
-    //
-    //     if (stats.Type == m_CurrentWeapon)
-    //         new_weapon.Equip();
-    // }
+    void AutoUneqiup(IWeapon weapon)
+    {
+        if (!weapon.Equiped || weapon.IsUnequiping) return;
+
+        bool shouldUnequip = true;
+        if (!shouldUnequip && weapon is RangedWeapon ranged)
+            shouldUnequip &= ranged.Ammo <= 0;
+
+        if (!shouldUnequip) return;
+
+        weapon.Unequiped += () => p_Weapon.Equip();
+        weapon.Unequip();
+    }
 
     protected override void FixedUpdate()
     {
@@ -164,15 +165,8 @@ public class PlayerWeaponHandler : BaseWeaponHandler
 
         Grenade.Update(Time.fixedDeltaTime);
         Melee.Update(Time.fixedDeltaTime);
-        if (Grenade.Equiped && (Grenade.Ammo <= 0 || Grenade.IsReloading))
-        {
-            Grenade.Unequip();
-            p_Weapon.Equip();
-        }
-        if (Melee.Equiped && Melee.IsReloading)
-        {
-            Melee.Unequip();
-            p_Weapon.Equip();
-        }
+
+        AutoUneqiup(Grenade);
+        AutoUneqiup(Melee);
     }
 }

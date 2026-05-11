@@ -38,7 +38,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
     {
         var hSpread = Random.Range(-p_Stats.MaxSpread.x, p_Stats.MaxSpread.x);
         var vSpread = Random.Range(-p_Stats.MaxSpread.y, p_Stats.MaxSpread.y);
-        return Quaternion.Euler(hSpread, vSpread, 0) * dir;
+        return Quaternion.Euler(vSpread, hSpread, 0) * dir;
     }
 
     const float c_HitFailedDistance = 200;

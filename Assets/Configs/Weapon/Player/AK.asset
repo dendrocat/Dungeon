@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
   m_Name: AK
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
-  m_WeaponPrefab: {fileID: 7895784510436758991, guid: 81b3635a3b2fc0149adba002cdba776d, type: 3}
+  m_WeaponPrefab: {fileID: 3297001669883323039, guid: db3a0f9a85eef0e41b99e2a50f76654f, type: 3}
   p_Type: 3
   m_Damage: 5
   m_Distance: 100
-  m_ReloadTime: 5
+  m_ReloadTime: 2
   m_FireRate: 360
   m_BulletRate: 1
   m_MaxAmmoInTube: 40

@@ -19,11 +19,15 @@ public abstract class WeaponStats : ScriptableObject
     [SerializeField, Min(1)] int m_Damage = 10;
     public int Damage => m_Damage;
 
+	[Group("set"), PropertyOrder(4), Unit(UnitAttribute.Second)]
+	[SerializeField, Min(0)] float m_UntilAttackTime = 0;
+	public float UntilAttackTime => m_UntilAttackTime; 
+
     [Group("set"), PropertyOrder(10), Unit(UnitAttribute.Meter)]
     [SerializeField, Min(.1f)] float m_Distance = 1;
     public float Distance => m_Distance;
 
     [Group("set"), PropertyOrder(11)]
-    [SerializeField, Min(1), Unit(UnitAttribute.Second)] int m_ReloadTime = 5;
-    public int ReloadTime => m_ReloadTime;
+    [SerializeField, Min(1), Unit(UnitAttribute.Second)] float m_ReloadTime = 5;
+    public float ReloadTime => m_ReloadTime;
 }

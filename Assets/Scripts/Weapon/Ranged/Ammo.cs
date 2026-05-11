@@ -25,7 +25,6 @@ public class Ammo : MonoBehaviour
     public void Launch(Vector3 dir)
     {
         // DomainLogging.DomainDebug.Log($"{m_Rig.name} lauched", DomainLogging.DomainType.Weapon);
-        dir = dir.normalized;
         transform.forward = dir.normalized;
         m_Rig.linearVelocity = dir * m_Speed;
     }

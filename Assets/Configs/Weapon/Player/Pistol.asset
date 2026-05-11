@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
-  m_WeaponPrefab: {fileID: 7895784510436758991, guid: 70705d0eecbe02d44be14857e867ea8e, type: 3}
+  m_WeaponPrefab: {fileID: 7810643967882512432, guid: 83671141956fe554c9577e8ab00dfe49, type: 3}
   p_Type: 2
   m_Damage: 10
   m_Distance: 300

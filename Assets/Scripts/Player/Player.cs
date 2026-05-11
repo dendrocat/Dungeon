@@ -74,7 +74,7 @@ public class Player : Person<PlayerConfig, PlayerHealth, PlayerHealthConfig>
         LightZone.PlayerInsideChanged -= OnLightZonePlayerInsideChanged;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!m_WeaponHandler.IsActive) return;
         if (Input.Attack) m_WeaponHandler.Attack();
