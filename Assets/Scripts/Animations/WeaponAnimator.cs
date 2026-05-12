@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class WeaponAnimator : MonoBehaviour
+public class WeaponAnimator : MonoBehaviour, IAnimator
 {
     public event UnityAction<bool> OnUneqiped;
+
     [SerializeField] Animator m_Animator;
     [SerializeField] bool m_HasTriggers = true;
 
@@ -26,16 +27,18 @@ public class WeaponAnimator : MonoBehaviour
 
     public void Unequip()
     {
-		StateExitor.StateExited += OnHideExited;
         if (!m_HasTriggers) return;
         m_Animator.SetTrigger("Hide");
     }
 
     void OnHideExited(bool finished)
     {
-		StateExitor.StateExited -= OnHideExited;
         OnUneqiped?.Invoke(finished);
         OnUneqiped = null;
     }
 
+    public void OnStateExited(bool stateFinished)
+    {
+        OnHideExited(stateFinished);
+    }
 }

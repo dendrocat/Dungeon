@@ -10,8 +10,8 @@ public struct AudioInput
 
 public class AudioOutput
 {
-    public Vector3 AudioPosition;
-    public float AudioLevel;
+    public Vector3? AudioPosition = null;
+    public float AudioLevel = 0;
 }
 
 public class AudioSensor : ISensor

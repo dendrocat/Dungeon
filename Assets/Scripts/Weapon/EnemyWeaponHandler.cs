@@ -20,6 +20,8 @@ public class EnemyWeaponHandler : BaseWeaponHandler
         m_Target = target;
     }
 
+	public bool CanAttack() => p_Weapon.CanAttack();
+
     public override void Attack()
     {
         p_Weapon.Attack(m_Target.position);

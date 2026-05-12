@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d46fbf2ea792b1c4ea897ea736e187fe, type: 3}
+  m_Name: TrainSpawner
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnerConfig
+  m_SpawnChances:
+  - Prefab: {fileID: 2796110768599105383, guid: 851453cb96aa70c45b2935b79d141fca, type: 3}
+    SpawnChance: 0.98
+  - Prefab: {fileID: 3966162405223893726, guid: dc8b4eaaef1775d49ad270857bfa898e, type: 3}
+    SpawnChance: 0.01
+  - Prefab: {fileID: 6297367115415550661, guid: 6e7c647ed8a5cfe4098cc29307e78e7a, type: 3}
+    SpawnChance: 0.01

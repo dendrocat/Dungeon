@@ -69,6 +69,8 @@ public class EnemyAgent : Agent
 
         fsm.ChangeStateRequested -= RequestDecision;
         fsm.ChangeState((int)States.Die);
+
+		EndEpisode();
         enabled = false;
     }
 

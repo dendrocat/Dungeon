@@ -15,8 +15,9 @@ MonoBehaviour:
   m_WeaponPrefab: {fileID: 6468306000038308540, guid: da848a62c37141a478dfb04b2d3107a6, type: 3}
   p_Type: 1
   m_Damage: 60
-  m_Distance: 4
-  m_ReloadTime: 15
+  m_UntilAttackTime: 0.8
+  m_Distance: 10
+  m_ReloadTime: 10
   m_BackDamage: 120
   m_HitMask:
     serializedVersion: 2

@@ -24,7 +24,7 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
         Ammo = Mathf.Min(ammo, p_Stats.MaxAmmo);
     }
 
-    protected override bool CanAttack()
+    public override bool CanAttack()
     {
         if (AmmoInTube <= 0)
         {
@@ -44,15 +44,15 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
     const float c_HitFailedDistance = 200;
     protected override void OnAttack(Vector3? target = null)
     {
-        if (!target.HasValue)
+        Vector3 baseDir;
+        if (target.HasValue)
+            baseDir = (target.Value - m_FirePoint.position).normalized;
+        else
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
-
-            if (Physics.Raycast(ray, out var hit, p_Stats.Distance)) target = hit.point;
-            else target = ray.direction * c_HitFailedDistance;
+            baseDir = ray.direction;
         }
 
-        var baseDir = (target.Value - m_FirePoint.position).normalized;
         for (int i = 0; i < p_Stats.BulletRate; ++i)
         {
             var dir = ApplySpread(baseDir).normalized;

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Tank
   m_EditorClassIdentifier: Assembly-CSharp::EnemyConfig
   m_Speed:
-    m_BaseSpeed: 10
-    m_Multiplier: 1.5
+    m_BaseSpeed: 2
+    m_Multiplier: 1.1
   m_Health:
     m_MaxHealth: 240
     m_HealValue: 50

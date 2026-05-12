@@ -10,6 +10,7 @@ public interface IWeapon
     public bool Equiped { get; }
     public bool IsUnequiping { get; }
 
+	bool CanAttack();
     bool Attack(UnityEngine.Vector3? target = null);
     void Reload();
 

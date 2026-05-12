@@ -3,10 +3,11 @@ using UnityEngine.AI;
 using TriInspector;
 
 [DeclareBoxGroup("set", Title = "Settings")]
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent), typeof(EnemyAnimator))]
 public class Enemy : Person<EnemyConfig, EnemyHealth, EnemyConfig.EnemyHealthConfig>
 {
     public NavMeshAgent NavAgent { get; private set; }
+    public EnemyAnimator Animator { get; private set; }
 
     [Group("cmp")]
     [SerializeField] EnemyAgent m_MLAgent;
@@ -20,6 +21,8 @@ public class Enemy : Person<EnemyConfig, EnemyHealth, EnemyConfig.EnemyHealthCon
 
     protected override void OnAwake()
     {
+		Animator = GetComponent<EnemyAnimator>();
+
         NavAgent = GetComponent<NavMeshAgent>();
         NavAgent.speed = Config.Speed.BaseSpeed;
 
@@ -41,7 +44,7 @@ public class Enemy : Person<EnemyConfig, EnemyHealth, EnemyConfig.EnemyHealthCon
     {
         DomainLogging.DomainDebug.Log($"{name} on disable", DomainLogging.DomainType.Person);
 #if TRAIN || UNITY_EDITOR
-        Die();
+        // Die();
 #endif
     }
 

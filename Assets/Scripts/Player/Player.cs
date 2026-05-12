@@ -51,7 +51,7 @@ public class Player : Person<PlayerConfig, PlayerHealth, PlayerHealthConfig>
             1 => WeaponType.Pistol,
             2 => WeaponType.Automat,
             3 => WeaponType.Shotgun,
-            _ => WeaponType.Pistol
+            _ => WeaponType.None
         };
 		m_WeaponHandler.ChangeWeapon(type);
     }

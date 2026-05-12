@@ -12,6 +12,7 @@ public class DieState : BaseState
 
     protected override void OnEnter()
     {
+		p_Enemy.Animator.Die();
         GameObject.Destroy(p_Enemy.gameObject, m_DestroyTime);
     }
 }

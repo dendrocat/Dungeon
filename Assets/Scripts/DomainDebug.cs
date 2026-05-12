@@ -23,7 +23,7 @@ namespace DomainLogging
     {
         static IReadOnlyDomainDict m_Enabled = new DomainDict(){
         { DomainType.None, true },
-        { DomainType.Person, false },
+        { DomainType.Person, true },
         { DomainType.Director, false },
         { DomainType.Agent, false },
         { DomainType.Training, true },
@@ -34,7 +34,7 @@ namespace DomainLogging
         { DomainType.Level, true },
         { DomainType.Sound, false },
         { DomainType.UI, true },
-        { DomainType.Weapon, false },
+        { DomainType.Weapon, true },
         { DomainType.Save, true },
     };
 

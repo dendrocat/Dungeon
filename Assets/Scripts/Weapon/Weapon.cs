@@ -34,9 +34,11 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
             m_AttackTimer = new Timer(p_Stats.UntilAttackTime, false);
     }
 
-    protected virtual bool CanAttack()
+    public virtual bool CanAttack()
     {
-        return !IsReloading;
+		bool res = !IsReloading;
+		if (m_AttackTimer != null) res &= !m_AttackTimer.IsActive;
+        return res;
     }
 
     public bool Attack(Vector3? target = null)

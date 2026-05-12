@@ -18,7 +18,9 @@ public class AlertState : BaseState
 
     Vector3 GetAudioPos()
     {
-        return p_Enemy.MLAgent.AudioSensor.AudioOutput.AudioPosition;
+        if (p_Enemy.MLAgent.AudioSensor.AudioOutput.AudioPosition.HasValue)
+            return p_Enemy.MLAgent.AudioSensor.AudioOutput.AudioPosition.Value;
+        return Vector3.positiveInfinity;
     }
 
     protected override void OnEnter()
@@ -28,12 +30,14 @@ public class AlertState : BaseState
         //     StateEnd();
         //     return;
         // }
-        var pos = GetPlayerPosFromRayPerception();
+        Vector3 pos = GetPlayerPosFromRayPerception();
         if (pos.Equals(Vector3.positiveInfinity)) pos = GetAudioPos();
+        if (pos.Equals(Vector3.positiveInfinity)) pos = Director.Instance.Player.transform.position;
 
         if (NavMesh.SamplePosition(pos, out NavMeshHit hit, 10, NavMesh.AllAreas))
             pos = hit.position;
         p_Enemy.NavAgent.SetDestination(pos);
+        p_Enemy.Animator.Walk();
     }
 
     // protected override void OnUpdate(float dt)

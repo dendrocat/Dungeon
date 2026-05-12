@@ -36,15 +36,31 @@ public class SearchState : PatrolState
     {
         Vector3 dest = Vector3.positiveInfinity;
         if (Director.Instance.LastPlayerPos.HasValue)
-            dest = Director.Instance.LastPlayerPos.Value + Random.onUnitSphere * m_SearchRadius;
+            dest = Director.Instance.LastPlayerPos.Value;
+        else if (p_Enemy.MLAgent.AudioSensor.AudioOutput.AudioPosition.HasValue)
+            dest = p_Enemy.MLAgent.AudioSensor.AudioOutput.AudioPosition.Value;
         else
-            dest = p_Enemy.MLAgent.AudioSensor.AudioOutput.AudioPosition;
-		dest.y = 0;
+            dest = Director.Instance.Player.transform.position;
+        Debug.Log(dest);
 
-        if (NavMesh.SamplePosition(dest, out var hit, 10f, NavMesh.AllAreas))
-            dest = hit.position;
+        bool hitted = true;
+        NavMeshHit hit;
+        do
+        {
+            Vector3 nDest = dest + Random.onUnitSphere * m_SearchRadius;
+            nDest.y = 5;
+            hitted = NavMesh.SamplePosition(nDest, out hit, 10f, NavMesh.AllAreas);
+        } while (!hitted);
 
-        p_Enemy.NavAgent.SetDestination(dest);
+        dest = hit.position;
+
+        NavMeshPath path = new();
+        p_Enemy.NavAgent.CalculatePath(dest, path);
+        p_Enemy.NavAgent.SetPath(path);
+
+        ResetStopTimer();
+
+        p_Enemy.Animator.Walk();
     }
 
     protected override void OnUpdate(float dt)

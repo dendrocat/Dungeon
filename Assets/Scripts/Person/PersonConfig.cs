@@ -10,10 +10,10 @@ public abstract class PersonConfig<THealth> : ScriptableObject
     public class SpeedConfig
     {
         [Unit(UnitAttribute.MeterPerSecond)]
-        [SerializeField, Slider(5, 20)] float m_BaseSpeed = 10;
+        [SerializeField, Slider(2, 20)] float m_BaseSpeed = 10;
         public float BaseSpeed => m_BaseSpeed;
 
-        [SerializeField, Slider(1.1f, 3)] float m_Multiplier = 1.5f;
+        [SerializeField, Slider(1f, 3f)] float m_Multiplier = 1.5f;
         public float Multiplier => m_Multiplier;
 
     }

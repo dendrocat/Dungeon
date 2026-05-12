@@ -72,6 +72,7 @@ public abstract class BaseState
         if (p_Enemy.NavAgent.enabled && p_Enemy.NavAgent.isOnNavMesh)
             p_Enemy.NavAgent.ResetPath();
 
+		p_Enemy.Animator.ResetAllTriggers();
         p_Enemy = null;
         StateEnded = null;
         m_Timer = null;

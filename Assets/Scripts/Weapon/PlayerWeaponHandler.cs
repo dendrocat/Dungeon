@@ -38,7 +38,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
 
     public void ChangeWeapon(WeaponType type)
     {
-        if (type == m_CurrentWeapon) return;
+        if (type == m_CurrentWeapon || type == WeaponType.None) return;
 
         void Equip()
         {
@@ -93,7 +93,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
 
     void AttackSpecial(IWeapon weapon)
     {
-        if (weapon.IsReloading || p_Weapon.IsUnequiping || !p_Weapon.Equiped) return;
+        if (p_Weapon.IsUnequiping || !p_Weapon.Equiped || !weapon.CanAttack()) return;
 
         p_Weapon.Unequiped += () =>
         {
