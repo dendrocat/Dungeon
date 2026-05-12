@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeaponStats
   m_WeaponPrefab: {fileID: 2547419863273698289, guid: 054ab42276bc197448602d34dcfbd055, type: 3}
   p_Type: 1
-  m_Damage: 40
+  m_Damage: 100
   m_UntilAttackTime: 0.5
   m_Distance: 1.5
   m_ReloadTime: 5
-  m_BackDamage: 120
+  m_BackDamage: 1000
   m_HitMask:
     serializedVersion: 2
     m_Bits: 128

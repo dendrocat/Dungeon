@@ -115,12 +115,12 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         if (stats.Type == WeaponType.None) return;
         var type = stats.Type;
 
-        IWeapon weapon = type switch
+        IWeapon oldWeapon = type switch
         {
             WeaponType.Melee => Melee,
             _ => m_Weapons.GetValueOrDefault(type, null),
         };
-        if (stats.GetInstanceID() == weapon.Stats.GetInstanceID()) return;
+        if (stats.GetInstanceID() == oldWeapon.Stats.GetInstanceID()) return;
 
         IWeapon newWeapon = type switch
         {
@@ -128,7 +128,7 @@ public class PlayerWeaponHandler : BaseWeaponHandler
             _ => new RangedWeapon(stats as RangedWeaponStats, transform),
         };
 
-        if (weapon is RangedWeapon weaponRanded)
+        if (oldWeapon is RangedWeapon weaponRanded)
         {
             (newWeapon as RangedWeapon).SetAmmo(weaponRanded.AmmoInTube, weaponRanded.Ammo);
         }
@@ -137,12 +137,12 @@ public class PlayerWeaponHandler : BaseWeaponHandler
         else m_Weapons[type] = newWeapon as RangedWeapon;
 
         if (type == m_CurrentWeapon)
-            weapon.Unequiped += () =>
+            oldWeapon.Unequiped += () =>
             {
-                p_Weapon = weapon;
+                p_Weapon = newWeapon;
                 newWeapon.Equip();
             };
-        weapon.Unequip(true);
+        oldWeapon.Unequip(true);
     }
 
     void AutoUneqiup(IWeapon weapon)

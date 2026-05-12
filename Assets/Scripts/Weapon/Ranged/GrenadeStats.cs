@@ -20,6 +20,9 @@ public class GrenadeStats : AmmoStats
     [SerializeField, Slider(1, 10)] float m_ExplosionTime = 5;
     public float ExplosionTime => m_ExplosionTime;
 
+    [Group("gset")]
+    [SerializeField] bool m_ExplodeOnHit = false;
+    public bool ExplodeOnHit => m_ExplodeOnHit;
     // [Group("gset")]
     // [Unit(UnitAttribute.Newton)]
     // [SerializeField, Slider(1, 10000)] float m_ExplosionForce = 20;

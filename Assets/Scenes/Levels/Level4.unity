@@ -1742,7 +1742,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 9cfeec01f914e064c9a5dc891fd2980d, type: 2}
   m_BuildHeightMesh: 0
@@ -2721,7 +2721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.539485
+      value: 0.62707984
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2729,7 +2729,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.84199524
+      value: 0.77895504
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2741,7 +2741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 102.33
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -2758,6 +2758,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7217510707869801924, guid: 2de949505a66777448596ef620907c6f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 518235616}
+    - targetCorrespondingSourceObject: {fileID: 7217510707869801924, guid: 2de949505a66777448596ef620907c6f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 518235617}
   m_SourcePrefab: {fileID: 100100000, guid: 2de949505a66777448596ef620907c6f, type: 3}
 --- !u!4 &518235614 stripped
 Transform:
@@ -2781,6 +2784,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 288b881ebf063614081b75cb9fd429e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelFinish
+--- !u!114 &518235617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518235615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7007eabd64431fb43bb3cbcf0fbbfa32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FinishAnimator
+  m_Animator: {fileID: 518235618}
+--- !u!95 &518235618 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 756426139171795238, guid: 2de949505a66777448596ef620907c6f, type: 3}
+  m_PrefabInstance: {fileID: 518235613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &531493341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9129,13 +9150,41 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7217510707869801924, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1927392946}
   m_SourcePrefab: {fileID: 100100000, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
 --- !u!4 &1927392943 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2852958178115824181, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
   m_PrefabInstance: {fileID: 1927392942}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1927392944 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1017540605703487113, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
+  m_PrefabInstance: {fileID: 1927392942}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1927392945 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7217510707869801924, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
+  m_PrefabInstance: {fileID: 1927392942}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1927392946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927392945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb0546cfe3fae5746b4d2afe5c92386e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponBonus
+  m_Prefab: {fileID: 280346742251822850, guid: 4c7734cc27c0fd645bea1216a0318e59, type: 3}
+  m_SpawnPos: {fileID: 1927392944}
+  m_WeaponStats: {fileID: 11400000, guid: eefdf80a2e023b24a8d2ccb956c8c5f0, type: 2}
 --- !u!1001 &1945403303
 PrefabInstance:
   m_ObjectHideFlags: 0

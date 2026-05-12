@@ -106,7 +106,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
         {
             m_Animator.OnUneqiped += (bool finished) =>
             {
-                if (!finished) return;
+                if (!finished && !destroy) return;
                 OnUnequip(destroy);
             };
             m_Animator.Unequip();

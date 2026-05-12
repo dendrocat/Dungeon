@@ -9,6 +9,7 @@ public class Grenade : Ammo
 
     float m_ExplosionDamage = 20;
     int m_ExplosionRadius = 5;
+    bool m_ExplodeOnHit = false;
 
     void OnDrawGizmos()
     {
@@ -28,7 +29,12 @@ public class Grenade : Ammo
         m_ExplosionTimer.TimerEnded += Explode;
     }
 
-    protected override void OnHit() { }
+    protected override void OnHit()
+    {
+        if (!m_ExplodeOnHit) return;
+        m_ExplosionTimer.Deactivate();
+        Explode();
+    }
 
     void Explode()
     {

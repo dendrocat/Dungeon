@@ -22,6 +22,6 @@ MonoBehaviour:
   m_BulletRate: 5
   m_MaxAmmoInTube: 6
   m_MaxAmmo: 60
-  x: 7.19
-  y: 5.45
+  x: 10
+  y: 5
   m_AmmoStats: {fileID: 11400000, guid: 46b4fca8094053f4eab9be845ab44963, type: 2}

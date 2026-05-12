@@ -774,7 +774,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 705572cff1aa8ec4abd0101a4abbbc45, type: 2}
   m_BuildHeightMesh: 0
@@ -5558,7 +5558,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 128.04857
+      value: 128.48
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5566,11 +5566,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -72.63132
+      value: -72.97
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9158604
+      value: 0.90031815
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalRotation.x
@@ -5578,7 +5578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.40149677
+      value: -0.43523234
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalRotation.z
@@ -5590,7 +5590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -47.344
+      value: -51.6
       objectReference: {fileID: 0}
     - target: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -5607,6 +5607,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7217510707869801924, guid: 2de949505a66777448596ef620907c6f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1420874516}
+    - targetCorrespondingSourceObject: {fileID: 7217510707869801924, guid: 2de949505a66777448596ef620907c6f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1420874517}
   m_SourcePrefab: {fileID: 100100000, guid: 2de949505a66777448596ef620907c6f, type: 3}
 --- !u!4 &1420874514 stripped
 Transform:
@@ -5630,6 +5633,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 288b881ebf063614081b75cb9fd429e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelFinish
+--- !u!114 &1420874517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420874515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7007eabd64431fb43bb3cbcf0fbbfa32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FinishAnimator
+  m_Animator: {fileID: 1420874518}
+--- !u!95 &1420874518 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 756426139171795238, guid: 2de949505a66777448596ef620907c6f, type: 3}
+  m_PrefabInstance: {fileID: 1420874513}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1504736014
 PrefabInstance:
   m_ObjectHideFlags: 0
