@@ -26,10 +26,18 @@ public class LevelManager : MonoBehaviour
     void OnEnable()
     {
         SceneLoader.Instance.LevelLoaded += OnLevelLoaded;
+        Person.Died += OnPlayerDied;
     }
     void OnDisable()
     {
         SceneLoader.Instance.LevelLoaded -= OnLevelLoaded;
+        Person.Died -= OnPlayerDied;
+    }
+
+    void OnPlayerDied(Person p)
+    {
+        if (p is not Player) return;
+        SceneLoader.Instance.LoadLevel();
     }
 
     public string GetLevel()

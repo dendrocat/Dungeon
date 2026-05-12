@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SpawnerLevel5
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerConfig
   m_SpawnChances:
-  - Prefab: {fileID: 6186730146867442464, guid: 76e61e3810f6c7a498d1186d4a7377e4, type: 3}
-    SpawnChance: 0.2
-  - Prefab: {fileID: 6186730146867442464, guid: c6a5f72b26e7efa48b14653219a7ee8c, type: 3}
-    SpawnChance: 0.4
-  - Prefab: {fileID: 6186730146867442464, guid: 00073733014e2794582ed6ca0195c0ee, type: 3}
-    SpawnChance: 0.4
+  - Prefab: {fileID: 3966162405223893726, guid: dc8b4eaaef1775d49ad270857bfa898e, type: 3}
+    SpawnChance: 0.3
+  - Prefab: {fileID: 2796110768599105383, guid: 851453cb96aa70c45b2935b79d141fca, type: 3}
+    SpawnChance: 0.35
+  - Prefab: {fileID: 6297367115415550661, guid: 6e7c647ed8a5cfe4098cc29307e78e7a, type: 3}
+    SpawnChance: 0.35

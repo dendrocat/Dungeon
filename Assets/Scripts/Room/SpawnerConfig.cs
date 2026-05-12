@@ -14,7 +14,7 @@ public class SpawnerConfig : ScriptableObject
         [Required]
         public GameObject Prefab;
 
-        [Slider(0.01f, 1f)]
+        [Slider(0f, 1f)]
         public float SpawnChance = 0.5f;
     }
 
