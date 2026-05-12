@@ -50,14 +50,15 @@ public class AttackState : BaseState
             return offset;
         }
 
-        bool hitted = true;
+        int tries = 10;
         NavMeshHit hit;
         do
         {
             Vector3 nDest = Director.Instance.Player.transform.position + GetOffset();
             nDest.y = 5;
-            hitted = NavMesh.SamplePosition(nDest, out hit, 10f, NavMesh.AllAreas);
-        } while (!hitted);
+            NavMesh.SamplePosition(nDest, out hit, 10f, NavMesh.AllAreas);
+        } while (!hit.hit && tries-- > 0);
+        if (!hit.hit) return;
 
         NavMeshPath path = new();
         p_Enemy.NavAgent.CalculatePath(hit.position, path);
@@ -90,7 +91,8 @@ public class AttackState : BaseState
             // Debug.Log($"{localVisible}");
             if (localVisible)
             {
-                m_Agent.ResetPath();
+                if (m_Agent.hasPath)
+                    m_Agent.ResetPath();
                 p_Enemy.transform.LookAt(m_Player);
 
                 // Debug.Log($"{m_IsAttacking} {p_Enemy.WeaponHandler.CanAttack()}");
@@ -103,7 +105,7 @@ public class AttackState : BaseState
                 m_IsAttacking = true;
 
                 p_Enemy.WeaponHandler.Attack();
-                p_Enemy.Animator.Attack();
+                p_Enemy?.Animator?.Attack();
             }
             else if (!m_Agent.hasPath)
                 SetDestination(true);

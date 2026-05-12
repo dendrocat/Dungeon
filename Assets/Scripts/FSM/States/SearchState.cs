@@ -41,16 +41,17 @@ public class SearchState : PatrolState
             dest = p_Enemy.MLAgent.AudioSensor.AudioOutput.AudioPosition.Value;
         else
             dest = Director.Instance.Player.transform.position;
-        Debug.Log(dest);
+        // Debug.Log(dest);
 
-        bool hitted = true;
+        int tries = 10;
         NavMeshHit hit;
         do
         {
             Vector3 nDest = dest + Random.onUnitSphere * m_SearchRadius;
             nDest.y = 5;
-            hitted = NavMesh.SamplePosition(nDest, out hit, 10f, NavMesh.AllAreas);
-        } while (!hitted);
+            NavMesh.SamplePosition(nDest, out hit, 10f, NavMesh.AllAreas);
+        } while (!hit.hit && tries-- > 0);
+		if (!hit.hit) return;
 
         dest = hit.position;
 

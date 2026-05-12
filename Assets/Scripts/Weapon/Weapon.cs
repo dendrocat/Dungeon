@@ -36,8 +36,8 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
 
     public virtual bool CanAttack()
     {
-		bool res = !IsReloading;
-		if (m_AttackTimer != null) res &= !m_AttackTimer.IsActive;
+        bool res = !IsReloading;
+        if (m_AttackTimer != null) res &= !m_AttackTimer.IsActive;
         return res;
     }
 
@@ -99,23 +99,18 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     public void Unequip(bool destroy = false)
     {
         if (!Equiped) { OnUnequip(destroy); return; }
+        DomainDebug.Log($"{p_GObj.name} unequiping, m_Animator? {m_Animator != null}", DomainType.Weapon);
         IsUnequiping = true;
-        DomainDebug.Log($"{p_GObj.name} unequiping", DomainType.Weapon);
-        if (m_Animator != null)
+        if (m_Animator == null) OnUnequip(destroy);
+        else
         {
             m_Animator.OnUneqiped += (bool finished) =>
             {
-                if (finished)
-                {
-                    OnUnequip(destroy);
-                    Unequiped?.Invoke();
-                }
-                IsUnequiping = false;
-                Unequiped = null;
+                if (!finished) return;
+                OnUnequip(destroy);
             };
             m_Animator.Unequip();
         }
-        else OnUnequip(destroy);
     }
 
     void OnUnequip(bool destroy)
@@ -123,7 +118,10 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
         if (destroy) Object.Destroy(p_GObj);
         else p_GObj.SetActive(false);
 
-        // DomainDebug.Log($"{p_GObj.name} unequiped", DomainType.Weapon);
+        DomainDebug.Log($"{p_GObj.name} unequiped", DomainType.Weapon);
         Equiped = false;
+        IsUnequiping = false;
+        Unequiped?.Invoke();
+        Unequiped = null;
     }
 }

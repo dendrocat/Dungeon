@@ -141,7 +141,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: 4d26e8c679007e24faf1d21b4b9e9be4, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 2
+  m_BehaviorType: 0
   m_BehaviorName: Enemy
   TeamId: 0
   m_UseChildSensors: 1
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e6aa6c80f73914698282e40a55cf80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponHandler
-  p_WeaponStats: {fileID: 11400000, guid: 50d00c6f4cbe2794db59b0c52b60be8e, type: 2}
+  p_WeaponStats: {fileID: 11400000, guid: 097e32540c7b45140a3a214ecd8ccb5f, type: 2}
 --- !u!1 &4359266972882722614
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,4 +485,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7177b6cdfb110428e196de7576138c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimator
-  m_Animator: {fileID: 0}

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
+  m_Name: BowTrain
+  m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
+  m_WeaponPrefab: {fileID: 7691624403421222432, guid: 433e26ca0b2970048899e33ca9c7698a, type: 3}
+  p_Type: 2
+  m_Damage: 50
+  m_UntilAttackTime: 0
+  m_Distance: 50
+  m_ReloadTime: 2
+  m_FireRate: 5
+  m_BulletRate: 1
+  m_MaxAmmoInTube: 1
+  m_MaxAmmo: 999
+  x: 1
+  y: 1
+  m_AmmoStats: {fileID: 11400000, guid: 59e21d5bf94b81c4284b0b4e53d81fc5, type: 2}

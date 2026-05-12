@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrainingArea
   m_Rewards: {fileID: 11400000, guid: dd67901390f80b646bce5d6df5a389eb, type: 2}
   m_Spawner: {fileID: 1426416999}
-  m_PlayerPrefab: {fileID: 1875641263216937551, guid: 8acfefa29987c7b479ce7f90f6995bac, type: 3}
+  m_PlayerPrefab: {fileID: 1875641263216937551, guid: c5367b793988dfd4daed08e9072fce3b, type: 3}
   m_PlayerSpawnZone: {x: 80, y: 80}
   m_ObstacleMask:
     serializedVersion: 2
@@ -1297,63 +1297,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 713509540443836928, guid: ea60ac560d222aa4a9638ed4fe0a6294, type: 3}
   m_PrefabInstance: {fileID: 1592416518}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1691848865
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -9.85948
-      objectReference: {fileID: 0}
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -20.69235
-      objectReference: {fileID: 0}
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4119118959995052956, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8660587285392975509, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
-      propertyPath: m_Name
-      value: TrainRoom1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 91d1a2655168b1243911d5f00cd23e36, type: 3}
 --- !u!1 &1924656228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,4 +1487,3 @@ SceneRoots:
   - {fileID: 973074018}
   - {fileID: 1426416996}
   - {fileID: 1439930417}
-  - {fileID: 1691848865}

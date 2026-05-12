@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public event UnityAction<IReadOnlyCollection<Enemy>> Spawned;
 
     [SerializeField] SpawnerConfig m_SpawnerConfig;
-	int m_CntSpawned = 0;
+    int m_CntSpawned = 0;
 
     void OnEnable()
     {
@@ -31,11 +31,12 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-		foreach (var enemy in lst)
+        if (m_CntSpawned + lst.Count > int.MaxValue) m_CntSpawned = 0;
+        foreach (var enemy in lst)
         {
-			int idx = ++m_CntSpawned;
-			// delete "(Clone)" (length 7) ending
-			const int suff = 7;
+            int idx = ++m_CntSpawned;
+            // deleting "(Clone)" (length 7) ending
+            const int suff = 7;
             enemy.name = $"{enemy.name.Substring(0, enemy.name.Length - suff)}_{idx + 1}";
             enemy.SetWaypointProvider(room);
         }

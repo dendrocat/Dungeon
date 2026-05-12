@@ -4,6 +4,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
+[RequireComponent(typeof(DecisionRequester))]
 public class PlayerAgent : Agent, IInput, IActivatable
 {
     public bool IsActive => enabled;
@@ -77,6 +78,7 @@ public class PlayerAgent : Agent, IInput, IActivatable
         IsRunning = inp[4] > 0;
         Attack = inp[5] > 0;
 
+        WeaponNumed?.Invoke(Mathf.FloorToInt(3 * (inp[9] + 1) * 0.5f) + 1);
         if (inp[6] > 0) Reloaded?.Invoke();
         if (inp[7] > 0)
         {
@@ -89,7 +91,6 @@ public class PlayerAgent : Agent, IInput, IActivatable
         }
 
         if (inp[8] > 0) MeleeAttacked?.Invoke();
-        WeaponNumed?.Invoke(Mathf.FloorToInt(3 * (inp[9] + 1) * 0.5f) + 1);
     }
 
     void FixedUpdate()

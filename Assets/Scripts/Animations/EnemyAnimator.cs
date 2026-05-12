@@ -4,7 +4,11 @@ public class EnemyAnimator : MonoBehaviour, IAnimator
 {
     public event UnityEngine.Events.UnityAction Attacked;
 
-    [SerializeField] Animator m_Animator;
+    Animator m_Animator;
+
+	void Awake() {
+		m_Animator = GetComponentInChildren<Animator>();
+	}
 
     public void ResetAllTriggers()
     {
@@ -15,8 +19,8 @@ public class EnemyAnimator : MonoBehaviour, IAnimator
 
     bool IsPlaying(string trigger)
     {
-        var clips = m_Animator.GetCurrentAnimatorClipInfo(0);
-        if (clips.Length == 0) return false;
+        var clips = m_Animator?.GetCurrentAnimatorClipInfo(0);
+        if (clips == null || clips.Length == 0) return false;
         return clips[0].clip.name.ToLower().Contains(trigger.ToLower());
     }
 

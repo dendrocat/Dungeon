@@ -7606,13 +7606,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7217510707869801924, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1674055050}
   m_SourcePrefab: {fileID: 100100000, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
 --- !u!4 &1674055047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2852958178115824181, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
   m_PrefabInstance: {fileID: 1674055046}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1674055048 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1017540605703487113, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
+  m_PrefabInstance: {fileID: 1674055046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1674055049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7217510707869801924, guid: e7d0308ee5e4c0547b2f516db3f72bff, type: 3}
+  m_PrefabInstance: {fileID: 1674055046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1674055050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674055049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb0546cfe3fae5746b4d2afe5c92386e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponBonus
+  m_SpawnPos: {fileID: 1674055048}
+  m_WeaponStats: {fileID: 0}
 --- !u!1001 &1676383049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9466,7 +9493,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: b83933610a7b1fa4dad4051d0b0766f5, type: 2}
   m_BuildHeightMesh: 0
