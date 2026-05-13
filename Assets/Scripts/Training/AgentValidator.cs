@@ -3,7 +3,7 @@ using Unity.MLAgents.Actuators;
 // using DomainLogging;
 
 [RequireComponent(typeof(EnemyAgent))]
-public class AgentValidator : MonoBehaviour, IActionReceiver
+public class AgentValidator : MonoBehaviour
 {
     [SerializeField] AgentRewards m_Rewards;
 
@@ -61,7 +61,7 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
         return m_Rewards.Correct;
     }
 
-    public float EstimateAgentAction(States next)
+    float EstimateAgentAction(States next)
     {
         if (next == States.Alert) return EstimateAlert();
         if (next == States.Attack) return EstimateAttack();
@@ -71,6 +71,12 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
         return m_Rewards.Correct;
     }
 
+    void EndEpisode()
+    {
+        m_Agent.EndEpisode();
+        m_Enemy.gameObject.SetActive(false);
+    }
+
     public void OnActionReceived(ActionBuffers actionBuffers)
     {
         States next = (States)actionBuffers.DiscreteActions[0];
@@ -78,11 +84,6 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
         m_Agent.AddReward(rate);
         // DomainDebug.Log($"Agent: {m_Enemy.name} getted {rate} for next state : {next}. All reward: {m_Agent.GetCumulativeReward()}", DomainType.Training);
         if (m_Agent.GetCumulativeReward() <= m_Rewards.Incorrect * 3)
-        {
-            m_Agent.EndEpisode();
-            m_Enemy.gameObject.SetActive(false);
-        }
+            EndEpisode();
     }
-
-    public void WriteDiscreteActionMask(IDiscreteActionMask actionMask) { }
 }

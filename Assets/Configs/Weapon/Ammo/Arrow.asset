@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb21255ede0d884791fcdbb7b0ccb62, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: Assembly-CSharp::AmmoStats
-  m_AmmoPrefab: {fileID: 4418923189705824227, guid: a7d9d7b0fecb2ba49b955d627104fa2d, type: 3}
+  m_AmmoPrefab: {fileID: 9174137156253274474, guid: 8c5859211fb1a084dbb7a43e75378bc5, type: 3}
   m_AmmoSpeed: 30
   m_HitMask:
     serializedVersion: 2

@@ -58,15 +58,12 @@ public class StateMachine : MonoBehaviour
     {
         if (m_ExitStates[GetActiveState()])
             m_ExitStates[GetActiveState()] = m_CanActiveState;
-        // if (m_ActiveState.State == States.Die)
+        // System.Text.StringBuilder s = new();
+        // for (int i = 0; i < m_ExitStates.Length; ++i)
         // {
-        //     StringBuilder s = new();
-        //     for (int i = 0; i < m_ExitStates.Length; ++i)
-        //     {
-        //         s.AppendLine($"{(States)i} can {m_ExitStates[i]}");
-        //     }
-        //     DomainDebug.Log($"{m_Enemy.name} exit config from {m_ActiveState.State}: {s.ToString()}", DomainType.StateMachine);
+        //     s.AppendLine($"{(States)i} can {m_ExitStates[i]}");
         // }
+        // DomainDebug.Log($"{m_Enemy.name} exit config from {m_ActiveState.State}: {s.ToString()}", DomainType.StateMachine);
         return m_ExitStates;
     }
 

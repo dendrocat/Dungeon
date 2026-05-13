@@ -16,7 +16,7 @@ namespace DomainLogging
         Sound,
         UI,
         Weapon,
-		Save,
+        Save,
     };
 
     public static class DomainDebug
@@ -24,8 +24,8 @@ namespace DomainLogging
         static IReadOnlyDomainDict m_Enabled = new DomainDict(){
         { DomainType.None, true },
         { DomainType.Person, false },
-        { DomainType.Director, true },
-        { DomainType.Agent, true },
+        { DomainType.Director, false },
+        { DomainType.Agent, false },
         { DomainType.Training, true },
         { DomainType.StateMachine, false },
         { DomainType.State, false },
