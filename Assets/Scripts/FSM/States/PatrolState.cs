@@ -26,14 +26,15 @@ public class PatrolState : BaseState
         var n_Waypoint = p_Enemy.WaypointProvider.GetFreeWaypoint();
         var waypoint = n_Waypoint.Position;
 
-        bool hitted = true;
         NavMeshHit hit;
+		int tries = 10;
         do
         {
             var nWaypoint = waypoint + Random.onUnitSphere * Waypoint.Radius;
             nWaypoint.y = 5;
-            hitted = NavMesh.SamplePosition(nWaypoint, out hit, 10f, NavMesh.AllAreas);
-        } while (!hitted);
+            NavMesh.SamplePosition(nWaypoint, out hit, 10f, NavMesh.AllAreas);
+        } while (!hit.hit && tries --> 0);
+		if (!hit.hit) NavMesh.SamplePosition(waypoint, out hit, 10f, NavMesh.AllAreas);
 
         waypoint = hit.position;
 
@@ -65,6 +66,7 @@ public class PatrolState : BaseState
 
     protected override void OnUpdate(float dt)
     {
+        // if (Director.Instance.PlayerVisible) StateEnd();
         // Debug.Log($"{m_Agent.hasPath} {m_StopTimer.IsActive}");
         if (!m_Agent.hasPath)
         {

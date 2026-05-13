@@ -179,7 +179,7 @@ MonoBehaviour:
   MaxStep: 0
   m_RaySensorComponent: {fileID: 4423352815678042844}
   m_AudioSensorComponent: {fileID: 3959914069372701306}
-  m_UpdateSensorTime: 1
+  m_UpdateSensorTime: 0.2
 --- !u!114 &5159506912116803680
 MonoBehaviour:
   m_ObjectHideFlags: 0

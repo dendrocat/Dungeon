@@ -51,7 +51,7 @@ public class SearchState : PatrolState
             nDest.y = 5;
             NavMesh.SamplePosition(nDest, out hit, 10f, NavMesh.AllAreas);
         } while (!hit.hit && tries-- > 0);
-		if (!hit.hit) return;
+        if (!hit.hit) return;
 
         dest = hit.position;
 

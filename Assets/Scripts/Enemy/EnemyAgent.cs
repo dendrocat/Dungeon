@@ -16,7 +16,7 @@ public class EnemyAgent : Agent
     [SerializeField] AudioSensorComponent m_AudioSensorComponent;
     public AudioSensor AudioSensor => m_AudioSensorComponent.AudioSensor;
 
-    [SerializeField, Min(1)] float m_UpdateSensorTime = 1;
+    [SerializeField, Min(0.1f)] float m_UpdateSensorTime = 1;
     Timer m_UpdateTimer;
 
     StateMachine fsm;
@@ -59,7 +59,11 @@ public class EnemyAgent : Agent
         // d[0] = state;
     }
 
-    void OnVisibilityChanged(bool _) { RequestDecision(); }
+    void OnVisibilityChanged(bool _)
+    {
+        // DomainDebug.Log("Player Visibility received", DomainType.Agent);
+        RequestDecision();
+    }
 
     void OnDied(Person p)
     {
@@ -70,7 +74,7 @@ public class EnemyAgent : Agent
         fsm.ChangeStateRequested -= RequestDecision;
         fsm.ChangeState((int)States.Die);
 
-		EndEpisode();
+        EndEpisode();
         enabled = false;
     }
 
@@ -84,6 +88,7 @@ public class EnemyAgent : Agent
         sensor.AddObservation(Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(m_Enemy));
         sensor.AddObservation(Director.Instance.PlayerVisible);
         sensor.AddObservation(Director.Instance.Player.IsLighted);
+        // DomainDebug.Log($"{m_Enemy.name} {Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(m_Enemy)} {Director.Instance.PlayerVisible} {Director.Instance.Player.IsLighted}", DomainType.Agent);
 
         // Health
         sensor.AddObservation(m_Enemy.Health.Value / m_Enemy.Health.Max);
@@ -106,10 +111,21 @@ public class EnemyAgent : Agent
         ActionReceived?.Invoke(actions);
     }
 
+    float prevAudio = 0f;
+    void CheckAudio()
+    {
+        float audio = AudioSensor?.AudioOutput.AudioLevel ?? 0;
+        if (audio > m_Enemy.Config.Detection.AudioLevel
+                && prevAudio < m_Enemy.Config.Detection.AudioLevel)
+            RequestDecision();
+        prevAudio = audio;
+    }
+
     void UpdateSensors()
     {
         RaySensor?.Update();
         AudioSensor?.Update();
+        CheckAudio();
 
         m_UpdateTimer.Reset();
         m_UpdateTimer.Activate();

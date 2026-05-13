@@ -167,7 +167,6 @@ public class TrainingArea : MonoBehaviour
         m_Group.AddGroupReward(m_Rewards.TimeEnd);
         DomainDebug.Log($"Time ended.", DomainType.Training);
         EndEpisode();
-
     }
     // void OnEndEpisodeRequested()
     // {

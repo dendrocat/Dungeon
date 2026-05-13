@@ -339,7 +339,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 58ebe7e028be6964fad60800b5431e6d, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 2
   m_BehaviorName: Enemy
@@ -366,7 +366,7 @@ MonoBehaviour:
   MaxStep: 0
   m_RaySensorComponent: {fileID: 994142477347858564}
   m_AudioSensorComponent: {fileID: 1923109373801191227}
-  m_UpdateSensorTime: 1
+  m_UpdateSensorTime: 0.2
 --- !u!114 &1820665217262504219
 MonoBehaviour:
   m_ObjectHideFlags: 0
