@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - weapons
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47e32edee155d714cbab59d4b7c6f621
+    m_Address: Assets/Configs/Weapon/Player/AKFull.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - weapons
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6039ea5dbf7e0744dbadcbff9129ba33
     m_Address: Assets/Prefabs/Weapons/Player/AK.asset
     m_ReadOnly: 0
@@ -35,6 +41,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a00b96a813d2461439b3c3327c344ff9
     m_Address: Assets/Prefabs/Weapons/Player/Pistol.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - weapons
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2150466dca05874ba6f36e047d06017
+    m_Address: Assets/Configs/Weapon/Player/PistolShotgun.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - weapons

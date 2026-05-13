@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Policies.BehaviorParameters
   m_BrainParameters:
     VectorObservationSize: 11
-    NumStackedVectorObservations: 1
+    NumStackedVectorObservations: 2
     m_ActionSpec:
       m_NumContinuousActions: 0
       BranchSizes: 07000000
@@ -57,7 +57,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4d26e8c679007e24faf1d21b4b9e9be4, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 2
   m_BehaviorName: Enemy
@@ -256,7 +256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7177b6cdfb110428e196de7576138c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimator
-  m_Animator: {fileID: 645338817657779944}
 --- !u!1 &4779531439891042906
 GameObject:
   m_ObjectHideFlags: 0

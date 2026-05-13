@@ -34,7 +34,7 @@ namespace DomainLogging
         { DomainType.Level, true },
         { DomainType.Sound, false },
         { DomainType.UI, false },
-        { DomainType.Weapon, true },
+        { DomainType.Weapon, false },
         { DomainType.Save, true },
     };
 

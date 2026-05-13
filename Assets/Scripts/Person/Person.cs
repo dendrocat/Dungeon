@@ -23,7 +23,7 @@ public abstract class Person : MonoBehaviour
     {
         if (comps == null)
         {
-            Debug.LogError($"comps is NULL");
+            DomainDebug.LogError($"comps is NULL", DomainType.Person);
         }
         foreach (var c in comps) c.Deactivate();
         DomainDebug.Log($"{name} died", DomainType.Person);

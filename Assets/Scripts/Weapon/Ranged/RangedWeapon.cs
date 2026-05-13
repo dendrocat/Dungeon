@@ -11,7 +11,6 @@ public class RangedWeapon : Weapon<RangedWeaponStats>
 
     public RangedWeapon(in RangedWeaponStats stats, in Transform parent) : base(stats, parent)
     {
-		Debug.Log($"Created {p_GObj.name}");
         m_FirePoint = p_GObj.transform.FindChildWithTag("FirePoint");
 
         if (m_FirePoint == null)

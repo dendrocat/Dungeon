@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2485cafc5683ebc44b3396fca99519b9, type: 3}
   m_Name: AgentRewards
   m_EditorClassIdentifier: Assembly-CSharp::AgentValidatorConfig
-  m_Detection:
-    m_RayLengthScale: 0.5
-    m_AudioLevel: 0.5
-  m_Rewards:
-    m_PlayerKill: 300
-    m_Die: -100
-    m_GroupDie: -150
-    m_Correct: 300
-    m_Incorrect: -500
+  m_PlayerKill: 300
+  m_Die: -100
+  m_GroupDie: -150
+  m_Correct: 100
+  m_Incorrect: -200

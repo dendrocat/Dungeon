@@ -77,7 +77,7 @@ public class AgentValidator : MonoBehaviour, IActionReceiver
         var rate = EstimateAgentAction(next);
         m_Agent.AddReward(rate);
         DomainDebug.Log($"Agent: {m_Enemy.name} getted {rate} for next state : {next}. All reward: {m_Agent.GetCumulativeReward()}", DomainType.Agent);
-        if (m_Agent.GetCumulativeReward() <= m_Rewards.Incorrect * 4)
+        if (m_Agent.GetCumulativeReward() <= m_Rewards.Incorrect * 5)
         {
             m_Agent.EndEpisode();
             m_Enemy.gameObject.SetActive(false);
