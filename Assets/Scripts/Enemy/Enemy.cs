@@ -21,7 +21,7 @@ public class Enemy : Person<EnemyConfig, EnemyHealth, EnemyConfig.EnemyHealthCon
 
     protected override void OnAwake()
     {
-		Animator = GetComponent<EnemyAnimator>();
+        Animator = GetComponent<EnemyAnimator>();
 
         NavAgent = GetComponent<NavMeshAgent>();
         NavAgent.speed = Config.Speed.BaseSpeed;
@@ -44,7 +44,8 @@ public class Enemy : Person<EnemyConfig, EnemyHealth, EnemyConfig.EnemyHealthCon
     {
         DomainLogging.DomainDebug.Log($"{name} on disable", DomainLogging.DomainType.Person);
 #if TRAIN || UNITY_EDITOR
-        Die();
+        if (Health.Value > 0)
+            Die();
 #endif
     }
 

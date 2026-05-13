@@ -8,8 +8,6 @@ public class DieState : BaseState
     [Unit(UnitAttribute.Second)]
     [SerializeField, Min(5)] float m_DestroyTime = 5;
 
-    Timer m_DestroyTimer;
-
     protected override void OnEnter()
     {
 		p_Enemy.Animator.Die();

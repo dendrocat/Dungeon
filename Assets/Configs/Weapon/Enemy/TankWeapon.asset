@@ -17,7 +17,7 @@ MonoBehaviour:
   m_Damage: 60
   m_UntilAttackTime: 0.8
   m_Distance: 10
-  m_ReloadTime: 10
+  m_ReloadTime: 5
   m_BackDamage: 120
   m_HitMask:
     serializedVersion: 2

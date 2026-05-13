@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2485cafc5683ebc44b3396fca99519b9, type: 3}
   m_Name: AgentRewards
   m_EditorClassIdentifier: Assembly-CSharp::AgentValidatorConfig
-  m_PlayerKill: 300
+  m_PlayerKill: 200
   m_Die: -100
   m_GroupDie: -150
-  m_Correct: 100
+  m_Correct: 50
   m_Incorrect: -200
+  m_TimeEnd: -100

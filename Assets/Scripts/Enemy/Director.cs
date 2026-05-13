@@ -20,6 +20,7 @@ public class Director : MonoBehaviour
     [SerializeField, Min(3)] float m_ChaseTime = 5;
     Timer m_ChaseTimer;
 
+    [TriInspector.ShowInInspector]
     bool m_PlayerVisible = false;
     public bool PlayerVisible
     {
@@ -46,6 +47,7 @@ public class Director : MonoBehaviour
 
         m_Enemies = new();
         m_ChaseTimer = new Timer(m_ChaseTime, false);
+        m_ChaseTimer.TimerEnded += OnChased;
     }
 
     void OnDestroy()
@@ -70,7 +72,9 @@ public class Director : MonoBehaviour
     void OnEnemySpawned(IReadOnlyCollection<Enemy> enemies)
     {
         m_Enemies.UnionWith(enemies);
-        m_PlayerVisible = m_VisibilityChecker.IsPlayerVisible(m_Enemies);
+        PlayerVisible = m_VisibilityChecker.IsPlayerVisible(m_Enemies);
+        m_ChaseTimer.Deactivate();
+        m_ChaseTimer.Reset();
     }
 
     void OnEnemyDied(Person p)
@@ -84,14 +88,18 @@ public class Director : MonoBehaviour
     void CheckVisibility()
     {
         bool visibility = m_VisibilityChecker.IsPlayerVisible(m_Enemies);
+        // DomainDebug.Log($"Visibility checked: {visibility}, PlayerVisible: {PlayerVisible}, Chase active: {m_ChaseTimer.IsActive}", DomainType.Director);
         if (visibility)
         {
             PlayerVisible = true;
             LastPlayerPos = null;
             m_ChaseTimer.Deactivate();
-            m_ChaseTimer.Reset();
         }
-        else m_ChaseTimer.Activate();
+        else if (PlayerVisible && !m_ChaseTimer.IsActive)
+        {
+            m_ChaseTimer.Reset();
+            m_ChaseTimer.Activate();
+        }
     }
 
     void OnChased()
@@ -104,6 +112,7 @@ public class Director : MonoBehaviour
     void FixedUpdate()
     {
         CheckVisibility();
+        // DomainDebug.Log($"Chase progress: {m_ChaseTimer.Progress}", DomainType.Director);
         m_ChaseTimer.Update(Time.fixedDeltaTime);
     }
 

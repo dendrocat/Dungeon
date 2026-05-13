@@ -7,6 +7,7 @@ using System.Linq;
 
 public class TrainingArea : MonoBehaviour
 {
+    [SerializeField, Slider(60, 7200)] float m_MaxTrainTime = 600;
     [SerializeField] AgentRewards m_Rewards;
     [SerializeField] EnemySpawner m_Spawner;
     [SerializeField] Player m_PlayerPrefab = null;
@@ -21,12 +22,15 @@ public class TrainingArea : MonoBehaviour
     SimpleMultiAgentGroup m_Group;
     HashSet<Enemy> m_Enemies;
 
-    int m_Died, m_Requests;
+    int m_Died;
+    Timer m_TrainTimer;
 
     void Awake()
     {
         Academy.Instance.OnEnvironmentReset += OnEnvironmentReseted;
         m_Spawner.Spawned += RegisterEnemies;
+
+        m_TrainTimer = new Timer(m_MaxTrainTime, false);
 
         // AgentValidator.EpisodeEndingRequested += OnEndEpisodeRequested;
 #if UNITY_EDITOR || TRAIN
@@ -116,7 +120,11 @@ public class TrainingArea : MonoBehaviour
 
         SetRoom();
         SetPlayer();
-        m_Died = m_Requests = 0;
+
+        m_TrainTimer.Reset();
+        m_TrainTimer.Activate();
+
+        m_Died = 0;
         Person.Died += OnPersonDied;
     }
 
@@ -144,15 +152,23 @@ public class TrainingArea : MonoBehaviour
 
     void OnEnemyDied(Enemy e)
     {
+        // if (!m_Enemies.Contains(e)) return;
         ++m_Died;
+        e.MLAgent.AddReward(m_Rewards.Die);
         m_Group.UnregisterAgent(e.MLAgent);
         m_Enemies.Remove(e);
-        DomainDebug.Log($"Died {e.name}, remaining agents: {m_Group.GetRegisteredAgents().Count}", DomainType.Training);
+        DomainDebug.Log($"Died {e.name}. Remaining agents: {m_Enemies.Count}. Time elapsed: {m_TrainTimer.Progress * m_MaxTrainTime}", DomainType.Training);
         if (m_Group.GetRegisteredAgents().Count > 0) return;
-        m_Group.AddGroupReward(m_Rewards.GroupDie);
         EndEpisode();
     }
 
+    void OnTimerEnded()
+    {
+        m_Group.AddGroupReward(m_Rewards.TimeEnd);
+        DomainDebug.Log($"Time ended.", DomainType.Training);
+        EndEpisode();
+
+    }
     // void OnEndEpisodeRequested()
     // {
     //     ++m_Requests;
@@ -163,7 +179,7 @@ public class TrainingArea : MonoBehaviour
 
     void EndEpisode()
     {
-        DomainDebug.LogWarning($"Episode ended\nDied: {m_Died}. End requests: {m_Requests}\nPlayer killed: {m_Player.Health.Value <= 0}", DomainType.Training);
+        DomainDebug.LogWarning($"Episode ended\nDied: {m_Died}.\nPlayer killed: {m_Player.Health.Value <= 0}.\nTime elapsed: {m_TrainTimer.Progress * m_MaxTrainTime}", DomainType.Training);
         m_Group.EndGroupEpisode();
         m_Player?.GetComponentInChildren<Agent>()?.EndEpisode();
         OnEnvironmentReseted();
@@ -173,6 +189,11 @@ public class TrainingArea : MonoBehaviour
     {
         Person.Died -= OnPersonDied;
         // DomainDebug.LogWarning($"Application quiting", DomainType.Training);
+    }
+
+    void FixedUpdate()
+    {
+        m_TrainTimer.Update(Time.fixedDeltaTime);
     }
 
 }
