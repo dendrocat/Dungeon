@@ -44,15 +44,18 @@ public class AudioSensor : ISensor
     {
         Collider[] hits = Physics.OverlapSphere(m_Input.Transform.position, m_Input.Radius, m_Input.Mask);
         float audioLevel;
+		m_Output.AudioLevel = 0;
+		m_Output.AudioPosition = null;
         foreach (var hit in hits)
         {
+			Debug.Log(hit.transform.parent.name);
             foreach (var emitter in hit.GetComponentsInChildren<IAudioEmitter>())
             {
                 audioLevel = emitter.GetAudioLevel();
                 var dist = Vector3.Distance(hit.transform.position, m_Input.Transform.position);
                 audioLevel *= Mathf.Clamp01(1 - dist / m_Input.Radius);
 
-                if (m_Output.AudioLevel < audioLevel) continue;
+                if (m_Output.AudioLevel > audioLevel) continue;
                 m_Output.AudioLevel = audioLevel;
                 m_Output.AudioPosition = hit.transform.position;
             }

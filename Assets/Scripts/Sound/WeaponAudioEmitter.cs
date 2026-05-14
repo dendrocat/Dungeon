@@ -2,9 +2,10 @@ using UnityEngine;
 using TriInspector;
 
 [DeclareFoldoutGroup("set", Title = "Settings", Expanded = true)]
-[RequireComponent(typeof(BaseWeaponHandler))]
 public class WeaponAudioEmitter : MonoBehaviour, IAudioEmitter
 {
+	[SerializeField] BaseWeaponHandler m_WeaponHandler;
+
     [Group("set")]
     [SerializeField, Slider(0.01f, 100f)] float m_MeleeVolume = 1f;
 
@@ -22,7 +23,7 @@ public class WeaponAudioEmitter : MonoBehaviour, IAudioEmitter
 
     void Awake()
     {
-        GetComponent<BaseWeaponHandler>().Attacked += OnAttacked;
+        m_WeaponHandler.Attacked += OnAttacked;
         m_AudioTimer = new Timer(m_AudioTime, false);
         m_AudioTimer.TimerEnded += () => m_Type = WeaponType.None;
     }

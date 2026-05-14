@@ -58,12 +58,14 @@ public class PlayerMover : MonoBehaviour
 
     void Move()
     {
-        Speed = CalcSpeed();
+        var speed = CalcSpeed();
         var dir = new Vector3(m_Input.Move.x, 0, m_Input.Move.y).normalized;
         dir = transform.TransformDirection(dir);
         dir.y = 0;
         dir.Normalize();
-        m_Rig.linearVelocity = new Vector3(dir.x * Speed, m_Rig.linearVelocity.y, dir.z * Speed);
+		dir *= speed;
+        m_Rig.linearVelocity = new Vector3(dir.x, m_Rig.linearVelocity.y, dir.z);
+		Speed = dir.magnitude;
     }
 
     void FixedUpdate()

@@ -16,9 +16,9 @@ MonoBehaviour:
   p_Type: 1
   m_Damage: 60
   m_UntilAttackTime: 0.8
-  m_Distance: 10
+  m_Distance: 5
   m_ReloadTime: 5
-  m_BackDamage: 120
+  m_BackDamage: 99
   m_HitMask:
     serializedVersion: 2
     m_Bits: 64
