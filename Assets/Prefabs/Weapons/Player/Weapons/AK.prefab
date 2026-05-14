@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_UpdateMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: b37af2191b6bba74e8b0897635ce850b, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7023496844640799535, guid: b37af2191b6bba74e8b0897635ce850b, type: 3}
       propertyPath: m_LocalScale.x
       value: 100

@@ -66,7 +66,7 @@ public class PatrolState : BaseState
 
     protected override void OnUpdate(float dt)
     {
-        // if (Director.Instance.PlayerVisible) StateEnd();
+        if (Director.Instance.PlayerVisible) StateEnd();
         // Debug.Log($"{m_Agent.hasPath} {m_StopTimer.IsActive}");
         if (!m_Agent.hasPath)
         {
