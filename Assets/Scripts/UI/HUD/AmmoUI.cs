@@ -7,6 +7,7 @@ public class AmmoUI : HUDComponent
 
     [SerializeField] TextMeshProUGUI m_Ammo;
     [SerializeField] TextMeshProUGUI m_Grenade;
+    [SerializeField] UnityEngine.UI.Image m_GrenadeImage;
 
     public override void Init(Player player)
     {
@@ -22,5 +23,7 @@ public class AmmoUI : HUDComponent
     {
         UpdateAmmo(m_Ammo, m_WeaponHandler.Weapon);
         UpdateAmmo(m_Grenade, m_WeaponHandler.Grenade);
+        if (m_WeaponHandler.Grenade.IsReloading)
+            m_GrenadeImage.fillAmount = m_WeaponHandler.Grenade.ReloadProgress;
     }
 }
