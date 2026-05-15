@@ -45,6 +45,7 @@ public class CoverState : BaseState
 
     protected override void OnEnter()
     {
+        if (p_Enemy.Health.RemainingHealCount <= 0) { StateEnd(); return; }
         var cover = FindCover();
         Vector3 directFromPlayer = (cover - Director.Instance.Player.transform.position).normalized;
         Vector3 agentPos = cover + directFromPlayer * 5;
@@ -53,7 +54,9 @@ public class CoverState : BaseState
             agentPos = hit.position;
 
         p_Enemy.NavAgent.SetDestination(agentPos);
-		p_Enemy.Animator.Walk();
+
+		p_Enemy.Animator.ResetAllTriggers();
+        p_Enemy.Animator.Walk();
     }
 
     protected override void OnUpdate(float dt)
@@ -63,7 +66,7 @@ public class CoverState : BaseState
 
     void Heal()
     {
-		p_Enemy.Animator.Idle();
+        p_Enemy.Animator.Idle();
         if (p_Enemy.Health.Value / p_Enemy.Health.Max <= 0.5f)
             p_Enemy.Health.Heal();
         StateEnd();

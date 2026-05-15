@@ -27,7 +27,7 @@ namespace DomainLogging
         { DomainType.Director, false },
         { DomainType.Agent, false },
         { DomainType.Training, true },
-        { DomainType.StateMachine, false },
+        { DomainType.StateMachine, true },
         { DomainType.State, false },
         { DomainType.Player, false },
         { DomainType.Room, false },

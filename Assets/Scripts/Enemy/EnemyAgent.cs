@@ -31,7 +31,6 @@ public class EnemyAgent : Agent
 
         m_UpdateTimer = new Timer(m_UpdateSensorTime);
         m_UpdateTimer.TimerEnded += UpdateSensors;
-        UpdateSensors();
 
         Person.Died += OnDied;
         Director.Instance.PlayerVisibilityChanged += OnVisibilityChanged;
@@ -92,6 +91,8 @@ public class EnemyAgent : Agent
 
         // Health
         sensor.AddObservation(m_Enemy.Health.Value / m_Enemy.Health.Max);
+        // TODO: restudy with lower
+        // sensor.AddObservation(m_Enemy.Health.RemainingHealCount > 0);
 
         // FSM state
         sensor.AddOneHotObservation(fsm.GetActiveState(), 7);
@@ -114,7 +115,11 @@ public class EnemyAgent : Agent
     float prevAudio = 0f;
     void CheckAudio()
     {
+        States currentState = (States)fsm.GetActiveState();
+        if (currentState == States.Attack || currentState == States.Cover) return;
+
         float audio = AudioSensor?.AudioOutput.AudioLevel ?? 0;
+        Debug.Log($"{m_Enemy.name} {audio} {prevAudio}");
         if (audio > m_Enemy.Config.Detection.AudioLevel
                 && prevAudio < m_Enemy.Config.Detection.AudioLevel)
             RequestDecision();

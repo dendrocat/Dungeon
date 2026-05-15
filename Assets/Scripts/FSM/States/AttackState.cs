@@ -43,7 +43,7 @@ public class AttackState : BaseState
         {
             Vector3 offset;
             if (random)
-                offset = Random.onUnitSphere * m_AttackDistance / 3;
+                offset = Random.insideUnitSphere * m_AttackDistance / 3;
             else
                 offset = (m_Player.position - p_Enemy.transform.position).normalized * m_AttackDistance * 0.2f;
             offset.y = 0;
@@ -54,7 +54,7 @@ public class AttackState : BaseState
         NavMeshHit hit;
         do
         {
-            Vector3 nDest = Director.Instance.Player.transform.position + GetOffset();
+            Vector3 nDest = m_Player.position + GetOffset();
             nDest.y = 5;
             NavMesh.SamplePosition(nDest, out hit, 10f, NavMesh.AllAreas);
         } while (!hit.hit && tries-- > 0);
@@ -64,6 +64,7 @@ public class AttackState : BaseState
         p_Enemy.NavAgent.CalculatePath(hit.position, path);
         p_Enemy.NavAgent.SetPath(path);
 
+		p_Enemy.Animator.ResetAllTriggers();
         p_Enemy.Animator.Run();
     }
 
@@ -73,43 +74,43 @@ public class AttackState : BaseState
         // {
         //     DomainLogging.DomainDebug.LogWarning($"m_Player: {m_Player == null}, p_Enemy: {p_Enemy?.transform == null}");
         // }
+
         float dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
+
+        bool needMove = dist > m_AttackDistance || dist < m_AttackDistance / 10;
+
+        if (needMove)
+        {
+            bool needSetDest = !m_Agent.hasPath || Vector3.Distance(m_Agent.destination, m_Player.position) > m_AttackDistance;
+            if (needSetDest) SetDestination();
+            return;
+        }
         bool localVisible = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(p_Enemy);
-        // Debug.Log($"{dist} {m_AttackDistance} {m_AttackDistance / 10}");
-        // if (m_Agent.hasPath && m_Agent.remainingDistance < m_Agent.stoppingDistance) m_Agent.ResetPath();
-        if (dist > m_AttackDistance || dist < m_AttackDistance / 10)
-        {
-            if (!m_Agent.hasPath) SetDestination();
-        }
-        else
-        {
-            if (!localVisible)
-            {
-                p_Enemy.transform.LookAt(m_Player);
-                localVisible = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(p_Enemy, false);
-            }
-            // Debug.Log($"{localVisible}");
-            if (localVisible)
-            {
-                if (m_Agent.hasPath)
-                    m_Agent.ResetPath();
-                p_Enemy.transform.LookAt(m_Player);
 
-                // Debug.Log($"{m_IsAttacking} {p_Enemy.WeaponHandler.CanAttack()}");
-                if (!p_Enemy.WeaponHandler.CanAttack())
-                {
-                    p_Enemy.Animator.Idle();
-                    return;
-                }
-                if (m_IsAttacking) return;
-                m_IsAttacking = true;
-
-                p_Enemy.WeaponHandler.Attack();
-                p_Enemy?.Animator?.Attack();
-            }
-            else if (!m_Agent.hasPath)
-                SetDestination(true);
+		// player not visible so set random destination
+        if (!localVisible)
+        {
+            if (!m_Agent.hasPath) SetDestination(random: true);
+            return;
         }
+
+        // player already in attack range and visible
+        if (m_Agent.hasPath) m_Agent.ResetPath();
+
+        p_Enemy.transform.LookAt(m_Player);
+
+        if (!p_Enemy.WeaponHandler.CanAttack())
+        {
+            p_Enemy.Animator.Idle();
+            return;
+        }
+        if (m_IsAttacking) return;
+
+        m_IsAttacking = true;
+
+        p_Enemy.WeaponHandler.Attack();
+        p_Enemy?.Animator?.Attack();
+
         // if (m_Agent != null && m_Agent.hasPath)
         //     DomainLogging.DomainDebug.Log($"{p_Enemy.name} check {m_Agent.remainingDistance} {m_Agent.velocity}");
     }

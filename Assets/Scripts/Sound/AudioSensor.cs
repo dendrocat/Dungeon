@@ -48,7 +48,7 @@ public class AudioSensor : ISensor
 		m_Output.AudioPosition = null;
         foreach (var hit in hits)
         {
-			Debug.Log(hit.transform.parent.name);
+			// Debug.Log(hit.transform.parent.name);
             foreach (var emitter in hit.GetComponentsInChildren<IAudioEmitter>())
             {
                 audioLevel = emitter.GetAudioLevel();
