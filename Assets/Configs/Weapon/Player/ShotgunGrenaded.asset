@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
   m_WeaponPrefab: {fileID: 5317221899725343705, guid: c43c4417d72c30f40af7ec9b7c8a3df7, type: 3}
   p_Type: 4
-  m_Damage: 7
+  m_Damage: 2
   m_UntilAttackTime: 0
   m_Distance: 20
-  m_ReloadTime: 5
+  m_ReloadTime: 1.2
   m_FireRate: 100
   m_BulletRate: 5
   m_MaxAmmoInTube: 12
   m_MaxAmmo: 120
-  x: 10
-  y: 10
+  x: 20
+  y: 20
   m_AmmoStats: {fileID: 11400000, guid: 67bac93dd2aef4646b73d1e26dd6af10, type: 2}

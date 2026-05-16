@@ -22,10 +22,10 @@ public class RangedWeaponStats : WeaponStats
     public int MaxAmmo => m_MaxAmmo;
 
     [Group("set/spread"), PropertyOrder(30), Unit(UnitAttribute.Degree)]
-    [SerializeField, Slider(0.1f, 10f)] float x = 1f;
+    [SerializeField, Slider(0.1f, 30f)] float x = 1f;
 
     [Group("set/spread"), PropertyOrder(31), Unit(UnitAttribute.Degree)]
-    [SerializeField, Slider(0.1f, 10f)] float y = 1f;
+    [SerializeField, Slider(0.1f, 30f)] float y = 1f;
 
     Vector2? m_MaxSpread = null;
     public Vector2 MaxSpread => m_MaxSpread.HasValue ? m_MaxSpread.Value : (m_MaxSpread = new Vector2(x, y)).Value;

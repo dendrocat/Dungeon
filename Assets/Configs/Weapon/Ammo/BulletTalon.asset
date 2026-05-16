@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb21255ede0d884791fcdbb7b0ccb62, type: 3}
+  m_Name: BulletTalon
+  m_EditorClassIdentifier: Assembly-CSharp::AmmoStats
+  m_AmmoPrefab: {fileID: 1191615194525043855, guid: 9cc8b1d606884f94da620c161b992d6c, type: 3}
+  m_AmmoSpeed: 120
+  m_HitMask:
+    serializedVersion: 2
+    m_Bits: 128
+  m_OnHitPrefab: {fileID: 6530139356875897956, guid: 44c328d04a9e01c488d265af5aba6e8b, type: 3}

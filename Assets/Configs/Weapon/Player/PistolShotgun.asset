@@ -24,4 +24,4 @@ MonoBehaviour:
   m_MaxAmmo: 120
   x: 1
   y: 1
-  m_AmmoStats: {fileID: 11400000, guid: 46b4fca8094053f4eab9be845ab44963, type: 2}
+  m_AmmoStats: {fileID: 11400000, guid: fe6d0a093ab2da148b71ce21f94bdbba, type: 2}

@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6909893160534065166
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1630788287172361486, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_Name
+      value: BuckshotGrenade Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789629790851245584, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 50f1479deee812442af67c81d8985881, type: 2}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782360266732621719, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8595535362405608962, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 89d745ecaf215c64882228dfb389ed76, type: 2}
+    m_RemovedComponents:
+    - {fileID: 588572499331140823, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1630788287172361486, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3379406876876973619}
+  m_SourcePrefab: {fileID: 100100000, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+--- !u!1 &5279738798195768576 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1630788287172361486, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
+  m_PrefabInstance: {fileID: 6909893160534065166}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3379406876876973619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5279738798195768576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b059ee906c2d9524ab6f3db8a0a61e30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Grenade

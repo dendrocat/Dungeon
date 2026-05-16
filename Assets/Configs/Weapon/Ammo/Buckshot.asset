@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb21255ede0d884791fcdbb7b0ccb62, type: 3}
   m_Name: Buckshot
   m_EditorClassIdentifier: Assembly-CSharp::AmmoStats
-  m_AmmoPrefab: {fileID: 4418923189705824227, guid: a7d9d7b0fecb2ba49b955d627104fa2d, type: 3}
+  m_AmmoPrefab: {fileID: 588572499331140823, guid: c0f309c3502a56d42b95678e3d1fcbfd, type: 3}
   m_AmmoSpeed: 50
   m_HitMask:
     serializedVersion: 2

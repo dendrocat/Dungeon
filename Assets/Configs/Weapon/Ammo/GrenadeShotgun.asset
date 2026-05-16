@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6703ea528e31ee148b87556ceab26233, type: 3}
   m_Name: GrenadeShotgun
   m_EditorClassIdentifier: Assembly-CSharp::GrenadeStats
-  m_AmmoPrefab: {fileID: 6755859531821563313, guid: 6d63d0bcf9e4b014da47ca9e5fe092f0, type: 3}
+  m_AmmoPrefab: {fileID: 3379406876876973619, guid: 37a5537031e37114c9e3c88b2a9ec195, type: 3}
   m_AmmoSpeed: 20
   m_HitMask:
     serializedVersion: 2
