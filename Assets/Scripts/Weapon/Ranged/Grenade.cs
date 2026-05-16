@@ -1,53 +1,46 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Grenade : Ammo
 {
-    public event UnityAction Exploded;
-
     Timer m_ExplosionTimer;
 
-    float m_ExplosionDamage = 20;
-    int m_ExplosionRadius = 5;
-    bool m_ExplodeOnHit = false;
+	GrenadeStats GrenadeStats => p_Stats as GrenadeStats;
 
     void OnDrawGizmos()
     {
+        if (GrenadeStats == null) return;
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, m_ExplosionRadius);
+        Gizmos.DrawWireSphere(transform.position, GrenadeStats.ExplosionRadius);
     }
 
 
     public override void Init(in RangedWeaponStats stats)
     {
         base.Init(stats);
-        GrenadeStats s = stats.AmmoStats as GrenadeStats;
-        m_ExplosionDamage = s.ExplosionDamage;
-        m_ExplosionRadius = s.ExplosionRadius;
 
-        m_ExplosionTimer = new Timer(s.ExplosionTime);
+        m_ExplosionTimer = new Timer(GrenadeStats.ExplosionTime);
         m_ExplosionTimer.TimerEnded += Explode;
     }
 
     protected override void OnHit()
     {
-        if (!m_ExplodeOnHit) return;
+        if (!GrenadeStats.ExplodeOnHit) return;
         m_ExplosionTimer.Deactivate();
         Explode();
     }
 
     void Explode()
     {
-        Exploded?.Invoke();
-
-        var colls = Physics.OverlapSphere(transform.position, m_ExplosionRadius, p_HitMask);
+		var stats = GrenadeStats;
+        var colls = Physics.OverlapSphere(transform.position, stats.ExplosionRadius, p_Stats.HitMask);
 
         foreach (var col in colls)
         {
             var dist = Vector3.Distance(transform.position, col.transform.position);
-            var multip = Mathf.Clamp01(1 - dist / m_ExplosionRadius);
-            Attack(col.gameObject, m_ExplosionDamage * multip);
+            var multip = Mathf.Clamp01(1 - dist / stats.ExplosionRadius);
+            Attack(col.gameObject, stats.ExplosionDamage * multip);
         }
+        Spawn(stats.OnExplodePrefab);
         Destroy(gameObject);
     }
 

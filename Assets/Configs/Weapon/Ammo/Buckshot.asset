@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Buckshot
   m_EditorClassIdentifier: Assembly-CSharp::AmmoStats
   m_AmmoPrefab: {fileID: 4418923189705824227, guid: a7d9d7b0fecb2ba49b955d627104fa2d, type: 3}
-  m_AmmoSpeed: 30
+  m_AmmoSpeed: 50
   m_HitMask:
     serializedVersion: 2
     m_Bits: 128
+  m_OnHitPrefab: {fileID: 6530139356875897956, guid: 44c328d04a9e01c488d265af5aba6e8b, type: 3}

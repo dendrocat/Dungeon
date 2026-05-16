@@ -23,8 +23,8 @@ public class GrenadeStats : AmmoStats
     [Group("gset")]
     [SerializeField] bool m_ExplodeOnHit = false;
     public bool ExplodeOnHit => m_ExplodeOnHit;
-    // [Group("gset")]
-    // [Unit(UnitAttribute.Newton)]
-    // [SerializeField, Slider(1, 10000)] float m_ExplosionForce = 20;
-    // public float ExplosionForce => m_ExplosionForce;
+
+	[Group("gset")]
+	[SerializeField] GameObject m_OnExplodePrefab = null;
+	public GameObject OnExplodePrefab => m_OnExplodePrefab;
 }

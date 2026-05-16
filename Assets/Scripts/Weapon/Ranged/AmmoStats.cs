@@ -17,4 +17,8 @@ public class AmmoStats : ScriptableObject
     [Group("set"), PropertyOrder(100)]
     [SerializeField] LayerMask m_HitMask;
     public LayerMask HitMask => m_HitMask;
+
+	[Group("set")]
+	[SerializeField] GameObject m_OnHitPrefab = null;
+	public GameObject OnHitPrefab => m_OnHitPrefab;
 }

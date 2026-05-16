@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3085383855043023841}
   - component: {fileID: 8477887886708163313}
   - component: {fileID: 6755859531821563313}
-  - component: {fileID: 8311366258321876802}
   m_Layer: 9
   m_Name: Grenade
   m_TagString: Untagged
@@ -96,20 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b059ee906c2d9524ab6f3db8a0a61e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grenade
---- !u!114 &8311366258321876802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2930766842099499188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6d03f70a9579f545812980e8c02310c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GrenadeAudioEmitter
-  m_HitVolume: 0.01
-  m_ExplosionVolume: 100
 --- !u!1001 &5357365947224758165
 PrefabInstance:
   m_ObjectHideFlags: 0

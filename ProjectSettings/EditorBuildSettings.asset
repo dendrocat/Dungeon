@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TrainScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
-    path: Assets/Scenes/Temp/TestLoad.unity
+    path: Assets/Scenes/Temp/Test.unity
     guid: f78bf3f37bf135c4995b36e3fdd3976b
   - enabled: 0
     path: Assets/Scenes/Levels/Level1.unity
