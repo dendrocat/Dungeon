@@ -186,7 +186,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1683122872132957992}
-  - component: {fileID: 1717862094121061570}
   - component: {fileID: 6888994772373431378}
   m_Layer: 0
   m_Name: WeaponHandler
@@ -210,22 +209,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4605997915678837392}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1717862094121061570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4026582281126146169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6e431dd31df6ea4bb08deeeb97f6604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponAudioEmitter
-  m_MeleeVolume: 1
-  m_FireVolume: 95
-  m_GrenadeVolume: 0.1
-  m_AudioTime: 1
 --- !u!114 &6888994772373431378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,6 +544,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7372874599759595134}
   - component: {fileID: 5510431707426336166}
+  - component: {fileID: 3972322376098719728}
+  - component: {fileID: 6872142239914537380}
   m_Layer: 8
   m_Name: Sound
   m_TagString: Untagged
@@ -599,6 +584,44 @@ MonoBehaviour:
   WalkVolume: 35
   RunVolume: 70
   m_Mover: {fileID: 6936228090893454987}
+--- !u!114 &3972322376098719728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346134516660743878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6e431dd31df6ea4bb08deeeb97f6604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponAudioEmitter
+  m_WeaponHandler: {fileID: 6888994772373431378}
+  m_MeleeVolume: 1
+  m_FireVolume: 95
+  m_GrenadeVolume: 0.1
+  m_AudioTime: 1
+--- !u!135 &6872142239914537380
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346134516660743878}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8797141153130753165
 GameObject:
   m_ObjectHideFlags: 0

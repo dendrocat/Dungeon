@@ -45,7 +45,7 @@ public class CoverState : BaseState
 
     protected override void OnEnter()
     {
-        if (p_Enemy.Health.RemainingHealCount <= 0) { StateEnd(); return; }
+        // if (p_Enemy.Health.RemainingHealCount <= 0) { StateEnd(); return; }
         var cover = FindCover();
         Vector3 directFromPlayer = (cover - Director.Instance.Player.transform.position).normalized;
         Vector3 agentPos = cover + directFromPlayer * 5;

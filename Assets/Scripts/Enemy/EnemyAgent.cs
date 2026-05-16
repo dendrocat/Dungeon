@@ -91,8 +91,7 @@ public class EnemyAgent : Agent
 
         // Health
         sensor.AddObservation(m_Enemy.Health.Value / m_Enemy.Health.Max);
-        // TODO: restudy with lower
-        // sensor.AddObservation(m_Enemy.Health.RemainingHealCount > 0);
+        sensor.AddObservation(m_Enemy.Health.RemainingHealCount > 0);
 
         // FSM state
         sensor.AddOneHotObservation(fsm.GetActiveState(), 7);
