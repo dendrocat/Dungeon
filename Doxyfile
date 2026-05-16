@@ -1,0 +1,61 @@
+# Project options
+DOXYFILE_ENCODING      = UTF-8
+PROJECT_NAME           = "The Rift"
+PROJECT_BRIEF          = "Документация проекта The Rift"
+
+# Input
+INPUT                  = "./Assets/Scripts"
+RECURSIVE              = YES
+
+# Output
+OUTPUT_DIRECTORY       = docs
+OUTPUT_LANGUAGE        = Russian
+TAB_SIZE               = 4
+
+# Brief
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+ABBREVIATE_BRIEF       = "The $name class" \
+                         "The $name widget" \
+                         "The $name file" \
+                         is \
+                         provides \
+                         specifies \
+                         contains \
+                         represents \
+                         a \
+                         an \
+                         the
+# Extract options
+TEMPLATE_RELATIONS     = YES
+INHERIT_DOCS           = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_PRIV_VIRTUAL   = YES
+EXTRACT_PACKAGE        = YES
+EXTRACT_STATIC         = YES
+
+# LaTeX
+GENERATE_LATEX         = NO
+
+# Markdown
+MARKDOWN_SUPPORT       = YES
+INPUT += ./ReadMe.md
+USE_MDFILE_AS_MAINPAGE = ./ReadMe.md
+
+# Diagram generator
+HAVE_DOT               = YES
+
+# Call graphs
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+
+# Collaboration and class graphs
+CLASS_GRAPH           = YES
+COLLABORATION_GRAPH   = YES
+INCLUDE_GRAPH         = YES
+INCLUDED_BY_GRAPH     = YES
+
+# Other graphs
+GRAPHICAL_HIERARCHY   = YES
+DIRECTORY_GRAPH       = YES

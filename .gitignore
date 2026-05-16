@@ -108,3 +108,6 @@ InitTestScene*.unity*
 /[Aa]ssets/[Pp]lugins/
 /[Aa]ssets/HoudiniEngineAssetCache/
 heu*
+
+# Doxygen docs text
+/[Dd]oc*/

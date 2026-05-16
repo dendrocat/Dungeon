@@ -6,7 +6,7 @@ namespace DomainLogging
 
     public enum DomainType
     {
-        None,
+        None = 0,
         Person,
         Director,
         Agent, Training,

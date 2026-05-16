@@ -9,7 +9,7 @@ public abstract class HealthConfig
 }
 
 [DeclareBoxGroup("hset", Title = "Heath Settings")]
-public abstract class Health<THealthConfig> : MonoBehaviour
+public abstract class Health<THealthConfig> : MonoBehaviour,  IDamagable
     where THealthConfig : HealthConfig
 {
     protected float p_Health;
