@@ -18,7 +18,7 @@ MonoBehaviour:
   m_UntilAttackTime: 0
   m_Distance: 20
   m_ReloadTime: 1.2
-  m_FireRate: 100
+  m_FireRate: 72
   m_BulletRate: 5
   m_MaxAmmoInTube: 12
   m_MaxAmmo: 120

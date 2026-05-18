@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Unity.MLAgents;
 using TriInspector;
 using DomainLogging;
-using System.Linq;
 
 public class TrainingArea : MonoBehaviour
 {
@@ -27,14 +27,14 @@ public class TrainingArea : MonoBehaviour
 
     void Awake()
     {
-        Academy.Instance.OnEnvironmentReset += OnEnvironmentReseted;
+        Academy.Instance.OnEnvironmentReset += ResetArea;
         m_Spawner.Spawned += RegisterEnemies;
 
         m_TrainTimer = new Timer(m_MaxTrainTime, false);
 
         // AgentValidator.EpisodeEndingRequested += OnEndEpisodeRequested;
 #if UNITY_EDITOR || TRAIN
-        DomainDebug.Log($"I'm training", DomainType.Training);
+        DomainDebug.LogWarning($"I'm training", DomainType.Training);
 #endif
     }
 
@@ -109,12 +109,17 @@ public class TrainingArea : MonoBehaviour
         DomainDebug.Log("Area cleared", DomainType.Training);
     }
 
+    void OnEnvironmentReseted()
+    {
+        DomainDebug.LogWarning($"Reseting environment", DomainType.Training);
+        ResetArea();
+    }
 
     [DisableInEditMode]
     [Button("Reset Environment")]
-    void OnEnvironmentReseted()
+    void ResetArea()
     {
-        DomainDebug.LogWarning($"EnvironmentReseting", DomainType.Training);
+        DomainDebug.LogWarning($"Reseting area", DomainType.Training);
         Person.Died -= OnPersonDied;
         ClearArea();
 
@@ -157,7 +162,7 @@ public class TrainingArea : MonoBehaviour
         e.MLAgent.AddReward(m_Rewards.Die);
         m_Group.UnregisterAgent(e.MLAgent);
         m_Enemies.Remove(e);
-        DomainDebug.Log($"Died {e.name}. Remaining agents: {m_Enemies.Count}. Time elapsed: {m_TrainTimer.Progress * m_MaxTrainTime}", DomainType.Training);
+        DomainDebug.Log($"Died {e.name}. Remaining: {m_Enemies.Count}. Time elapsed: {m_TrainTimer.Progress * m_MaxTrainTime}", DomainType.Training);
         if (m_Group.GetRegisteredAgents().Count > 0) return;
         EndEpisode();
     }
@@ -181,7 +186,7 @@ public class TrainingArea : MonoBehaviour
         DomainDebug.LogWarning($"Episode ended\nDied: {m_Died}.\nPlayer killed: {m_Player.Health.Value <= 0}.\nTime elapsed: {m_TrainTimer.Progress * m_MaxTrainTime}", DomainType.Training);
         m_Group.EndGroupEpisode();
         m_Player?.GetComponentInChildren<Agent>()?.EndEpisode();
-        OnEnvironmentReseted();
+        ResetArea();
     }
 
     void OnApplicationQuit()

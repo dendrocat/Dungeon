@@ -18,6 +18,7 @@ public class EnemyHealth : Health<EnemyConfig.EnemyHealthConfig>
     public void Heal()
     {
         if (RemainingHealCount <= 0) return;
+		DomainLogging.DomainDebug.Log($"{transform.parent.name} healed", DomainLogging.DomainType.Person);
         p_Health = Mathf.Min(p_Health + m_HealValue, p_MaxHealth);
         RemainingHealCount--;
     }

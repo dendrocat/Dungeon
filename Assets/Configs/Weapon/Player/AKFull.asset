@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
   m_WeaponPrefab: {fileID: 3297001669883323039, guid: d0d08686383c6e54891c903897167079, type: 3}
   p_Type: 3
-  m_Damage: 10
+  m_Damage: 5
   m_UntilAttackTime: 0
   m_Distance: 100
   m_ReloadTime: 1.8

@@ -108,6 +108,9 @@ public class EnemyAgent : Agent
         sensor.AddObservation(m_Enemy.Health.Value / m_Enemy.Health.Max);
         sensor.AddObservation(m_Enemy.Health.RemainingHealCount > 0);
 
+		// Enemy was attacked or not
+		sensor.AddObservation(m_AttackTimer.IsActive);
+
         // FSM state
         sensor.AddOneHotObservation(fsm.GetActiveState(), 7);
     }

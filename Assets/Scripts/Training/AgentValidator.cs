@@ -10,13 +10,22 @@ public class AgentValidator : MonoBehaviour
     EnemyAgent m_Agent;
     Enemy m_Enemy;
 
+    bool m_Attacked = false;
+
     void Awake()
     {
         m_Enemy = GetComponentInParent<Enemy>();
+        m_Enemy.Attacked += OnAttacked;
+
         m_Agent = m_Enemy.MLAgent;
         m_Agent.ActionReceived += OnActionReceived;
 
         Person.Died += OnDied;
+    }
+
+    private void OnAttacked()
+    {
+        m_Attacked = true;
     }
 
     void OnDied(Person p)
@@ -27,8 +36,10 @@ public class AgentValidator : MonoBehaviour
 
     float EstimateAlert()
     {
-        if (m_Agent.AudioSensor.AudioOutput.AudioLevel > m_Enemy.Config.Detection.AudioLevel) return m_Rewards.Correct;
-        bool correct = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(m_Enemy) || Director.Instance.PlayerVisible;
+        bool correct = m_Attacked;
+        correct |= m_Agent.AudioSensor.AudioOutput.AudioLevel > m_Enemy.Config.Detection.AudioLevel;
+        correct |= Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(m_Enemy);
+        correct |= Director.Instance.PlayerVisible;
         return correct ? m_Rewards.Correct : m_Rewards.Incorrect;
     }
 
@@ -48,15 +59,13 @@ public class AgentValidator : MonoBehaviour
     {
         if (Director.Instance.PlayerVisible)
             return m_Rewards.Incorrect;
-        if (!Director.Instance.LastPlayerPos.HasValue)
-            return m_Rewards.Incorrect;
         return m_Rewards.Correct;
     }
 
     float EstimateIdlePatrol()
     {
         // DomainDebug.Log($"EstimateIdlePatrol: PlayerVisible : {Director.Instance.PlayerVisible}", DomainType.Agent);
-        if (Director.Instance.PlayerVisible)
+        if (Director.Instance.PlayerVisible || m_Attacked)
             return m_Rewards.Incorrect;
         return m_Rewards.Correct;
     }
@@ -85,5 +94,6 @@ public class AgentValidator : MonoBehaviour
         // DomainDebug.Log($"Agent: {m_Enemy.name} getted {rate} for next state : {next}. All reward: {m_Agent.GetCumulativeReward()}", DomainType.Training);
         if (m_Agent.GetCumulativeReward() <= m_Rewards.Incorrect * 3)
             EndEpisode();
+        m_Attacked = false;
     }
 }

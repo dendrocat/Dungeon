@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.AI;
 using TriInspector;
+using DomainLogging;
 
 [System.Serializable]
 public class CoverState : BaseState
@@ -27,7 +28,8 @@ public class CoverState : BaseState
     Vector3 FindCover()
     {
         Collider[] hits = Physics.OverlapSphere(p_Enemy.transform.position, m_DetectionRadius, m_ObstacleLayer);
-        if (hits.Length == 0) return Vector3.zero;
+        DomainDebug.Log($"{p_Enemy.name} founded {hits.Length} covers", DomainType.State);
+        if (hits.Length == 0) return Vector3.positiveInfinity;
 
         float minScore = float.MaxValue;
         Vector3 obstaclePosition = hits[0].transform.position;
@@ -43,20 +45,28 @@ public class CoverState : BaseState
         return obstaclePosition;
     }
 
-    protected override void OnEnter()
+    void SetDestination()
     {
-        // if (p_Enemy.Health.RemainingHealCount <= 0) { StateEnd(); return; }
         var cover = FindCover();
+        if (cover.Equals(Vector3.positiveInfinity)) { StateEnd(); return; }
         Vector3 directFromPlayer = (cover - Director.Instance.Player.transform.position).normalized;
         Vector3 agentPos = cover + directFromPlayer * 5;
 
-        if (NavMesh.SamplePosition(agentPos, out NavMeshHit hit, 10, NavMesh.AllAreas))
-            agentPos = hit.position;
+        if (!NavMesh.SamplePosition(agentPos, out NavMeshHit hit, 10, NavMesh.AllAreas)) { StateEnd(); return; }
 
-        p_Enemy.NavAgent.SetDestination(agentPos);
+        NavMeshPath path = new();
+        p_Enemy.NavAgent.CalculatePath(hit.position, path);
+        p_Enemy.NavAgent.SetPath(path);
+    }
 
-		p_Enemy.Animator.ResetAllTriggers();
-        p_Enemy.Animator.Walk();
+    protected override void OnEnter()
+    {
+        // if (p_Enemy.Health.RemainingHealCount <= 0) { StateEnd(); return; }
+        p_Enemy.NavAgent.speed = p_Enemy.Config.Speed.BaseSpeed * p_Enemy.Config.Speed.Multiplier;
+        SetDestination();
+
+        p_Enemy.Animator.ResetAllTriggers();
+        p_Enemy.Animator.Run();
     }
 
     protected override void OnUpdate(float dt)
@@ -67,8 +77,12 @@ public class CoverState : BaseState
     void Heal()
     {
         p_Enemy.Animator.Idle();
-        if (p_Enemy.Health.Value / p_Enemy.Health.Max <= 0.5f)
-            p_Enemy.Health.Heal();
+        p_Enemy.Health.Heal();
         StateEnd();
+    }
+
+    protected override void OnExit()
+    {
+        p_Enemy.NavAgent.speed = p_Enemy.Config.Speed.BaseSpeed;
     }
 }

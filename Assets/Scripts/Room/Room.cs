@@ -50,7 +50,10 @@ public class Room : MonoBehaviour, IActivatable, IWaypointProvider
 
     public IWaypoint GetFreeWaypoint()
     {
-        if (m_Waypoints == null || m_Waypoints.Count == 0) throw new System.OperationCanceledException("Items not found");
+        if (m_Waypoints == null || m_Waypoints.Count == 0) {
+			DomainDebug.LogError("Waypoins not found", DomainType.Room);
+			return null;
+		}
         int index = 0;
         for (int attemp = 0; attemp < 10; ++attemp)
         {
