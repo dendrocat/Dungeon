@@ -20,7 +20,7 @@ public class PlayerHealthConfig : HealthConfig
 
 public class PlayerHealth : Health<PlayerHealthConfig>
 {
-    public event UnityAction<float> HealthChanged;
+    public event UnityAction HealthChanged;
 
     Timer m_UntilRegen, m_Regen;
 
@@ -42,7 +42,7 @@ public class PlayerHealth : Health<PlayerHealthConfig>
     public override bool TakeDamage(float damage)
     {
         if (!base.TakeDamage(damage)) return false;
-        HealthChanged?.Invoke(p_Health);
+        HealthChanged?.Invoke();
         if (!m_UntilRegen.IsActive && !m_Regen.IsActive)
             m_UntilRegen.Activate();
         return true;
@@ -51,7 +51,7 @@ public class PlayerHealth : Health<PlayerHealthConfig>
     void Heal()
     {
         p_Health = Mathf.Min(p_Health + m_RegenPerTick, p_MaxHealth);
-        HealthChanged?.Invoke(p_Health);
+        HealthChanged?.Invoke();
         if (p_Health == p_MaxHealth)
         {
             m_UntilRegen.Reset();

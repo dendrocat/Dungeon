@@ -15,7 +15,7 @@ public class HealthUI : HUDComponent
     }
 
     protected override void Update() { }
-    void UpdateHP(float value)
+    void UpdateHP()
     {
         m_HP.text = $"{Mathf.RoundToInt(m_Health.Value)}";
 		m_Image.fillAmount = m_Health.Value / m_Health.Max;

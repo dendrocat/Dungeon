@@ -17,7 +17,7 @@ public class EnemyAgent : Agent
     public AudioSensor AudioSensor => m_AudioSensorComponent.AudioSensor;
 
     [SerializeField, Min(0.1f)] float m_UpdateSensorTime = 1;
-    Timer m_UpdateTimer;
+    Timer m_UpdateTimer, m_AttackTimer;
 
     StateMachine fsm;
     Enemy m_Enemy;
@@ -28,9 +28,12 @@ public class EnemyAgent : Agent
         fsm.ChangeStateRequested += RequestDecision;
 
         m_Enemy = GetComponentInParent<Enemy>();
+        m_Enemy.Attacked += OnAttacked;
 
         m_UpdateTimer = new Timer(m_UpdateSensorTime);
         m_UpdateTimer.TimerEnded += UpdateSensors;
+
+        m_AttackTimer = new Timer(1, false);
 
         Person.Died += OnDied;
         Director.Instance.PlayerVisibilityChanged += OnVisibilityChanged;
@@ -61,6 +64,18 @@ public class EnemyAgent : Agent
     void OnVisibilityChanged(bool _)
     {
         // DomainDebug.Log("Player Visibility received", DomainType.Agent);
+        RequestDecision();
+    }
+
+    void OnAttacked()
+    {
+        if (m_AttackTimer.IsActive) return;
+        m_AttackTimer.Reset();
+        m_AttackTimer.Activate();
+
+        // DomainDebug.Log($"{m_Enemy.name} attacked", DomainType.Agent);
+        States currentState = (States)fsm.GetActiveState();
+        if (currentState == States.Attack || currentState == States.Cover) return;
         RequestDecision();
     }
 
@@ -118,7 +133,6 @@ public class EnemyAgent : Agent
         if (currentState == States.Attack || currentState == States.Cover) return;
 
         float audio = AudioSensor?.AudioOutput.AudioLevel ?? 0;
-        Debug.Log($"{m_Enemy.name} {audio} {prevAudio}");
         if (audio > m_Enemy.Config.Detection.AudioLevel
                 && prevAudio < m_Enemy.Config.Detection.AudioLevel)
             RequestDecision();
@@ -138,5 +152,6 @@ public class EnemyAgent : Agent
     void FixedUpdate()
     {
         m_UpdateTimer.Update(Time.fixedDeltaTime);
+		m_AttackTimer.Update(Time.fixedDeltaTime);
     }
 }
