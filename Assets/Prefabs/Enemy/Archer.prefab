@@ -213,7 +213,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4d0120922174be74d9766f129b974491, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 783aae41288f60344a93113ccbb23abc, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 2
   m_BehaviorName: Enemy

@@ -72,9 +72,9 @@ public class AgentValidator : MonoBehaviour
 
     float EstimateAgentAction(States next)
     {
-        if (next == States.Alert) return EstimateAlert();
+        // if (next == States.Alert) return EstimateAlert();
         if (next == States.Attack) return EstimateAttack();
-        if (next == States.Cover) return EstimateCover();
+        // if (next == States.Cover) return EstimateCover();
         if (next == States.Search) return EstimateSearch();
         if (next == States.Idle || next == States.Patrol) return EstimateIdlePatrol();
         return m_Rewards.Correct;
