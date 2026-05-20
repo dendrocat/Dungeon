@@ -19,7 +19,7 @@ behaviors:
       extrinsic:
         strength: 1
         gamma: 0.99
-    max_steps: 600000
+    max_steps: 300000
     time_horizon: 64
     summary_freq: 2000
     checkpoint_interval: 50000
@@ -41,13 +41,13 @@ behaviors:
       extrinsic:
         strength: 1
         gamma: 0.99
-    max_steps: 2800000
+    max_steps: 2000000
     time_horizon: 1000
     summary_freq: 10000
     checkpoint_interval: 100000
 
 checkpoint_settings:
-  run_id: FSMAgent1VectorLightCondition2 
+  run_id: FSMAgent2VectorLightCondition 
   initialize_from: null
   load_model: false
   resume: true
@@ -56,7 +56,7 @@ checkpoint_settings:
   results_dir: results
 
 env_settings:
-  env_path: C:\Users\User\Unity\Builds\DiplomMLLight\The_Rift.exe
+  env_path: C:\Users\User\Unity\Builds\DiplomMLLight2Vectors\The_Rift.exe
   env_args: null
   base_port: 5005
   num_envs: 10
@@ -67,7 +67,7 @@ env_settings:
   restarts_rate_limit_period_s: 60
 
 engine_settings:
-  time_scale: 40
+  time_scale: 50
   no_graphics: true
 
 torch_settings:

@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-run_id = "FSMAgent"
+run_id = "FSMAgent2VectorLightCondition"
 embeding_onnx = ["Enemy", "PlayerAgent"]
 
 def get_path_lastest_model(dir: str) -> Path:
