@@ -64,7 +64,7 @@ public class AttackState : BaseState
         p_Enemy.NavAgent.CalculatePath(hit.position, path);
         p_Enemy.NavAgent.SetPath(path);
 
-		p_Enemy.Animator.ResetAllTriggers();
+        p_Enemy.Animator.ResetAllTriggers();
         p_Enemy.Animator.Run();
     }
 
@@ -74,6 +74,7 @@ public class AttackState : BaseState
         // {
         //     DomainLogging.DomainDebug.LogWarning($"m_Player: {m_Player == null}, p_Enemy: {p_Enemy?.transform == null}");
         // }
+        if (m_IsAttacking && m_Agent.hasPath) m_Agent.ResetPath();
 
         float dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
 
@@ -87,7 +88,7 @@ public class AttackState : BaseState
         }
         bool localVisible = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(p_Enemy);
 
-		// player not visible so set random destination
+        // player not visible so set random destination
         if (!localVisible)
         {
             if (!m_Agent.hasPath) SetDestination(random: true);
@@ -119,6 +120,7 @@ public class AttackState : BaseState
     {
         p_Enemy.Animator.Attacked -= OnAttacked;
 
+        if (m_Agent.hasPath) m_Agent.ResetPath();
         m_Agent.speed = p_Enemy.Config.Speed.BaseSpeed;
         // m_Agent.stoppingDistance = baseStoppingDistance;
 

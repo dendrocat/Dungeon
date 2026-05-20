@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
-// using DomainLogging;
+using DomainLogging;
 
 [RequireComponent(typeof(StateMachine))]
 public class EnemyAgent : Agent
@@ -25,7 +25,7 @@ public class EnemyAgent : Agent
     public override void Initialize()
     {
         fsm = GetComponent<StateMachine>();
-        fsm.ChangeStateRequested += RequestDecision;
+        fsm.ChangeStateRequested += RequestState;
 
         m_Enemy = GetComponentInParent<Enemy>();
         m_Enemy.Attacked += OnAttacked;
@@ -42,7 +42,7 @@ public class EnemyAgent : Agent
     protected override void OnDisable()
     {
         base.OnDisable();
-        fsm.ChangeStateRequested -= RequestDecision;
+        fsm.ChangeStateRequested -= RequestState;
         Person.Died -= OnDied;
     }
 
@@ -54,6 +54,17 @@ public class EnemyAgent : Agent
     //
     // int state = 0;
     //
+#if UNITY_EDITOR
+    System.Diagnostics.Stopwatch watch = new();
+#endif
+    void RequestState()
+    {
+#if UNITY_EDITOR
+        watch.Restart();
+#endif
+        RequestDecision();
+    }
+
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         // DomainDebug.Log("Heuristic", DomainType.Agent);
@@ -64,7 +75,7 @@ public class EnemyAgent : Agent
     void OnVisibilityChanged(bool _)
     {
         // DomainDebug.Log("Player Visibility received", DomainType.Agent);
-        RequestDecision();
+        RequestState();
     }
 
     void OnAttacked()
@@ -76,7 +87,7 @@ public class EnemyAgent : Agent
         // DomainDebug.Log($"{m_Enemy.name} attacked", DomainType.Agent);
         States currentState = (States)fsm.GetActiveState();
         if (currentState == States.Attack || currentState == States.Cover) return;
-        RequestDecision();
+        RequestState();
     }
 
     void OnDied(Person p)
@@ -85,7 +96,7 @@ public class EnemyAgent : Agent
 
         Director.Instance.PlayerVisibilityChanged -= OnVisibilityChanged;
 
-        fsm.ChangeStateRequested -= RequestDecision;
+        fsm.ChangeStateRequested -= RequestState;
         fsm.ChangeState((int)States.Die);
 
         EndEpisode();
@@ -108,8 +119,8 @@ public class EnemyAgent : Agent
         sensor.AddObservation(m_Enemy.Health.Value / m_Enemy.Health.Max);
         sensor.AddObservation(m_Enemy.Health.RemainingHealCount > 0);
 
-		// Enemy was attacked or not
-		sensor.AddObservation(m_AttackTimer.IsActive);
+        // Enemy was attacked or not
+        sensor.AddObservation(m_AttackTimer.IsActive);
 
         // FSM state
         sensor.AddOneHotObservation(fsm.GetActiveState(), 7);
@@ -125,6 +136,10 @@ public class EnemyAgent : Agent
     public override void OnActionReceived(ActionBuffers actions)
     {
         // DomainDebug.Log($"{m_Enemy.name} (enabled : {enabled}) getted next state: {(States)actions.DiscreteActions[0]}", DomainType.Agent);
+#if UNITY_EDITOR
+        watch.Stop();
+        DomainDebug.Log($"{m_Enemy.name} getted state {(States)actions.DiscreteActions[0]} in {watch.ElapsedMilliseconds} milliseconds.", DomainType.Agent);
+#endif
         fsm.ChangeState(actions.DiscreteActions[0]);
         ActionReceived?.Invoke(actions);
     }
@@ -138,7 +153,7 @@ public class EnemyAgent : Agent
         float audio = AudioSensor?.AudioOutput.AudioLevel ?? 0;
         if (audio > m_Enemy.Config.Detection.AudioLevel
                 && prevAudio < m_Enemy.Config.Detection.AudioLevel)
-            RequestDecision();
+            RequestState();
         prevAudio = audio;
     }
 
@@ -155,6 +170,6 @@ public class EnemyAgent : Agent
     void FixedUpdate()
     {
         m_UpdateTimer.Update(Time.fixedDeltaTime);
-		m_AttackTimer.Update(Time.fixedDeltaTime);
+        m_AttackTimer.Update(Time.fixedDeltaTime);
     }
 }

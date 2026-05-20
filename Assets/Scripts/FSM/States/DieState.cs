@@ -10,7 +10,9 @@ public class DieState : BaseState
 
     protected override void OnEnter()
     {
-		p_Enemy.Animator.Die();
+        if (p_Enemy.TryGetComponent<Collider>(out var col))
+            col.enabled = false;
+        p_Enemy.Animator.Die();
         GameObject.Destroy(p_Enemy.gameObject, m_DestroyTime);
     }
 }

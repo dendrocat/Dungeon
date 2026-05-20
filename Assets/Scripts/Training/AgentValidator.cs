@@ -50,7 +50,7 @@ public class AgentValidator : MonoBehaviour
 
     float EstimateCover()
     {
-        if (m_Enemy.Health.Value / m_Enemy.Health.Max > 0.5f || m_Enemy.Health.RemainingHealCount < 1)
+        if (m_Enemy.Health.Value / m_Enemy.Health.Max > 0.25f)
             return m_Rewards.Incorrect;
         return m_Rewards.Correct;
     }
@@ -74,7 +74,7 @@ public class AgentValidator : MonoBehaviour
     {
         // if (next == States.Alert) return EstimateAlert();
         if (next == States.Attack) return EstimateAttack();
-        // if (next == States.Cover) return EstimateCover();
+        if (next == States.Cover) return EstimateCover();
         if (next == States.Search) return EstimateSearch();
         if (next == States.Idle || next == States.Patrol) return EstimateIdlePatrol();
         return m_Rewards.Correct;

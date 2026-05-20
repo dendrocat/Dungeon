@@ -25,7 +25,7 @@ namespace DomainLogging
         { DomainType.None, true },
         { DomainType.Person, false },
         { DomainType.Director, false },
-        { DomainType.Agent, false },
+        { DomainType.Agent, true },
         { DomainType.Training, true },
         { DomainType.StateMachine, false },
         { DomainType.State, false },
