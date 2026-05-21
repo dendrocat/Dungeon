@@ -7298,54 +7298,24 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7217510707869801924, guid: 2de949505a66777448596ef620907c6f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1790593548}
-    - targetCorrespondingSourceObject: {fileID: 7217510707869801924, guid: 2de949505a66777448596ef620907c6f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1790593547}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2de949505a66777448596ef620907c6f, type: 3}
 --- !u!4 &1790593544 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2852958178115824181, guid: 2de949505a66777448596ef620907c6f, type: 3}
   m_PrefabInstance: {fileID: 1790593543}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1790593545 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 756426139171795238, guid: 2de949505a66777448596ef620907c6f, type: 3}
-  m_PrefabInstance: {fileID: 1790593543}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1790593546 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7217510707869801924, guid: 2de949505a66777448596ef620907c6f, type: 3}
-  m_PrefabInstance: {fileID: 1790593543}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1790593547
+--- !u!114 &1790593545 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3973049178936300142, guid: 2de949505a66777448596ef620907c6f, type: 3}
+  m_PrefabInstance: {fileID: 1790593543}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1790593546}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 288b881ebf063614081b75cb9fd429e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelFinish
---- !u!114 &1790593548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1790593546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7007eabd64431fb43bb3cbcf0fbbfa32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FinishAnimator
-  m_Animator: {fileID: 1790593545}
 --- !u!1001 &1819829948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8518,7 +8488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133c8548cf5cf4d489ee569177f32032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Director
-  m_Finish: {fileID: 1790593547}
+  m_Finish: {fileID: 1790593545}
   m_Player: {fileID: 1182920011}
   m_ChaseTime: 5
 --- !u!114 &2061355054

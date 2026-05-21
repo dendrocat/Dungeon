@@ -52,7 +52,7 @@ public class Director : MonoBehaviour
         m_ChaseTimer = new Timer(m_ChaseTime, false);
         m_ChaseTimer.TimerEnded += OnChased;
 
-        if (m_Finish != null) m_Finish.StartLevelFinish += OnStartLevelFinish;
+        if (Finish != null) Finish.StartLevelFinish += OnStartLevelFinish;
     }
 
     void RemoveAll()

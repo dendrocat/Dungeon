@@ -1,40 +1,39 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-public class WeaponAnimator : MonoBehaviour, IAnimator
+public class WeaponAnimator : MonoBehaviour, IAnimator, IWeaponActions
 {
-    public event UnityAction<bool> OnUneqiped;
+    public event UnityEngine.Events.UnityAction<bool> OnUneqiuped;
 
     [SerializeField] Animator m_Animator;
-    [SerializeField] bool m_HasTriggers = true;
 
     public void Attack()
     {
-        if (!m_HasTriggers) return;
+        if (m_Animator == null) return;
         m_Animator.SetTrigger("Attack");
     }
 
     public void Reload()
     {
-        if (!m_HasTriggers) return;
+        if (m_Animator == null) return;
         m_Animator.SetTrigger("Reload");
     }
 
-    public virtual void Equip()
+    public void Equip()
     {
+        if (m_Animator == null) return;
         m_Animator.SetTrigger("Equip");
     }
 
     public void Unequip()
     {
-        if (!m_HasTriggers) return;
+        if (m_Animator == null) return;
         m_Animator.SetTrigger("Hide");
     }
 
     void OnHideExited(bool finished)
     {
-        OnUneqiped?.Invoke(finished);
-        OnUneqiped = null;
+        OnUneqiuped?.Invoke(finished);
+        OnUneqiuped = null;
     }
 
     public void OnStateExited(bool stateFinished)

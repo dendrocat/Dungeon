@@ -12,7 +12,7 @@ public class EnemyWeaponHandler : BaseWeaponHandler
             (p_Weapon as RangedWeapon).SetAmmo(stats.MaxAmmoInTube, stats.MaxAmmo);
         }
         else p_Weapon = new MeleeWeapon(p_WeaponStats as MeleeWeaponStats, transform);
-        p_Weapon.Equip();
+		Attacked += (IWeapon weapon) => weapon.Unequip();
     }
 
     public void SetTarget(UnityEngine.Transform target)
@@ -24,6 +24,7 @@ public class EnemyWeaponHandler : BaseWeaponHandler
 
     public override void Attack()
     {
+        p_Weapon.Equip();
         p_Weapon.Attack(m_Target.position);
     }
 }

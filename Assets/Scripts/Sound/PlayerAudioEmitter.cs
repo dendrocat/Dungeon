@@ -17,7 +17,7 @@ public class PlayerAudioEmitter : MonoBehaviour, IAudioEmitter
     [Group("cmp")]
     [SerializeField] PlayerMover m_Mover;
 
-    public float VolumeMultiplier { get; set; } = 1;
+    public float Volume { get; set; } = 1;
 
     float GetAudio()
     {
@@ -29,7 +29,7 @@ public class PlayerAudioEmitter : MonoBehaviour, IAudioEmitter
 
     public float GetAudioLevel()
     {
-        return GetAudio() * VolumeMultiplier;
+        return GetAudio() * Volume;
     }
 
     void OnValidate()

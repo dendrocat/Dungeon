@@ -15,11 +15,11 @@ public class AudioSaveLoader : SaveLoader
     protected override void Load()
     {
         if (Repository.GetData(c_Key, out float multiplier))
-            m_Emitter.VolumeMultiplier = multiplier;
+            m_Emitter.Volume = multiplier;
     }
 
     protected override void Save()
     {
-        Repository.SetData(c_Key, m_Emitter.VolumeMultiplier);
+        Repository.SetData(c_Key, m_Emitter.Volume);
     }
 }

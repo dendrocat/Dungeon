@@ -7,6 +7,7 @@ using DomainLogging;
 public abstract class Person : MonoBehaviour
 {
     public static event UnityAction<Person> Died;
+    public event UnityAction Attacked;
 
     IEnumerable<IActivatable> comps;
 
@@ -18,6 +19,11 @@ public abstract class Person : MonoBehaviour
     }
     protected abstract void InitHealth();
     protected virtual void OnAwake() { }
+
+	protected void RaiseAttacked() {
+		DomainDebug.Log($"{name} attacked", DomainType.Person);
+		Attacked?.Invoke();
+	}
 
     protected virtual void Die()
     {
@@ -37,7 +43,6 @@ public abstract class Person<TConfig, THealth, THealthConfig> : Person, IDamagab
     where THealth : Health<THealthConfig>
     where THealthConfig : HealthConfig
 {
-    public event UnityAction Attacked;
 
     [SerializeField] TConfig m_Config;
     public TConfig Config => m_Config;
@@ -48,11 +53,6 @@ public abstract class Person<TConfig, THealth, THealthConfig> : Person, IDamagab
     public THealth Health => p_Health;
 
     protected sealed override void InitHealth() => p_Health.Init(m_Config.Health);
-
-	void RaiseAttacked() {
-		DomainDebug.Log($"{name} attacked", DomainType.Person);
-		Attacked?.Invoke();
-	}
 
     /// <inheritdoc/>
     public bool TakeDamage(float damage)

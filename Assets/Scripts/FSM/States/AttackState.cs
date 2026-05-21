@@ -78,7 +78,7 @@ public class AttackState : BaseState
 
         float dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
 
-        bool needMove = dist > m_AttackDistance || dist < m_AttackDistance / 10;
+        bool needMove = dist > m_AttackDistance || dist < m_AttackDistance / 3;
 
         if (needMove)
         {

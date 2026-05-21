@@ -11,7 +11,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     public TStats GetStats() => Stats as TStats ?? throw new System.InvalidCastException();
 
     protected GameObject p_GObj;
-    WeaponAnimator m_Animator;
+    WeaponActionContoller m_Action;
 
     Timer m_ReloadTimer = null, m_AttackTimer = null;
     public float ReloadProgress => m_ReloadTimer.Progress;
@@ -24,7 +24,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     {
         p_Stats = stats;
         p_GObj = Object.Instantiate(p_Stats.WeaponPrefab, parent);
-        m_Animator = p_GObj.GetComponent<WeaponAnimator>();
+        m_Action = p_GObj.GetComponent<WeaponActionContoller>();
         p_GObj.SetActive(false);
 
         m_ReloadTimer = new Timer(p_Stats.ReloadTime, false);
@@ -48,7 +48,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
         var can = CanAttack();
         if (can)
         {
-            m_Animator?.Attack();
+            m_Action?.Attack();
             if (m_AttackTimer != null)
             {
                 m_AttackTimer.Reset();
@@ -69,7 +69,7 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     public void Reload()
     {
         if (!CanReload()) return;
-        m_Animator?.Reload();
+        m_Action?.Reload();
         DomainDebug.Log($"{p_Stats.name} reloading...", DomainType.Weapon);
         m_ReloadTimer.Activate();
         m_ReloadTimer.Reset();
@@ -92,25 +92,25 @@ public abstract class Weapon<TStats> : IWeapon where TStats : WeaponStats
     {
         p_GObj.SetActive(true);
         Equiped = true;
-        m_Animator?.Equip();
+        m_Action?.Equip();
         DomainDebug.Log($"{p_GObj.name} equiped", DomainType.Weapon);
     }
 
     public void Unequip(bool destroy = false)
     {
         if (!Equiped) { OnUnequip(destroy); return; }
-        DomainDebug.Log($"{p_GObj.name} unequiping, m_Animator? {m_Animator != null}", DomainType.Weapon);
+        DomainDebug.Log($"{p_GObj.name} unequiping, m_Action? {m_Action != null}", DomainType.Weapon);
         IsUnequiping = true;
-        if (m_Animator == null) OnUnequip(destroy);
+        if (m_Action == null) OnUnequip(destroy);
         else
         {
-            m_Animator.OnUneqiped += (bool finished) =>
+            m_Action.OnUneqiuped += (bool finished) =>
             {
                 IsUnequiping = false;
                 if (!finished && !destroy) return;
                 OnUnequip(destroy);
             };
-            m_Animator.Unequip();
+            m_Action.Unequip();
         }
     }
 
