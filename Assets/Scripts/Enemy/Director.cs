@@ -10,6 +10,9 @@ public class Director : MonoBehaviour
 
     public static Director Instance { get; private set; }
 
+    [SerializeField] LevelFinish m_Finish = null;
+    public LevelFinish Finish => m_Finish;
+
     [SerializeField] Player m_Player;
     public Player Player => m_Player;
     public Vector3? LastPlayerPos { get; private set; } = null;
@@ -48,6 +51,22 @@ public class Director : MonoBehaviour
         m_Enemies = new();
         m_ChaseTimer = new Timer(m_ChaseTime, false);
         m_ChaseTimer.TimerEnded += OnChased;
+
+        if (m_Finish != null) m_Finish.StartLevelFinish += OnStartLevelFinish;
+    }
+
+    void RemoveAll()
+    {
+        foreach (var enemy in m_Enemies)
+            Destroy(enemy.gameObject);
+        m_Enemies.Clear();
+		m_VisibilityChecker.ClearCache();
+    }
+
+    void OnStartLevelFinish()
+    {
+        m_Player.Input.Deactivate();
+        RemoveAll();
     }
 
     void OnDestroy()
@@ -60,13 +79,13 @@ public class Director : MonoBehaviour
     void OnEnable()
     {
         m_Spawner.Spawned += OnEnemySpawned;
-        Person.Died += OnEnemyDied;
+        Person.Died += OnPersonDied;
     }
 
     void OnDisable()
     {
         m_Spawner.Spawned -= OnEnemySpawned;
-        Person.Died -= OnEnemyDied;
+        Person.Died -= OnPersonDied;
     }
 
     void OnEnemySpawned(IReadOnlyCollection<Enemy> enemies)
@@ -77,9 +96,9 @@ public class Director : MonoBehaviour
         m_ChaseTimer.Reset();
     }
 
-    void OnEnemyDied(Person p)
+    void OnPersonDied(Person p)
     {
-        if (p is not Enemy e) return;
+        if (p is not Enemy e) { RemoveAll(); return; }
         DomainDebug.Log($"Enemy {e.name} removed", DomainType.Director);
         m_Enemies.Remove(e);
     }

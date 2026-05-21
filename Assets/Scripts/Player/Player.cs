@@ -6,17 +6,17 @@ public class Player : Person<PlayerConfig, PlayerHealth, PlayerHealthConfig>
 {
     [TriInspector.Group("cmp")]
     [SerializeField] PlayerWeaponHandler m_WeaponHandler;
-	public PlayerWeaponHandler WeaponHandler => m_WeaponHandler;
+    public PlayerWeaponHandler WeaponHandler => m_WeaponHandler;
 
-    IInput m_Input;
-    public IInput Input => m_Input;
+    InputManager m_Input;
+    public InputManager Input => m_Input;
 
     int m_LightZoneCount = 0;
     public bool IsLighted => m_LightZoneCount > 0;
 
     protected override void OnAwake()
     {
-        m_Input = GetComponentInChildren<IInput>();
+        m_Input = GetComponentInChildren<InputManager>();
         GetComponent<PlayerMover>().Init(Config);
     }
 
@@ -53,7 +53,7 @@ public class Player : Person<PlayerConfig, PlayerHealth, PlayerHealthConfig>
             3 => WeaponType.Shotgun,
             _ => WeaponType.None
         };
-		m_WeaponHandler.ChangeWeapon(type);
+        m_WeaponHandler.ChangeWeapon(type);
     }
 
     void OnLightZonePlayerInsideChanged(bool playerInside)

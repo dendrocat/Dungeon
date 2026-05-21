@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-	InputManager m_Input;
+    InputManager m_Input;
     void Start()
     {
-        m_Input = GetComponentInParent<Player>().Input as InputManager;
-		m_Input.Paused += ChangeState;
+        m_Input = GetComponentInParent<Player>().Input;
+        m_Input.Paused += ChangeState;
         gameObject.SetActive(false);
     }
 

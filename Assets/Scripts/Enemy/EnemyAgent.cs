@@ -54,12 +54,12 @@ public class EnemyAgent : Agent
     //
     // int state = 0;
     //
-#if UNITY_EDITOR
+#if TIME_ESTIMATE || UNITY_EDITOR
     System.Diagnostics.Stopwatch watch = new();
 #endif
     void RequestState()
     {
-#if UNITY_EDITOR
+#if TIME_ESTIMATE || UNITY_EDITOR
         watch.Restart();
 #endif
         RequestDecision();
@@ -105,6 +105,7 @@ public class EnemyAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        // DomainDebug.Log($"{transform.parent.name} collecting observations");
         // // Player position
         // sensor.AddObservation(Vector3.Distance(Director.Instance.PlayerTransform.position, m_Enemy.transform.position));
         // sensor.AddObservation(Vector3.Angle(Director.Instance.PlayerTransform.forward, m_Enemy.transform.forward));
@@ -136,7 +137,7 @@ public class EnemyAgent : Agent
     public override void OnActionReceived(ActionBuffers actions)
     {
         // DomainDebug.Log($"{m_Enemy.name} (enabled : {enabled}) getted next state: {(States)actions.DiscreteActions[0]}", DomainType.Agent);
-#if UNITY_EDITOR
+#if TIME_ESTIMATE || UNITY_EDITOR
         watch.Stop();
         DomainDebug.Log($"{m_Enemy.name} getted state {(States)actions.DiscreteActions[0]} in {watch.ElapsedMilliseconds} milliseconds.", DomainType.Agent);
 #endif

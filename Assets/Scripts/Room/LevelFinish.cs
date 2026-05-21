@@ -4,6 +4,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(FinishAnimator))]
 public class LevelFinish : MonoBehaviour, IInteractable
 {
+    public UnityAction StartLevelFinish;
     public UnityAction LevelFinished;
 
     FinishAnimator m_Animator;
@@ -16,6 +17,7 @@ public class LevelFinish : MonoBehaviour, IInteractable
 
     public void Interact(Player _)
     {
+        StartLevelFinish?.Invoke();
         m_Animator.Open();
     }
 }

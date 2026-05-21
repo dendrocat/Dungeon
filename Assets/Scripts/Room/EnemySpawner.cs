@@ -14,6 +14,11 @@ public class EnemySpawner : MonoBehaviour
         Room.Activated += Spawn;
     }
 
+    void OnDisable()
+    {
+        Room.Activated -= Spawn;
+    }
+
     void Spawn(Room room)
     {
         var lst = new List<Enemy>(room.SpawnPoints.Count);
@@ -37,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
             int idx = ++m_CntSpawned;
             // deleting "(Clone)" (length 7) ending
             const int suff = 7;
-            enemy.name = $"{enemy.name.Substring(0, enemy.name.Length - suff)}_{idx + 1}";
+            enemy.name = $"{enemy.name.Substring(0, enemy.name.Length - suff)}_{idx}";
             enemy.SetWaypointProvider(room);
         }
 

@@ -37,6 +37,7 @@ public class LevelManager : MonoBehaviour
     void OnPlayerDied(Person p)
     {
         if (p is not Player) return;
+		Debug.Log("PlayerDied");
         SceneLoader.Instance.LoadLevel();
     }
 
@@ -47,12 +48,13 @@ public class LevelManager : MonoBehaviour
 
     void FindFinish()
     {
-        var finish = FindFirstObjectByType<LevelFinish>();
+        var finish = Director.Instance?.Finish;
         if (finish == null)
         {
             DomainDebug.LogError($"Finish not found in level {CurrentLevel + 1}: {SceneLoader.Instance.Scene.name}", DomainType.Level);
             return;
         }
+        finish.StartLevelFinish += OnStartLevelFinish;
         finish.LevelFinished += OnLevelFinished;
     }
 
@@ -61,10 +63,13 @@ public class LevelManager : MonoBehaviour
         FindFinish();
     }
 
-    void OnLevelFinished()
+    void OnStartLevelFinish()
     {
         LevelPreLoad?.Invoke();
+    }
 
+    void OnLevelFinished()
+    {
         CurrentLevel++;
         if (CurrentLevel >= m_Levels.Count) EndedLevels?.Invoke();
         else SceneLoader.Instance.LoadLevel();

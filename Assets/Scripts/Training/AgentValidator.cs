@@ -20,7 +20,15 @@ public class AgentValidator : MonoBehaviour
         m_Agent = m_Enemy.MLAgent;
         m_Agent.ActionReceived += OnActionReceived;
 
+    }
+
+    void OnEnable()
+    {
         Person.Died += OnDied;
+    }
+    void OnDisable()
+    {
+        Person.Died -= OnDied;
     }
 
     private void OnAttacked()

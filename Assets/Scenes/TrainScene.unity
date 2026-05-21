@@ -231,7 +231,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
+  sharedProfile: {fileID: 11400000, guid: b45215553237d454aa133e5140ec763f, type: 2}
 --- !u!4 &832575519
 Transform:
   m_ObjectHideFlags: 0
@@ -420,6 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133c8548cf5cf4d489ee569177f32032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Director
+  m_Finish: {fileID: 0}
   m_Player: {fileID: 0}
   m_ChaseTime: 3
 --- !u!114 &1426416999

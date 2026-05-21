@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adb21255ede0d884791fcdbb7b0ccb62, type: 3}
-  m_Name: Arrow
+  m_Name: ArrowTrain
   m_EditorClassIdentifier: Assembly-CSharp::AmmoStats
-  m_AmmoPrefab: {fileID: 9174137156253274474, guid: 8c5859211fb1a084dbb7a43e75378bc5, type: 3}
+  m_AmmoPrefab: {fileID: 9174137156253274474, guid: 566b543657957ca49acaea1ed2714d55, type: 3}
   m_AmmoSpeed: 60
   m_HitMask:
     serializedVersion: 2

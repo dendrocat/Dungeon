@@ -6,10 +6,13 @@ public class VisibilityChecker : MonoBehaviour
 {
     Dictionary<Enemy, bool> m_TempVisibility = new();
 
-    void Awake()
+    void OnEnable()
     {
         Person.Died += OnDied;
     }
+	void OnDisable() {
+		Person.Died -= OnDied;
+	}
 
     void OnDied(Person p)
     {
@@ -44,6 +47,11 @@ public class VisibilityChecker : MonoBehaviour
     public bool IsPlayerVisible(IReadOnlyCollection<Enemy> enemies)
     {
         return enemies.Any(e => IsPlayerVisibleFrom(e, false));
+    }
+
+    public void ClearCache()
+    {
+        m_TempVisibility.Clear();
     }
 
 }

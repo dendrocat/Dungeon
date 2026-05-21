@@ -43,7 +43,7 @@ public class Enemy : Person<EnemyConfig, EnemyHealth, EnemyConfig.EnemyHealthCon
     void OnDisable()
     {
         DomainLogging.DomainDebug.Log($"{name} on disable", DomainLogging.DomainType.Person);
-#if TRAIN || UNITY_EDITOR
+#if TRAIN
         if (Health.Value > 0)
             Die();
 #endif

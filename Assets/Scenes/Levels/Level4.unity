@@ -9701,6 +9701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133c8548cf5cf4d489ee569177f32032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Director
+  m_Finish: {fileID: 518235616}
   m_Player: {fileID: 638276859}
   m_ChaseTime: 5
 --- !u!114 &2061355054
