@@ -6,6 +6,9 @@ using TriInspector;
 [DeclareBoxGroup("set", Title = "Weapon Parameters")]
 public abstract class WeaponStats : ScriptableObject
 {
+	[SerializeField, Min(0)] int m_ID = 0;
+	public int ID => m_ID;
+
     [Required, AssetsOnly, PreviewObject, PropertyOrder(0)]
     [SerializeField] GameObject m_WeaponPrefab;
     public GameObject WeaponPrefab => m_WeaponPrefab;

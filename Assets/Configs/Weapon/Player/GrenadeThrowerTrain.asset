@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
   m_Name: GrenadeThrowerTrain
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
+  m_ID: 14
   m_WeaponPrefab: {fileID: 5796934852874072609, guid: cf2b7ce24617d0f41ac6fb6d2642bccf, type: 3}
   p_Type: 5
   m_Damage: 1

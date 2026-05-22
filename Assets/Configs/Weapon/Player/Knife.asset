@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb3671aabe8cf64f9728c3e20c89712, type: 3}
   m_Name: Knife
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeaponStats
+  m_ID: 15
   m_WeaponPrefab: {fileID: 2547419863273698289, guid: 054ab42276bc197448602d34dcfbd055, type: 3}
   p_Type: 1
   m_Damage: 100

@@ -43,7 +43,7 @@ public class WeaponSaveLoader : SaveLoader
 
         var op = Addressables.LoadAssetsAsync<WeaponStats>(m_WeaponLabel, data =>
         {
-            if (m_Data[data.Type].statsID == data.GetInstanceID())
+            if (m_Data[data.Type].statsID == data.ID)
                 stats[data.Type] = data;
         });
         op.WaitForCompletion();
@@ -58,14 +58,14 @@ public class WeaponSaveLoader : SaveLoader
         {
             m_Data[kv.Key] = new WeaponData
             {
-                statsID = kv.Value.Stats.GetInstanceID(),
+                statsID = kv.Value.Stats.ID,
                 ammoInTube = kv.Value.AmmoInTube,
                 ammo = kv.Value.Ammo,
             };
         }
         m_Data[WeaponType.Melee] = new WeaponData
         {
-            statsID = m_Hanlder.Melee.Stats.GetInstanceID()
+            statsID = m_Hanlder.Melee.Stats.ID
         };
         Repository.SetData(c_Key, m_Data);
     }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb3671aabe8cf64f9728c3e20c89712, type: 3}
   m_Name: KnifeTrain
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeaponStats
+  m_ID: 16
   m_WeaponPrefab: {fileID: 6468306000038308540, guid: 5f2ca8b2e36e9d3489cf633cc1b21b50, type: 3}
   p_Type: 1
   m_Damage: 100

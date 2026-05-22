@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
   m_Name: BowTrain
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
+  m_ID: 1
   m_WeaponPrefab: {fileID: 7691624403421222432, guid: 7165b85bb860a5341afeded48a23fffb, type: 3}
   p_Type: 2
   m_Damage: 50

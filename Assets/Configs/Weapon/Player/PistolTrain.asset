@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
   m_Name: PistolTrain
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
+  m_ID: 19
   m_WeaponPrefab: {fileID: 7895784510436758991, guid: 70705d0eecbe02d44be14857e867ea8e, type: 3}
   p_Type: 2
   m_Damage: 10

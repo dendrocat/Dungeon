@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9994fc5d4727c214486ae3cde41ca50b, type: 3}
   m_Name: AKFull
   m_EditorClassIdentifier: Assembly-CSharp::RangedWeaponStats
+  m_ID: 11
   m_WeaponPrefab: {fileID: 3297001669883323039, guid: d0d08686383c6e54891c903897167079, type: 3}
   p_Type: 3
   m_Damage: 5
