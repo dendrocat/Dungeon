@@ -98,8 +98,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2886502481724079155}
-  - component: {fileID: 5863845137924112983}
-  - component: {fileID: 6691368283928087156}
+  - component: {fileID: 59185953481475454}
+  - component: {fileID: 4890389286894022840}
   m_Layer: 0
   m_Name: Sound
   m_TagString: Untagged
@@ -124,7 +124,7 @@ Transform:
   - {fileID: 6090767120814058301}
   m_Father: {fileID: 9043704643158558933}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5863845137924112983
+--- !u!114 &59185953481475454
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,11 +133,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4137209824315685094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05baefd90e1d6764e8826f5b231aa0e1, type: 3}
+  m_Script: {fileID: 11500000, guid: c50c761abf8d36042bb9bf4bd928968a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HurtAudio
   m_Hurt: {fileID: 7142407210973934132}
---- !u!114 &6691368283928087156
+--- !u!114 &4890389286894022840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,13 +146,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4137209824315685094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df79696e86142c443a862a2aa37ead56, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a07313475a38544296721f641487640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWalkAudio
   m_Enemy: {fileID: 1475957164351119576}
   m_Source: {fileID: 5154714290111185409}
-  m_WalkClip: {fileID: 8300000, guid: c10ab094353cee242bccbdc552e44f57, type: 3}
-  m_RunClip: {fileID: 8300000, guid: 0cf42cb086431b34c900143bfd97bca3, type: 3}
+  m_WalkClip: {fileID: 8300000, guid: cf1b726cfdc95b84f850a7c77e15ecd8, type: 3}
+  m_RunClip: {fileID: 8300000, guid: ebef268299da6ea4ea3421509d52e9e1, type: 3}
 --- !u!1 &4604795256227049717
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,7 +618,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 1a5821cd5989d0c4cb8ceda911c6df46, type: 3}
+  m_Resource: {fileID: 8300000, guid: 2094f884fd936a74a8419cc2304435ed, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 0.8

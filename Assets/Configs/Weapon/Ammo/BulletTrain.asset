@@ -17,4 +17,4 @@ MonoBehaviour:
   m_HitMask:
     serializedVersion: 2
     m_Bits: 128
-  m_OnHitPrefab: {fileID: 6530139356875897956, guid: b91b082ad421f3d4dbe5c14f0b2d99b5, type: 3}
+  m_OnHitPrefab: {fileID: 6530139356875897956, guid: 44c328d04a9e01c488d265af5aba6e8b, type: 3}

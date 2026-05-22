@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &198099519650781952
+--- !u!1 &571479728018978721
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,76 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4165006953573116402}
-  - component: {fileID: 3373589360237123239}
+  - component: {fileID: 5202255241411417242}
   m_Layer: 0
-  m_Name: Reload
+  m_Name: Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4165006953573116402
+--- !u!4 &5202255241411417242
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 198099519650781952}
+  m_GameObject: {fileID: 571479728018978721}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5269244768014600840}
+  - {fileID: 3290691814009914766}
+  - {fileID: 242740729345446}
+  m_Father: {fileID: 6861184185333124913}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4235724203182423359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5269244768014600840}
+  - component: {fileID: 1165669945498927644}
+  m_Layer: 0
+  m_Name: Shoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5269244768014600840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4235724203182423359}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 213381198186130673}
+  m_Father: {fileID: 5202255241411417242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &3373589360237123239
+--- !u!82 &1165669945498927644
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 198099519650781952}
+  m_GameObject: {fileID: 4235724203182423359}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 4c5bdd764b0423842b79ffeb9eda9686, type: 3}
+  m_Resource: {fileID: 8300000, guid: aab0024cae697494baa47f52ac0575dd, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -129,7 +163,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &1869637665369821468
+--- !u!1 &5557383277711589949
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,76 +171,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 213381198186130673}
+  - component: {fileID: 242740729345446}
+  - component: {fileID: 5262547148325454409}
   m_Layer: 0
-  m_Name: Sound
+  m_Name: Equip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &213381198186130673
+--- !u!4 &242740729345446
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1869637665369821468}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.0000000037252903, z: -1.1641532e-10, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8178711983151670226}
-  - {fileID: 4165006953573116402}
-  - {fileID: 247872734977289623}
-  m_Father: {fileID: 6861184185333124913}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4365155347739727062
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8178711983151670226}
-  - component: {fileID: 6257961044559497856}
-  m_Layer: 0
-  m_Name: Shoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8178711983151670226
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4365155347739727062}
+  m_GameObject: {fileID: 5557383277711589949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 213381198186130673}
+  m_Father: {fileID: 5202255241411417242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &6257961044559497856
+--- !u!82 &5262547148325454409
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4365155347739727062}
+  m_GameObject: {fileID: 5557383277711589949}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 6698a65aa51764f43bd2447960862394, type: 3}
+  m_Resource: {fileID: 8300000, guid: 3256a0625cc6973419a60c4367a6d94a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -332,9 +332,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6861184185333124913}
-  - component: {fileID: -7289280054021112995}
   - component: {fileID: 5925111884545656162}
-  - component: {fileID: -4867054891383844672}
+  - component: {fileID: 1962935562381028167}
+  - component: {fileID: 4162231125321636546}
   m_Layer: 0
   m_Name: TalonShotgun
   m_TagString: Untagged
@@ -355,24 +355,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5202255241411417242}
   - {fileID: 1686925743010721262}
-  - {fileID: 213381198186130673}
   - {fileID: 315861457111043150}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7289280054021112995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7810643967882512432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963f740aeec14974484b3adfcf08a6e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponActionContoller
-  m_OneAction: 0
 --- !u!114 &5925111884545656162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,7 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponAnimator
   m_Animator: {fileID: 8056536829916775168}
---- !u!114 &-4867054891383844672
+--- !u!114 &1962935562381028167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -395,13 +382,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 7810643967882512432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 003c50f3c6076184b8e8b0ace62698a0, type: 3}
+  m_Script: {fileID: 11500000, guid: c768953e21cf75e45b95e304296a36f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponAudio
-  m_Shoot: {fileID: 6257961044559497856}
-  m_Reload: {fileID: 3373589360237123239}
-  m_Equip: {fileID: 4637872829965382666}
---- !u!1 &8897664953539441606
+  m_Shoot: {fileID: 1165669945498927644}
+  m_Reload: {fileID: 2807512799689423441}
+  m_Equip: {fileID: 5262547148325454409}
+--- !u!114 &4162231125321636546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810643967882512432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5b8edcfc3099a40be6844063a32935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponActionContoller
+  m_OneAction: 0
+--- !u!1 &8883433805711987409
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -409,42 +409,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 247872734977289623}
-  - component: {fileID: 4637872829965382666}
+  - component: {fileID: 3290691814009914766}
+  - component: {fileID: 2807512799689423441}
   m_Layer: 0
-  m_Name: Equip
+  m_Name: Reload
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &247872734977289623
+--- !u!4 &3290691814009914766
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8897664953539441606}
+  m_GameObject: {fileID: 8883433805711987409}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 213381198186130673}
+  m_Father: {fileID: 5202255241411417242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &4637872829965382666
+--- !u!82 &2807512799689423441
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8897664953539441606}
+  m_GameObject: {fileID: 8883433805711987409}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: d16ad20b48ba5da4da1f2b061d8700f4, type: 3}
+  m_Resource: {fileID: 8300000, guid: 17f0da36dee12f94c854ff04f6db081e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

@@ -43,7 +43,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: ca33ab4eb4aba0d41a72310156071ff0, type: 3}
+  m_Resource: {fileID: 8300000, guid: 76528aed86e675e41b3a63d099621752, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
@@ -170,8 +170,8 @@ GameObject:
   m_Component:
   - component: {fileID: 665401748068392432}
   - component: {fileID: -2795929703478548006}
-  - component: {fileID: -8256249996039429746}
-  - component: {fileID: -3356413788645664648}
+  - component: {fileID: 986733598901059563}
+  - component: {fileID: 5072968841345412077}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponAnimator
   m_Animator: {fileID: 0}
---- !u!114 &-8256249996039429746
+--- !u!114 &986733598901059563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,13 +218,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7691624403421222432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 003c50f3c6076184b8e8b0ace62698a0, type: 3}
+  m_Script: {fileID: 11500000, guid: c768953e21cf75e45b95e304296a36f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponAudio
   m_Shoot: {fileID: 0}
   m_Reload: {fileID: 0}
   m_Equip: {fileID: 5809466000844778923}
---- !u!114 &-3356413788645664648
+--- !u!114 &5072968841345412077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7691624403421222432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963f740aeec14974484b3adfcf08a6e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c5b8edcfc3099a40be6844063a32935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponActionContoller
   m_OneAction: 1

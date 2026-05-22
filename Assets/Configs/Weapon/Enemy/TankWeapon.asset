@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb3671aabe8cf64f9728c3e20c89712, type: 3}
   m_Name: TankWeapon
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeaponStats
-  m_WeaponPrefab: {fileID: 6468306000038308540, guid: af3083bb04b6b1740b205bc9abaf7012, type: 3}
+  m_WeaponPrefab: {fileID: 6468306000038308540, guid: a3bce3b51e301b448869d7ea06a0b175, type: 3}
   p_Type: 1
   m_Damage: 60
   m_UntilAttackTime: 0.8

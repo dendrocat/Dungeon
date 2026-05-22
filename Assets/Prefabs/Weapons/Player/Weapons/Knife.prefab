@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8964736903977774575}
-  - component: {fileID: 312099029730398393}
   - component: {fileID: 8882172464832714798}
-  - component: {fileID: 2657606492527379438}
+  - component: {fileID: 7335115390510397514}
+  - component: {fileID: 4473155262558869147}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -36,19 +36,6 @@ Transform:
   - {fileID: 7244716840413643186}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &312099029730398393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2547419863273698289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963f740aeec14974484b3adfcf08a6e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponActionContoller
-  m_OneAction: 1
 --- !u!114 &8882172464832714798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponAnimator
   m_Animator: {fileID: 6391886607066187036}
---- !u!114 &2657606492527379438
+--- !u!114 &7335115390510397514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,12 +58,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2547419863273698289}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 003c50f3c6076184b8e8b0ace62698a0, type: 3}
+  m_Script: {fileID: 11500000, guid: c768953e21cf75e45b95e304296a36f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponAudio
   m_Shoot: {fileID: 0}
   m_Reload: {fileID: 0}
   m_Equip: {fileID: 1734829563906478935}
+--- !u!114 &4473155262558869147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2547419863273698289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5b8edcfc3099a40be6844063a32935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponActionContoller
+  m_OneAction: 1
 --- !u!1 &7380487881221347778
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: cbfea984daf05354ba9b307c1e708657, type: 3}
+  m_Resource: {fileID: 8300000, guid: 036a84d25e13c8842926209ae2b31022, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

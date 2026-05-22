@@ -1,12 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider), typeof(BonusAnimator), typeof(BonusSound))]
+[RequireComponent(typeof(Collider), typeof(BonusAnimator), typeof(BonusAudio))]
 public abstract class Bonus : MonoBehaviour, IInteractable
 {
     [SerializeField] GameObject m_Prefab;
     [SerializeField] Transform m_SpawnPos;
     BonusAnimator m_Animator;
-    BonusSound m_Sound;
+    BonusAudio m_Audio;
 
     bool m_Interacted = false;
 
@@ -17,7 +17,7 @@ public abstract class Bonus : MonoBehaviour, IInteractable
         m_Animator = GetComponent<BonusAnimator>();
         m_Animator.Hided += () => Destroy(gameObject);
 
-        m_Sound = GetComponent<BonusSound>();
+        m_Audio = GetComponent<BonusAudio>();
     }
 
     public void Interact(Player player)
@@ -26,7 +26,7 @@ public abstract class Bonus : MonoBehaviour, IInteractable
         m_Interacted = true;
         OnInteract(player);
         m_Animator.Hide();
-        m_Sound.Play();
+        m_Audio.Play();
         Destroy(m_Obj);
     }
 

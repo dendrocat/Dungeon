@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2852958178115824181}
   - component: {fileID: 8964133247617222463}
   - component: {fileID: 3015955920320295806}
-  - component: {fileID: 781637483486196223}
+  - component: {fileID: 8482720186991451701}
   m_Layer: 30
   m_Name: Bonus
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BonusAnimator
   m_Animator: {fileID: 1200970859617715613}
---- !u!114 &781637483486196223
+--- !u!114 &8482720186991451701
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7217510707869801924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2615b181e292b204f87595857d37ba6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 57aad0a5e5689504ab4efb783c433a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BonusSound
   m_Source: {fileID: 7979832327535507956}
@@ -159,7 +159,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 3d4187493e235c048a637633a06f7701, type: 3}
+  m_Resource: {fileID: 8300000, guid: e39c2e8c59485d34fa61721c3091a935, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.6
   m_Pitch: 1

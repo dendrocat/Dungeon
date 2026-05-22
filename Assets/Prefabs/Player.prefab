@@ -566,7 +566,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 53b5f473d262e7a468693fa6a04a44e8, type: 3}
+  m_Resource: {fileID: 8300000, guid: 5f2a8a139cd177c49830e4dca47b19b7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.3
   m_Pitch: 1
@@ -661,8 +661,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1479923721408966417}
-  - component: {fileID: 7964182233950047478}
-  - component: {fileID: 7833830557495101442}
+  - component: {fileID: 2956425017065000803}
+  - component: {fileID: 2424399062570214731}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -687,7 +687,7 @@ Transform:
   - {fileID: 7914501009907159085}
   m_Father: {fileID: 3021079914218274790}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7964182233950047478
+--- !u!114 &2956425017065000803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -696,18 +696,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3862053898605445317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 319a110c76f48854391df7995ec3b8b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4394f2b635ce59242887f066650aa10f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAudio
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWalkAudio
   m_Checker: {fileID: 9158216735366668330}
   m_Input: {fileID: 6417459138302310675}
   m_Mover: {fileID: 6936228090893454987}
   m_Emitter: {fileID: 5510431707426336166}
   m_Step: {fileID: 3408588526828380243}
-  m_RunClip: {fileID: 8300000, guid: 988a1ee5c06d0424e9d9eb08c55f5d4c, type: 3}
-  m_WalkClip: {fileID: 8300000, guid: 357df1dc0deb3384584ac21a3b077d7c, type: 3}
-  m_CrouchClip: {fileID: 8300000, guid: 4ff18c5a92416e040aea10ffed8159bb, type: 3}
---- !u!114 &7833830557495101442
+  m_RunClip: {fileID: 8300000, guid: 49551fbaaa7178a43ba11851c3fd54de, type: 3}
+  m_WalkClip: {fileID: 8300000, guid: f59abf73a0c305844beb9ce4fdc51e72, type: 3}
+  m_CrouchClip: {fileID: 8300000, guid: 2b0ae11a32d57584abe2fe45f57b99d6, type: 3}
+--- !u!114 &2424399062570214731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -716,7 +716,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3862053898605445317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05baefd90e1d6764e8826f5b231aa0e1, type: 3}
+  m_Script: {fileID: 11500000, guid: c50c761abf8d36042bb9bf4bd928968a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HurtAudio
   m_Hurt: {fileID: 5932553815622520874}

@@ -43,7 +43,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 3095db980e7618c4aaabd79000e5f708, type: 3}
+  m_Resource: {fileID: 8300000, guid: 54097a9a4875f1340af71a12eb15ab67, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -169,9 +169,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2767833214255534605}
-  - component: {fileID: -3662378272288447464}
   - component: {fileID: 1699364204650254488}
-  - component: {fileID: 1669512851107883516}
+  - component: {fileID: 8351015738158995290}
+  - component: {fileID: 3342539780239514994}
   m_Layer: 0
   m_Name: GrenadeThrower
   m_TagString: Untagged
@@ -197,19 +197,6 @@ Transform:
   - {fileID: 7024247859077437489}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-3662378272288447464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9157150870988310894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963f740aeec14974484b3adfcf08a6e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponActionContoller
-  m_OneAction: 1
 --- !u!114 &1699364204650254488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponAnimator
   m_Animator: {fileID: 2521474321325167388}
---- !u!114 &1669512851107883516
+--- !u!114 &8351015738158995290
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,12 +219,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 9157150870988310894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 003c50f3c6076184b8e8b0ace62698a0, type: 3}
+  m_Script: {fileID: 11500000, guid: c768953e21cf75e45b95e304296a36f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponAudio
   m_Shoot: {fileID: 0}
   m_Reload: {fileID: 0}
   m_Equip: {fileID: 5672541053716756727}
+--- !u!114 &3342539780239514994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9157150870988310894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5b8edcfc3099a40be6844063a32935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponActionContoller
+  m_OneAction: 1
 --- !u!1001 &8328429086319554189
 PrefabInstance:
   m_ObjectHideFlags: 0

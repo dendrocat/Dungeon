@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BonusSound : MonoBehaviour
+public class BonusAudio : MonoBehaviour
 {
 	[SerializeField] AudioSource m_Source;
 
