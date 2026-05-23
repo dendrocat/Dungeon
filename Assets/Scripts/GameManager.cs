@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
-		LevelManager.EndedLevels += ToTitles;
+        LevelManager.EndedLevels += ToTitles;
     }
 
     void OnDestroy()
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     public void ContinueGame()
     {
-		SaveSystem.LoadData();
+        SaveSystem.LoadData();
         SceneLoader.Instance.LoadLevel();
     }
 
@@ -47,10 +47,12 @@ public class GameManager : MonoBehaviour
     public void Pause()
     {
         Time.timeScale = 0;
+        AudioListener.pause = true;
     }
 
     public void UnPause()
     {
         Time.timeScale = 1;
+        AudioListener.pause = false;
     }
 }
