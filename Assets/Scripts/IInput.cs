@@ -1,7 +1,7 @@
 using Vector2 = UnityEngine.Vector2;
 using UnityEngine.Events;
 
-public interface IInput
+public interface IInput : IActivatable
 {
     public Vector2 Move { get; }
     public bool IsCrouching { get; }

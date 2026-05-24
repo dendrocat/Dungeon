@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundChecker
   m_CheckDistanse: 1.1
-  m_Skin: 0.05
+  m_Skin: 0.2
   m_Layer:
     serializedVersion: 2
     m_Bits: 8

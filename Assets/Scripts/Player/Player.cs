@@ -8,15 +8,15 @@ public class Player : Person<PlayerConfig, PlayerHealth, PlayerHealthConfig>
     [SerializeField] PlayerWeaponHandler m_WeaponHandler;
     public PlayerWeaponHandler WeaponHandler => m_WeaponHandler;
 
-    InputManager m_Input;
-    public InputManager Input => m_Input;
+    IInput m_Input;
+    public IInput Input => m_Input;
 
     int m_LightZoneCount = 0;
     public bool IsLighted => m_LightZoneCount > 0;
 
     protected override void OnAwake()
     {
-        m_Input = GetComponentInChildren<InputManager>();
+        m_Input = GetComponentInChildren<IInput>();
         GetComponent<PlayerMover>().Init(Config);
     }
 
