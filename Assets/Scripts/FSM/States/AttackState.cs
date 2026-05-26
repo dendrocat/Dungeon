@@ -37,7 +37,6 @@ public class AttackState : BaseState
 
     void SetDestination(bool random = false)
     {
-        if (m_IsAttacking) return;
         // DomainLogging.DomainDebug.Log($"{p_Enemy.name} set dest {m_Agent.remainingDistance} {m_Agent.velocity}");
         Vector3 GetOffset()
         {
@@ -74,12 +73,19 @@ public class AttackState : BaseState
         // {
         //     DomainLogging.DomainDebug.LogWarning($"m_Player: {m_Player == null}, p_Enemy: {p_Enemy?.transform == null}");
         // }
-        if (m_IsAttacking && m_Agent.hasPath) m_Agent.ResetPath();
+        // Debug.Log($"{p_Enemy.name} Continued, {m_IsAttacking}");
+        if (m_IsAttacking)
+        {
+            p_Enemy.transform.LookAt(m_Player);
+            if (m_Agent.hasPath) m_Agent.ResetPath();
+            return;
+        }
 
         float dist = Vector3.Distance(m_Player.position, p_Enemy.transform.position);
 
-        bool needMove = dist > m_AttackDistance || dist < m_AttackDistance / 5;
+        bool needMove = dist > m_AttackDistance || dist < m_AttackDistance / 10;
 
+        // Debug.Log($"{p_Enemy.name} needMove {needMove}");
         if (needMove)
         {
             bool needSetDest = !m_Agent.hasPath || Vector3.Distance(m_Agent.destination, m_Player.position) > m_AttackDistance;
@@ -87,6 +93,7 @@ public class AttackState : BaseState
             return;
         }
         bool localVisible = Director.Instance.VisibilityChecker.IsPlayerVisibleFrom(p_Enemy);
+        // Debug.Log($"{p_Enemy.name} localVisible {localVisible}");
 
         // player not visible so set random destination
         if (!localVisible)
@@ -98,14 +105,12 @@ public class AttackState : BaseState
         // player already in attack range and visible
         if (m_Agent.hasPath) m_Agent.ResetPath();
 
-        p_Enemy.transform.LookAt(m_Player);
-
         if (!p_Enemy.WeaponHandler.CanAttack())
         {
             p_Enemy.Animator.Idle();
             return;
         }
-        if (m_IsAttacking) return;
+        // if (m_IsAttacking) return;
 
         m_IsAttacking = true;
 

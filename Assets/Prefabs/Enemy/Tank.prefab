@@ -207,7 +207,7 @@ MonoBehaviour:
   m_RayLength: 20.5
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 2147484536
+    m_Bits: 3758096457
   m_ObservationStacks: 1
   m_AlternatingRayOrder: 0
   m_UseBatchedRaycasts: 0
@@ -533,7 +533,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: d1b01f2fb2162c0488aa1e458b6f8a18, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 9aece6b9e38c1ed4992b273386a507b8, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 2
   m_BehaviorName: Enemy

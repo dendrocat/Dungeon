@@ -60,7 +60,7 @@ public class Director : MonoBehaviour
         foreach (var enemy in m_Enemies)
             Destroy(enemy.gameObject);
         m_Enemies.Clear();
-		m_VisibilityChecker.ClearCache();
+        m_VisibilityChecker.ClearCache();
     }
 
     void OnStartLevelFinish()
@@ -98,7 +98,13 @@ public class Director : MonoBehaviour
 
     void OnPersonDied(Person p)
     {
-        if (p is not Enemy e) { RemoveAll(); return; }
+        if (p is not Enemy e)
+        {
+#if !TRAIN
+			RemoveAll(); 
+#endif
+            return;
+        }
         DomainDebug.Log($"Enemy {e.name} removed", DomainType.Director);
         m_Enemies.Remove(e);
     }
