@@ -434,6 +434,7 @@ MonoBehaviour:
   - {fileID: 1500916615}
   - {fileID: 72690499}
   m_Duration: 5
+  m_Ease: 10
 --- !u!1 &1500916614
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8561364d1b8af954f917efee609e4613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HackingText
+  m_Ease: 8
   m_ChangeInterval: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

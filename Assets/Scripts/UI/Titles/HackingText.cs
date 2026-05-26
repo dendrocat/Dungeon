@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
+using DG.Tweening;
 
 using TextUI = TMPro.TextMeshProUGUI;
 
 [RequireComponent(typeof(TextUI))]
 public class HackingText : MonoBehaviour
 {
-    const int c_MinChanges = 2000;
     TextUI m_Text;
+    [SerializeField] Ease m_Ease;
     [SerializeField] float m_ChangeInterval = 0.1f;
 
     const string c_Specials = "!$*(&_+-^%)#@ ";
@@ -21,7 +21,7 @@ public class HackingText : MonoBehaviour
 
     public void StartHack(float duration)
     {
-        StartCoroutine(HackText(m_Text.text, duration));
+        HackText(m_Text.text, duration);
     }
 
     char GetSymbol()
@@ -48,10 +48,9 @@ public class HackingText : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator HackText(string target, float duration)
+    void HackText(string target, float duration)
     {
-        List<int> indexes = Enumerable.Range(0, target.Length).ToList();
-        StringBuilder hacking = new(target);
+        System.Text.StringBuilder hacking = new(target);
         for (int i = 0; i < target.Length; ++i)
         {
             do hacking[i] = GetSymbol();
@@ -59,33 +58,36 @@ public class HackingText : MonoBehaviour
         }
         m_Text.text = hacking.ToString();
 
+        List<int> indexes = Enumerable.Range(0, target.Length).ToList();
         ShuffleIndexes(indexes);
 
-        Timer timer = new(duration);
         int hacked = 0;
-        while (timer.Progress < 1)
-        {
-            int targetHacked = Mathf.FloorToInt(target.Length * timer.Progress);
+        float time = Time.time;
 
-            while (hacked < targetHacked)
+        DOVirtual.Float(0, 1, duration, progress =>
             {
-                int idx = indexes[hacked++];
-                hacking[idx] = target[idx];
+                if (Time.time - time < m_ChangeInterval) return;
+                time = Time.time;
+
+                int targetHacked = Mathf.Min(Mathf.FloorToInt(target.Length * progress), target.Length - 1);
+
+                while (hacked < targetHacked)
+                {
+                    int idx = indexes[hacked++];
+                    hacking[idx] = target[idx];
+                }
+
+                for (int i = hacked; i < target.Length; ++i)
+                {
+                    int idx = indexes[i];
+                    do hacking[idx] = GetSymbol();
+                    while (hacking[idx] == target[idx]);
+                }
+
+                m_Text.text = hacking.ToString();
             }
-
-            for (int i = hacked; i < target.Length; ++i)
-            {
-                int idx = indexes[i];
-                do hacking[idx] = GetSymbol();
-                while (hacking[idx] == target[idx]);
-            }
-
-            m_Text.text = hacking.ToString();
-            yield return new WaitForSeconds(m_ChangeInterval);
-
-            timer.Update(m_ChangeInterval);
-        }
-
-        m_Text.text = target;
+        )
+        .SetEase(m_Ease)
+        .OnComplete(() => m_Text.text = target);
     }
 }
