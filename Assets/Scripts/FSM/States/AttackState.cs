@@ -63,7 +63,7 @@ public class AttackState : BaseState
         p_Enemy.NavAgent.CalculatePath(hit.position, path);
         p_Enemy.NavAgent.SetPath(path);
 
-        p_Enemy.Animator.ResetAllTriggers();
+        // p_Enemy.Animator.ResetAllTriggers();
         p_Enemy.Animator.Run();
     }
 

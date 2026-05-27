@@ -65,7 +65,6 @@ public class CoverState : BaseState
         p_Enemy.NavAgent.speed = p_Enemy.Config.Speed.BaseSpeed * p_Enemy.Config.Speed.Multiplier;
         SetDestination();
 
-        p_Enemy.Animator.ResetAllTriggers();
         p_Enemy.Animator.Run();
     }
 

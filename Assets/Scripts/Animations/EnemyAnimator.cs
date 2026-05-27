@@ -6,22 +6,16 @@ public class EnemyAnimator : MonoBehaviour, IAnimator
 
     Animator m_Animator;
 
-	void Awake() {
-		m_Animator = GetComponentInChildren<Animator>();
-	}
-
-    public void ResetAllTriggers()
+    void Awake()
     {
-        System.Collections.Generic.List<string> triggers = new() { "Attack", "Idle", "Walk", "Run", "Death" };
-        foreach (var trig in triggers)
-            m_Animator?.ResetTrigger(trig);
+        m_Animator = GetComponentInChildren<Animator>();
     }
 
     bool IsPlaying(string trigger)
     {
-        var clips = m_Animator?.GetCurrentAnimatorClipInfo(0);
-        if (clips == null || clips.Length == 0) return false;
-        return clips[0].clip.name.ToLower().Contains(trigger.ToLower());
+        var state = m_Animator?.GetCurrentAnimatorStateInfo(0);
+        if (!state.HasValue || state.Value.length == 0) return false;
+        return state.Value.IsName(trigger);
     }
 
     void Play(string trigger)
@@ -33,25 +27,33 @@ public class EnemyAnimator : MonoBehaviour, IAnimator
         else m_Animator?.ResetTrigger(trigger);
     }
 
+    void Play(int move)
+    {
+        m_Animator?.SetInteger("Move", move);
+    }
+
     public void Attack()
     {
         Play("Attack");
-		if (m_Animator == null) OnStateExited(true);
+        if (m_Animator == null) OnStateExited(true);
     }
 
     public void Idle()
     {
-        Play("Idle");
+        // Play("Idle");
+        Play(0);
     }
 
     public void Walk()
     {
-        Play("Walk");
+        // Play("Walk");
+        Play(1);
     }
 
     public void Run()
     {
-        Play("Run");
+        // Play("Run");
+        Play(2);
     }
 
     public void Die()
