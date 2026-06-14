@@ -19,9 +19,9 @@ behaviors:
       extrinsic:
         strength: 1
         gamma: 0.99
-    max_steps: 300000
+    max_steps: 800000
     time_horizon: 64
-    summary_freq: 2000
+    summary_freq: 5000
     checkpoint_interval: 50000
   PlayerAgent:
     trainer_type: ppo
@@ -41,22 +41,22 @@ behaviors:
       extrinsic:
         strength: 1
         gamma: 0.99
-    max_steps: 2000000
+    max_steps: 5000000
     time_horizon: 1000
-    summary_freq: 10000
-    checkpoint_interval: 100000
+    summary_freq: 40000
+    checkpoint_interval: 200000
 
 checkpoint_settings:
-  run_id: FSMAgent2VectorLightCondition 
+  run_id: FSMAgent2VectorLightConditionCover50_2 
   initialize_from: null
   load_model: false
-  resume: true
+  resume: false
   force: false
   inference: false
   results_dir: results
 
 env_settings:
-  env_path: C:\Users\User\Unity\Builds\DiplomMLLight2Vectors\The_Rift.exe
+  env_path: C:\Users\User\Unity\Builds\DiplomMLLight2VectorsCover\The_Rift.exe
   env_args: null
   base_port: 5005
   num_envs: 10
@@ -67,7 +67,7 @@ env_settings:
   restarts_rate_limit_period_s: 60
 
 engine_settings:
-  time_scale: 50
+  time_scale: 70
   no_graphics: true
 
 torch_settings:
